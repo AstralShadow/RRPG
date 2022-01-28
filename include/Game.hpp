@@ -16,6 +16,7 @@ public:
     int init();
 
     void run();
+    void stop();
 
 private:
     bool _running;

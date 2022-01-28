@@ -39,19 +39,29 @@ void Game::run()
         auto tick_end = steady_clock::now();
         auto tick_time = tick_end - tick_start;
         auto sleep_time = TICK_INTERVAL - tick_time;
-        std::this_thread::sleep_for(sleep_time);
         
-        #if 1
+        #if PRINT_TICK_SLEEP_TIME
             std::cout << "Sleeping for "
                 << duration_cast<duration_t>(sleep_time)
                     .count() << std::endl;
         #endif
+
+        std::this_thread::sleep_for(sleep_time);
     }
 }
 
 void Game::poll_events()
 {
-
+    SDL_Event event;
+    while(SDL_PollEvent(&event))
+    {
+        switch(event.type)
+        {
+            case SDL_QUIT:
+                stop();
+                break;
+        }
+    }
 }
 
 void Game::tick(duration_t progress)
@@ -62,4 +72,12 @@ void Game::tick(duration_t progress)
 void Game::render()
 {
 
+}
+
+void Game::stop()
+{
+    #if PRINT_EXIT_MESSAGE 
+        std::cout << "Stopping the game." << std::endl;
+    #endif
+    _running = false;
 }
