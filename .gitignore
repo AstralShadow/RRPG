@@ -1,0 +1,16 @@
+# Directories for personal stuff.
+private/
+archive/
+
+# Vim metadata and backup files. 
+.backup/
+*.swp
+tags
+*~
+
+# Makefile compilation binary and object dirs.
+bin/
+obj/
+dep/
+tags
+

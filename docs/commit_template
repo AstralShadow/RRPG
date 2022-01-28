@@ -1,0 +1,25 @@
+
+# Title format: [prefix] message (reference)
+#
+# reference - connected issue / bug report / pull request
+# prefix - the type of commit
+# Example prefixes:
+# | fix bug patch merge upgrade feature tag doc security
+# | markdown depend beautify resource config legal
+# and anything that can describe the commit in 1 word
+
+
+# Useful stuff you may want to add to the commit body:
+#
+# [Gaol] - what did you try to achieve
+# [Solution] - how did you achieve it.
+# [Details] - why did you achieve it that way
+
+
+# WARNING:
+#  Make sure you commit each logical change
+#  in seperate commit. IF you've made multiple
+#  changes you should use a specialized tool to
+#  pick only part of them for this commit. (like gitg)
+
+
