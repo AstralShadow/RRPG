@@ -29,6 +29,7 @@ private:
 
     void poll_events();
     void tick(duration_t);
+    void render();
 
 };
 

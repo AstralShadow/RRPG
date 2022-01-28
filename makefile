@@ -44,7 +44,7 @@ ${BDIR}/${NAME}: ${OBJ}
 	$(CXX) -o $@ ${OBJ} ${_CXXFLAGS}
 
 clean:
-	echo -n "Cleaning build files"
+	echo "Cleaning build files"
 	rm -r ${ODIR} ${BDIR} ${DDIR} tags
 
 run: build
