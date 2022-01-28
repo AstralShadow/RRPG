@@ -7,7 +7,7 @@ struct Point
 {
     float x;
     float y;
-
+    
     operator SDL_Point() const
     {
         SDL_Point p;

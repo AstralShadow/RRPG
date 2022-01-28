@@ -3,6 +3,7 @@
 
 #include "globals.hpp"
 #include "Texture.hpp"
+#include "Stickman.hpp"
 #include <vector>
 #include <string>
 #include <memory>
@@ -29,6 +30,7 @@ private:
     SDL_Window* _window;
     SDL_Renderer* _renderer;
     std::vector<Texture> _textures;
+    Stickman _fighter;
 
     int init_sdl();
     int init_sdl_image();

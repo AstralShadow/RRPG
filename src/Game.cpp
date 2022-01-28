@@ -9,8 +9,11 @@
 Game::Game() :
     _running(false),
     _window(nullptr),
-    _renderer(nullptr)
-{}
+    _renderer(nullptr),
+    _fighter(this)
+{
+    
+}
 
 Game::~Game()
 {
@@ -67,12 +70,18 @@ void Game::poll_events()
 
 void Game::tick(duration_t progress)
 {
-
+    _fighter.tick(progress);
 }
 
 void Game::render()
 {
+    SDL_SetRenderDrawColor(_renderer,
+                           255, 255, 255, 255);
+    SDL_RenderClear(_renderer);
 
+    _fighter.render(_renderer);
+
+    SDL_RenderPresent(_renderer);
 }
 
 void Game::stop()
