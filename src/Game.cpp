@@ -14,6 +14,7 @@ Game::Game() :
 
 Game::~Game()
 {
+    clear_textures();
     IMG_Quit();
     SDL_Quit();
 }
