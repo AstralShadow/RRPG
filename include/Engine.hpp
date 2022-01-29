@@ -1,9 +1,8 @@
-#ifndef GAME_HPP
-#define GAME_HPP
+#ifndef ENGINE_HPP
+#define ENGINE_HPP
 
 #include "globals.hpp"
 #include "Texture.hpp"
-#include "Stickman.hpp"
 #include <vector>
 #include <string>
 #include <memory>
@@ -12,13 +11,14 @@ class SDL_Window;
 class SDL_Renderer;
 
 
-class Game
+class Engine
 {
 public:
-    Game();
-    ~Game();
+    Engine();
+    ~Engine();
 
     int init();
+    int load(std::string assets_dir);
 
     void run();
     void stop();
@@ -30,7 +30,6 @@ private:
     SDL_Window* _window;
     SDL_Renderer* _renderer;
     std::vector<Texture> _textures;
-    Stickman _fighter;
 
     int init_sdl();
     int init_sdl_image();

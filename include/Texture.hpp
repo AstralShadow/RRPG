@@ -4,14 +4,14 @@
 #include <string>
 
 using std::string;
-class Game;
+class Engine;
 class SDL_Texture;
 class SDL_Renderer;
 
 
 class Texture
 {
-friend Game;
+friend Engine;
 
 public:
     Texture(const Texture&) = default;

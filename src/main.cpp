@@ -1,12 +1,14 @@
-#include "Game.hpp"
+#include "Engine.hpp"
 
-static Game game;
+static Engine engine;
 
 int main(int, char**)
 {
-    if(game.init()) return -1;
+    if(engine.init()) return -1;
 
-    game.run();
+    engine.load("assets/");
+
+    engine.run();
 
     return 0;
 }

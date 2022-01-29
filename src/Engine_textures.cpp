@@ -1,11 +1,11 @@
-#include "Game.hpp"
+#include "Engine.hpp"
 #include "Texture.hpp"
 #include <string>
 #include <algorithm>
 #include <stdexcept>
 
 
-Texture Game::get_texture(std::string uri)
+Texture Engine::get_texture(std::string uri)
 {
     auto texture_itr = 
         std::find_if(_textures.begin(), _textures.end(),
@@ -20,7 +20,7 @@ Texture Game::get_texture(std::string uri)
     return *texture_itr;
 }
 
-Texture Game::load_texture(std::string uri)
+Texture Engine::load_texture(std::string uri)
 {
     Texture texture;
     int error = texture.load(_renderer, uri);
@@ -33,7 +33,7 @@ Texture Game::load_texture(std::string uri)
     return texture;
 }
 
-void Game::clear_textures()
+void Engine::clear_textures()
 {
     for(auto texture : _textures)
         texture.clear();

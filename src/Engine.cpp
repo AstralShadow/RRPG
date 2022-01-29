@@ -1,4 +1,4 @@
-#include "Game.hpp"
+#include "Engine.hpp"
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -6,23 +6,22 @@
 #include <SDL2/SDL_image.h>
 
 
-Game::Game() :
+Engine::Engine() :
     _running(false),
     _window(nullptr),
-    _renderer(nullptr),
-    _fighter(this)
+    _renderer(nullptr)
 {
     
 }
 
-Game::~Game()
+Engine::~Engine()
 {
     clear_textures();
     IMG_Quit();
     SDL_Quit();
 }
 
-void Game::run()
+void Engine::run()
 {
     using std::chrono::steady_clock;
     using std::chrono::duration_cast;
@@ -54,7 +53,7 @@ void Game::run()
     }
 }
 
-void Game::poll_events()
+void Engine::poll_events()
 {
     SDL_Event event;
     while(SDL_PollEvent(&event))
@@ -68,23 +67,23 @@ void Game::poll_events()
     }
 }
 
-void Game::tick(duration_t progress)
+void Engine::tick(duration_t progress)
 {
-    _fighter.tick(progress);
+
 }
 
-void Game::render()
+void Engine::render()
 {
     SDL_SetRenderDrawColor(_renderer,
                            255, 255, 255, 255);
     SDL_RenderClear(_renderer);
 
-    _fighter.render(_renderer);
+
 
     SDL_RenderPresent(_renderer);
 }
 
-void Game::stop()
+void Engine::stop()
 {
     #if PRINT_EXIT_MESSAGE 
         std::cout << "Stopping the game." << std::endl;

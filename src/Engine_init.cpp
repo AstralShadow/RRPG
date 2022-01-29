@@ -1,10 +1,10 @@
-#include "Game.hpp"
+#include "Engine.hpp"
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
 
-int Game::init()
+int Engine::init()
 {
     return init_sdl()
         || init_sdl_image()
@@ -12,7 +12,7 @@ int Game::init()
         || init_renderer();
 }
 
-int Game::init_sdl()
+int Engine::init_sdl()
 {
     if(!SDL_Init(SDL_INIT_VIDEO))
         return 0;
@@ -22,7 +22,7 @@ int Game::init_sdl()
     return 1;
 }
 
-int Game::init_sdl_image()
+int Engine::init_sdl_image()
 {
     if((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
         return 0;
@@ -32,7 +32,7 @@ int Game::init_sdl_image()
     return 1;
 }
 
-int Game::init_window()
+int Engine::init_window()
 {
     _window = SDL_CreateWindow(
         WINDOW_TITLE,
@@ -48,7 +48,7 @@ int Game::init_window()
     return 1;
 }
 
-int Game::init_renderer()
+int Engine::init_renderer()
 {
     _renderer = SDL_CreateRenderer(
         _window, -1,
