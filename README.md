@@ -1,10 +1,5 @@
-# No longer a billiard-like game
-These guys pulled quite the interesting theme.
-You control the environment, not the character.
-
-And in billiard, the environment... kinda follows
-physics strictly, so if i were to change that it won't
-be billiard anymore.
+# An RPG game.
+With an R at the beginning. ;)
 
 Making this for the SDL Enthusiasts 1K members Game Jam.
 

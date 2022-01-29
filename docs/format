@@ -1,0 +1,44 @@
+#main
+    :load_map kitchen
+    :load_character Гошо at 4 4
+    :load_character Петя at 4 5
+
+    > Гошо
+    Добро утро!
+
+    > Петя
+    Добро утро!
+
+    > Петя
+    Какво да приготвя за обяд?
+
+    > Гошо
+    :choice
+        Хляб
+        :set petia_cooking_bread
+    :choice
+        :set petia_cooking_soup 
+        Супа
+    :choice
+        Не съм гладен
+    :end
+
+    > Петя
+    :if petia_cooking_bread
+        Една питка, запомнено.
+        :set petia_cooking
+    :else_if petia_cooking_soup
+        Супа, разбира се.
+        :set petia_cooking
+    :else_if !cooking
+        Ама нищо не си ял днес!
+        > Гошо
+        Съседите ме черпиха мусака.
+    :end
+
+    > Гошо
+    :move 5 5
+
+#when petia_cooking
+    > Петя
+    :move 5 5

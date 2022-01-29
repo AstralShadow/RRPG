@@ -1,0 +1,10 @@
+#map
+    :name kitchen
+    :size 10 10
+    :tileset kitchen k
+    :tileset house h
+
+// comment;
+// format: [prefix] [x] . [y]
+// we put all y lines of x tiles
+k<x>.<y> h<x>.<y> <x>.<y>
