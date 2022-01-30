@@ -12,11 +12,15 @@ using std::vector;
 using std::map;
 
 typedef string StoryName;
+typedef string Flag;
 
 struct Story
 {
     id_t id;
     StoryName name;
+    //vector<Action> actions;
+    vector<Flag> flags;
+    map<Flag, StoryName> events;
 };
 
 #endif
