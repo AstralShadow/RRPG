@@ -10,6 +10,11 @@
 using std::string;
 using std::vector;
 using std::map;
+using std::pair;
+
+typedef string Flag;
+typedef string StoryName;
+
 
 class StoryParser
 {
@@ -26,10 +31,13 @@ public:
 private:
     string _root;
     map<string, Character> _characters;
-    map<string, Story> _stories;
+    map<StoryName, Story> _stories;
 
+    map<pair<StoryName, Flag>, vector<shared_ptr<Action>>>
+        _unlinked_events;
     string _speaker;
     string _target;
+    vector<shared_ptr<Action>> *_target_actions;
 
     enum {
         state_none,

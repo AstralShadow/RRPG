@@ -113,7 +113,7 @@ parse_story_command(string& line,
     {
         auto flag = new SetFlag;
         flag->flag = args[1];
-        _stories[_target].actions.emplace_back(flag);
+        _target_actions->emplace_back(flag);
         return;
     }
 
@@ -123,7 +123,7 @@ parse_story_command(string& line,
 void StoryParser::parse_state_block(string block)
 {
     _state = state_none;
-    auto args = explode(' ', block, 1);
+    auto args = explode(' ', block);
 
     if(args[0] == "character")
     {
@@ -132,7 +132,7 @@ void StoryParser::parse_state_block(string block)
                 ("Can not load unnamed character");
 
         auto id = _stories.size();
-        string name = args[1];
+        string name = explode(' ', block, 1)[1];
 
         auto &character = _characters[name];
         character.name = name;
@@ -144,7 +144,7 @@ void StoryParser::parse_state_block(string block)
         return;
     }
 
-    if(args[0] == "story")
+    if(args[0] == "story" && args.size() == 2)
     {
         if(args.size() < 2)
             throw std::runtime_error
@@ -158,8 +158,20 @@ void StoryParser::parse_state_block(string block)
         story.name = name;
 
         _target = name;
+        _target_actions = &(story.actions);
         _state = state_story;
 
+        return;
+    }
+
+    if(args[0] == "when" && args.size() == 3)
+    {
+        auto story= args[1];
+        auto flag = args[2];
+        
+        _target = story;
+        _target_actions =& _stories[story].events[flag];
+        _state = state_story;
         return;
     }
 
@@ -184,5 +196,5 @@ void StoryParser::store_text(string text)
     auto speech = new Speech;
     speech->character = _speaker;
     speech->text = text;
-    _stories[_target].actions.emplace_back(speech);
+    _target_actions->emplace_back(speech);
 }
