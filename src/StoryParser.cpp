@@ -6,6 +6,8 @@
 #define ENABLE_PRINTING PRINT_PARSE_LOG
 #include "print.hpp"
 #include "str_utils.hpp"
+#include "Character.hpp"
+#include "Story.hpp"
 #include <stdexcept>
 
 using std::string;
@@ -105,15 +107,28 @@ parse_character_command(string& line,
 
 void StoryParser::parse_state_block(string block)
 {
-    if(block == "character")
+    finish_state();
+    auto args = explode(' ', block, 1);
+
+    if(args[0] == "character")
     {
-        finish_state();
+        if(args.size() < 2)
+            throw std::runtime_error
+                ("Can not load unnamed character");
+
+        auto id = _stories.size();
+        string name = args[1];
+
+        auto &character = _characters[name];
+        character.name = name;
+        character.id = id;
+        
+        _target.character = &character;
         _state = state_character;
-        _target.character = new Character();
+        
         return;
     }
 
-    auto args = explode(' ', block, 1);
     if(args[0] == "story")
     {
         if(args.size() < 2)
@@ -122,9 +137,11 @@ void StoryParser::parse_state_block(string block)
         
         string name = args[1];
         auto id = _stories.size();
-        Story& story = _stories[name];
+
+        auto& story = _stories[name];
         story.id = id;
         story.name = name;
+
         _target.story = &story;
         _state = state_story;
 
@@ -143,17 +160,8 @@ void StoryParser::finish_state()
 
         case state_character:
         {
-            if(_target.character->name == "")
-                throw std::runtime_error
-                    ("Can not load unnamed character.");
-
             string name = _target.character->name;
             print("Loaded character ", name);
-
-            auto id = _characters.size();
-            _characters[name] = *_target.character;
-            _characters[name].id = id;
-            delete _target.character;
             break;
         }
         
@@ -161,7 +169,6 @@ void StoryParser::finish_state()
         {
             string name = _target.story->name;
             print("Loaded story ", name);
-
             break;
         }
     }

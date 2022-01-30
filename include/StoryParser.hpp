@@ -1,8 +1,6 @@
 #ifndef STORYPARSER_HPP
 #define STORYPARSER_HPP
 
-#include "Character.hpp"
-#include "Story.hpp"
 #include <string>
 #include <vector>
 #include <map>
@@ -11,6 +9,8 @@ using std::string;
 using std::vector;
 using std::map;
 
+class Story;
+class Character;
 
 class StoryParser
 {
