@@ -1,7 +1,7 @@
 #ifndef STORY_HPP
 #define STORY_HPP
 
-#include "Action.hpp"
+#include "Actions.hpp"
 #include "globals.hpp"
 #include <string>
 #include <vector>
@@ -18,7 +18,7 @@ struct Story
 {
     id_t id;
     StoryName name;
-    //vector<Action> actions;
+    vector<Action> actions;
     vector<Flag> flags;
     map<Flag, StoryName> events;
 };

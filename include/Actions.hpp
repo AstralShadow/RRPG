@@ -1,5 +1,5 @@
-#ifndef ACTION_HPP
-#define ACTION_HPP
+#ifndef ACTIONS_HPP
+#define ACTIONS_HPP
 
 #include "globals.hpp"
 #include <vector>
@@ -33,22 +33,14 @@ struct Condition
 
 struct Command
 {
-    Command(){}
-    ~Command(){}
-
     enum {
         map,
         move,
         spawn
     } type;
     
-    union CommandData
-    {
-        CommandData(){}
-        ~CommandData(){}
-        string name;
-        SDL_Point pos;
-    } data;
+    string name;
+    SDL_Point pos;
 };
 
 class Action
