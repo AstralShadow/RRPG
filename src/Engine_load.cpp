@@ -1,35 +1,18 @@
 #include "Engine.hpp"
+#include "StoryParser.hpp"
+#include "globals.hpp"
+#define ENABLE_PRINTING PRINT_LOAD_LOG
+#include "print.hpp"
 
-#if PRINT_LOAD_LOG
-#include <iostream>
-#endif
+using std::string;
 
-namespace
+
+void Engine::load(string assets_dir)
 {
-#if PRINT_LOAD_LOG
-    template<typename... T>
-    void print(T...);
+    string manifest_uri = assets_dir + "manifest";
+    print("Parsing assets manifest file ", manifest_uri);
+    StoryParser parser;
 
-    template<typename T, typename... R>
-    void print(T text, R... other)
-    {
-            std::cout << text;
-            print(other...);
-    }
+    parser.parse_file(manifest_uri);
 
-    template<> void print() {
-        std::cout << std::endl;
-    }
-#else
-    template<typename... R>
-    void print(R...)
-    { }
-#endif
-}
-
-int Engine::load(std::string assets_dir)
-{
-    print("Loading assets from ", assets_dir);
-
-    return 0;
 }

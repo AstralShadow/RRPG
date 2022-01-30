@@ -7,6 +7,8 @@
 #include <string>
 #include <memory>
 
+using std::string;
+
 class SDL_Window;
 class SDL_Renderer;
 
@@ -18,12 +20,12 @@ public:
     ~Engine();
 
     int init();
-    int load(std::string assets_dir);
+    void load(string assets_dir);
 
     void run();
     void stop();
 
-    Texture get_texture(std::string uri);
+    Texture get_texture(string uri);
 
 private:
     bool _running;
@@ -36,7 +38,7 @@ private:
     int init_window();
     int init_renderer();
 
-    Texture load_texture(std::string uri);
+    Texture load_texture(string uri);
     void clear_textures();
 
     void poll_events();
