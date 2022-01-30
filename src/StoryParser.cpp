@@ -14,6 +14,7 @@
 
 using std::string;
 using std::make_shared;
+using std::stoi;
 
 
 StoryParser::StoryParser(string root) :
@@ -114,6 +115,17 @@ parse_story_command(string& line,
         auto flag = new SetFlag;
         flag->flag = args[1];
         _target_actions->emplace_back(flag);
+        return;
+    }
+
+    if(args[0] == "move" && args.size() == 3)
+    {
+        auto cmd = new Command;
+        cmd->command = Command::move;
+        cmd->name = _speaker;
+        cmd->pos.x = stoi(args[1]);
+        cmd->pos.y = stoi(args[2]);
+        _target_actions->emplace_back(cmd);
         return;
     }
 
