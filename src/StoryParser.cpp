@@ -23,13 +23,8 @@ StoryParser::StoryParser(string root) :
     print("Assets root: ", root);
 }
 
-StoryParser::~StoryParser()
-{
-    finish_state();
-}
 
-
-void StoryParser::parse_file(string uri, bool base)
+void StoryParser::parse_file(string uri)
 {
     print("Parsing: ", uri);
     std::ifstream file(_root + uri, std::ios::in);
@@ -73,10 +68,7 @@ void StoryParser::parse_file(string uri, bool base)
         store_text(line);
     }
 
-    if(base)
-    {
-        finish_state();
-    }
+    _state = state_none;
 }
 
 void StoryParser::parse_command(string line)
@@ -84,12 +76,19 @@ void StoryParser::parse_command(string line)
     auto args = explode(' ', line);
     if(args[0] == "include")
     {
-        parse_file(args[1], false);
+        parse_file(args[1]);
         return;
     }
 
-    if(_state == state_character){
+    if(_state == state_character)
+    {
         parse_character_command(line, args);
+        return;
+    }
+
+    if(_state == state_story)
+    {
+        parse_story_command(line, args);
         return;
     }
 
@@ -106,9 +105,24 @@ parse_character_command(string& line,
         print("Unknown command: ", line);
 }
 
+void StoryParser::
+parse_story_command(string& line,
+                    vector<string>& args)
+{
+    if(args[0] == "set" && args.size() == 2)
+    {
+        auto flag = new SetFlag;
+        flag->flag = args[1];
+        _stories[_target].actions.emplace_back(flag);
+        return;
+    }
+
+    print("Unknown command: ", line);
+}
+
 void StoryParser::parse_state_block(string block)
 {
-    finish_state();
+    _state = state_none;
     auto args = explode(' ', block, 1);
 
     if(args[0] == "character")
@@ -152,40 +166,23 @@ void StoryParser::parse_state_block(string block)
     print("Unknown block #", block);
 }
 
-void StoryParser::finish_state()
-{
-    switch(_state)
-    {
-        case state_none:
-            break;
-
-        case state_character:
-        {
-            print("Loaded character ", _target);
-            break;
-        }
-        
-        case state_story:
-        {
-            print("Loaded story ", _target);
-            break;
-        }
-    }
-
-    _state = state_none;
-}
-
 void StoryParser::set_speaker(string name)
 {
+    if(name != "")
+    {
+        auto entity = _characters.find(name);
+        if(entity == _characters.end())
+            print("WARNING: Character ", name,
+                " is not loaded, but used in story ",
+                _stories[_target].name);
+    }
     _speaker = name;
 }
 
 void StoryParser::store_text(string text)
 {
-    print(text);
     auto speech = new Speech;
     speech->character = _speaker;
     speech->text = text;
-    _stories[_target].actions
-        .push_back(shared_ptr<Speech>(speech));
+    _stories[_target].actions.emplace_back(speech);
 }

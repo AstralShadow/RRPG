@@ -10,8 +10,8 @@ using std::string;
 using std::vector;
 using std::shared_ptr;
 
-
 typedef string Flag;
+
 
 class Action
 {
@@ -49,6 +49,14 @@ struct Choice : public Action
     string character;
     std::pair<string, vector<shared_ptr<Action>>> options;
     virtual Type type() { return action_choice; }
+};
+
+struct SetFlag : public Action
+{
+    SetFlag() = default;
+    Flag flag;
+
+    virtual Type type() { return action_flag; }
 };
 
 struct Condition : public Action
