@@ -37,7 +37,12 @@ vector<string> explode(char delimeter,
         itr = find(start, input.end(), delimeter);
         result.emplace_back(start, itr);
         start = itr + 1;
-    } 
+        limit--;
+        if(limit == 0) break;
+    }
+
+    if(itr != input.end())
+        result.emplace_back(start, input.end());
 
     return result;
 }
