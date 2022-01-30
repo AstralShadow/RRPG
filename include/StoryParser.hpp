@@ -29,7 +29,7 @@ public:
 
 private:
     string _root;
-    vector<Character> _characters;
+    map<string, Character> _characters;
     map<string, Story> _stories;
 
     union {
@@ -37,7 +37,7 @@ private:
         Story* story;
     } _target;
 
-    enum State{
+    enum {
         state_none,
         state_character,
         state_story

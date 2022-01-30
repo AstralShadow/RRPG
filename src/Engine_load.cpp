@@ -9,7 +9,7 @@ using std::string;
 
 void Engine::load(string assets_dir)
 {
-    print("Assets dir ", assets_dir);
+    print("Parsing story.");
     StoryParser parser(assets_dir);
 
     parser.parse_file("manifest");

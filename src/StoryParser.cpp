@@ -14,7 +14,9 @@ using std::string;
 StoryParser::StoryParser(string root) :
     _root(root),
     _state(state_none)
-{ }
+{
+    print("Assets root: ", root);
+}
 
 StoryParser::~StoryParser()
 {
@@ -24,7 +26,7 @@ StoryParser::~StoryParser()
 
 void StoryParser::parse_file(string uri, bool base)
 {
-    print("Parsing asset file: ", uri);
+    print("Parsing: ", uri);
     std::ifstream file(_root + uri, std::ios::in);
     std::array<char, 256> buff;
     while(file.getline(&buff[0], 255))
@@ -32,6 +34,9 @@ void StoryParser::parse_file(string uri, bool base)
         string line(&buff[0]);
         //print(uri, ": ", line);
         line = trim(line);
+
+        if(!line.size())
+            continue;
 
         if(line[0] == ';')
             continue;
@@ -45,6 +50,13 @@ void StoryParser::parse_file(string uri, bool base)
         {
             parse_command(line.substr(1));
             continue;
+        }
+
+        if(_state != state_story)
+        {
+            print("Can not parse outside story mode:");
+            print(line);
+            return;
         }
 
         if(line[0] == '>')
@@ -101,10 +113,21 @@ void StoryParser::parse_state_block(string block)
         return;
     }
 
-    auto args = explode(' ', block);
+    auto args = explode(' ', block, 1);
     if(args[0] == "story")
     {
+        if(args.size() < 2)
+            throw std::runtime_error
+                ("Can not load unnamed story.");
         
+        string name = args[1];
+        auto id = _stories.size();
+        Story& story = _stories[name];
+        story.id = id;
+        story.name = name;
+        _target.story = &story;
+        _state = state_story;
+
         return;
     }
 
@@ -120,25 +143,24 @@ void StoryParser::finish_state()
 
         case state_character:
         {
-            print("Loaded character '",
-                    _target.character->name, '\'');
+            if(_target.character->name == "")
+                throw std::runtime_error
+                    ("Can not load unnamed character.");
 
-            _characters.push_back(*_target.character);
+            string name = _target.character->name;
+            print("Loaded character ", name);
+
+            auto id = _characters.size();
+            _characters[name] = *_target.character;
+            _characters[name].id = id;
             delete _target.character;
             break;
         }
         
         case state_story:
         {
-            if(_target.story->name == "")
-            {
-                print("Deleting unnamed story block.");
-                delete _target.story;
-                break;
-            }
-            
-            print("Loaded story ", _target.story->name);
-            _target.story = nullptr;
+            string name = _target.story->name;
+            print("Loaded story ", name);
 
             break;
         }
@@ -149,10 +171,10 @@ void StoryParser::finish_state()
 
 void StoryParser::set_speaker(string name)
 {
-
+    print("Speaker: ", name);
 }
 
 void StoryParser::store_text(string text)
 {
-
+    print("Text: ", text);
 }
