@@ -31,11 +31,9 @@ private:
     string _root;
     map<string, Character> _characters;
     map<string, Story> _stories;
+    string _speaker;
 
-    union {
-        Character* character;
-        Story* story;
-    } _target;
+    string _target;
 
     enum {
         state_none,

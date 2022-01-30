@@ -2,15 +2,18 @@
 #include <fstream>
 #include <cstring>
 #include <array>
+#include <memory>
 #include "globals.hpp"
 #define ENABLE_PRINTING PRINT_PARSE_LOG
 #include "print.hpp"
 #include "str_utils.hpp"
 #include "Character.hpp"
 #include "Story.hpp"
+#include "Actions.hpp"
 #include <stdexcept>
 
 using std::string;
+using std::make_shared;
 
 
 StoryParser::StoryParser(string root) :
@@ -63,7 +66,7 @@ void StoryParser::parse_file(string uri, bool base)
 
         if(line[0] == '>')
         {
-            set_speaker(line.substr(1));
+            set_speaker(ltrim(line.substr(1)));
             continue;
         }
 
@@ -97,10 +100,8 @@ void StoryParser::
 parse_character_command(string& line,
                         vector<string>& args)
 {
-    if(args[0] == "name")
-        _target.character->name = args[1];
-    else if(args[0] == "sprite")
-        _target.character->sprite = args[1];
+    if(args[0] == "sprite")
+        _characters[_target].sprite = args[1];
     else
         print("Unknown command: ", line);
 }
@@ -123,7 +124,7 @@ void StoryParser::parse_state_block(string block)
         character.name = name;
         character.id = id;
         
-        _target.character = &character;
+        _target = name;
         _state = state_character;
         
         return;
@@ -142,7 +143,7 @@ void StoryParser::parse_state_block(string block)
         story.id = id;
         story.name = name;
 
-        _target.story = &story;
+        _target = name;
         _state = state_story;
 
         return;
@@ -160,15 +161,13 @@ void StoryParser::finish_state()
 
         case state_character:
         {
-            string name = _target.character->name;
-            print("Loaded character ", name);
+            print("Loaded character ", _target);
             break;
         }
         
         case state_story:
         {
-            string name = _target.story->name;
-            print("Loaded story ", name);
+            print("Loaded story ", _target);
             break;
         }
     }
@@ -178,10 +177,15 @@ void StoryParser::finish_state()
 
 void StoryParser::set_speaker(string name)
 {
-    print("Speaker: ", name);
+    _speaker = name;
 }
 
 void StoryParser::store_text(string text)
 {
-    print("Text: ", text);
+    print(text);
+    auto speech = new Speech;
+    speech->character = _speaker;
+    speech->text = text;
+    _stories[_target].actions
+        .push_back(shared_ptr<Speech>(speech));
 }
