@@ -114,7 +114,7 @@ parse_story_command(string& line,
     {
         auto flag = new SetFlag;
         flag->flag = args[1];
-        _target_actions->emplace_back(flag);
+        _context_stack.top()->emplace_back(flag);
         return;
     }
 
@@ -125,7 +125,7 @@ parse_story_command(string& line,
         cmd->name = _speaker;
         cmd->pos.x = stoi(args[1]);
         cmd->pos.y = stoi(args[2]);
-        _target_actions->emplace_back(cmd);
+        _context_stack.top()->emplace_back(cmd);
         return;
     }
 
@@ -136,6 +136,13 @@ void StoryParser::parse_state_block(string block)
 {
     _state = state_none;
     auto args = explode(' ', block);
+
+    if(_context_stack.size() > 1)
+        throw std::runtime_error
+            ("Can not change state with" 
+            " non-empty context stack "
+            "(aka finish your logic blocks and"
+            "then do other stories/events).");
 
     if(args[0] == "character")
     {
@@ -170,7 +177,8 @@ void StoryParser::parse_state_block(string block)
         story.name = name;
 
         _target = name;
-        _target_actions = &(story.actions);
+        _context_stack.empty();
+        _context_stack.push(&(story.actions));
         _state = state_story;
 
         return;
@@ -182,7 +190,9 @@ void StoryParser::parse_state_block(string block)
         auto flag = args[2];
         
         _target = story;
-        _target_actions =& _stories[story].events[flag];
+        _context_stack.empty();
+        _context_stack
+            .push(&(_stories[story].events[flag]));
         _state = state_story;
         return;
     }
@@ -208,5 +218,5 @@ void StoryParser::store_text(string text)
     auto speech = new Speech;
     speech->character = _speaker;
     speech->text = text;
-    _target_actions->emplace_back(speech);
+    _context_stack.top()->emplace_back(speech);
 }

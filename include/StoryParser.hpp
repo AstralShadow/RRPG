@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <stack>
 #include "Story.hpp"
 #include "Character.hpp"
 
@@ -11,6 +12,7 @@ using std::string;
 using std::vector;
 using std::map;
 using std::pair;
+using std::stack;
 
 typedef string Flag;
 typedef string StoryName;
@@ -37,7 +39,8 @@ private:
         _unlinked_events;
     string _speaker;
     string _target;
-    vector<shared_ptr<Action>> *_target_actions;
+    typedef vector<shared_ptr<Action>> ActionList;
+    stack<ActionList*> _context_stack;
 
     enum {
         state_none,
