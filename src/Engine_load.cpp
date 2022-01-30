@@ -9,10 +9,9 @@ using std::string;
 
 void Engine::load(string assets_dir)
 {
-    string manifest_uri = assets_dir + "manifest";
-    print("Parsing assets manifest file ", manifest_uri);
-    StoryParser parser;
+    print("Assets dir ", assets_dir);
+    StoryParser parser(assets_dir);
 
-    parser.parse_file(manifest_uri);
+    parser.parse_file("manifest");
 
 }
