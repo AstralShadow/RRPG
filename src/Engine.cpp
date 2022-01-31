@@ -4,6 +4,7 @@
 #include <thread>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 
 
 Engine::Engine() :
@@ -17,6 +18,7 @@ Engine::Engine() :
 Engine::~Engine()
 {
     clear_textures();
+    TTF_Quit();
     IMG_Quit();
     SDL_Quit();
 }
@@ -96,8 +98,7 @@ void Engine::tick(duration_t progress)
 
 void Engine::render()
 {
-    SDL_SetRenderDrawColor(_renderer,
-                           255, 255, 255, 255);
+    SDL_SetRenderDrawColor(_renderer, 0, 0, 0, 0);
     SDL_RenderClear(_renderer);
 
     if(_scenes.find(_mode) != _scenes.end())

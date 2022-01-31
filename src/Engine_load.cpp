@@ -3,6 +3,7 @@
 #include "globals.hpp"
 #define ENABLE_PRINTING PRINT_LOAD_LOG
 #include "print.hpp"
+#include "FontManager.hpp"
 #include <chrono>
 #include <thread>
 
@@ -19,6 +20,8 @@ void Engine::load(string assets_dir)
     
     _story = load_story(assets_dir);
     _story.assets_dir = assets_dir;
+
+    load_fonts();
 
 #if LOAD_TEXTURES_CACHE
     cache_textures();
@@ -46,6 +49,17 @@ StoryData Engine::load_story(string assets_dir)
     StoryParser parser(assets_dir);
     parser.parse_file("manifest");
     return parser.get_data();
+}
+
+void Engine::load_fonts()
+{
+    print("Loading fonts.");
+    auto font_root = _story.assets_dir + "fonts/";
+
+    int font_sizes[] = PRELOAD_FONT_SIZES;
+    for(int size : font_sizes)
+        FontManager::get_font
+            (font_root + FONT_NAME, size);
 }
 
 void Engine::cache_textures()

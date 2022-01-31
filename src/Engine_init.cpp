@@ -2,12 +2,14 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 
 
 int Engine::init()
 {
     return init_sdl()
         || init_sdl_image()
+        || init_sdl_ttf()
         || init_window()
         || init_renderer();
 }
@@ -29,6 +31,16 @@ int Engine::init_sdl_image()
 
     std::cout << "IMG_Init error: "
         << IMG_GetError() << std::endl;
+    return 1;
+}
+
+int Engine::init_sdl_ttf()
+{
+    if(!TTF_Init())
+        return 0;
+
+    std::cout << "TTF_Init error: "
+        << TTF_GetError() << std::endl;
     return 1;
 }
 

@@ -37,6 +37,7 @@ public:
 
     void run();
     void stop();
+    void update_screen() { render(); }
 
     Texture get_texture(string uri);
 
@@ -53,10 +54,12 @@ private:
 
     int init_sdl();
     int init_sdl_image();
+    int init_sdl_ttf();
     int init_window();
     int init_renderer();
 
     StoryData load_story(string assets_dir);
+    void load_fonts();
     void cache_textures();
 
     Texture load_texture(string uri);

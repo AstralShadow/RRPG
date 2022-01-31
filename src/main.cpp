@@ -4,7 +4,6 @@
 //#include "CreditsScreen.hpp"
 //#include "GameScene.hpp"
 #include <memory>
-#include <thread>
 
 namespace {
     Engine engine;
@@ -16,10 +15,10 @@ int main(int, char**)
 {
     if(engine.init()) return -1;
 
-    std::thread game_thread(&Engine::run, &engine);
 
     engine.set_scene(EngineMode::loading, std::make_shared
                      <LoadingScreen>(&engine, "assets/"));
+    engine.update_screen();
     /*
     engine.set_scene(EngineMode::menu, std::make_shared
                      <MainMenu>(&engine));
@@ -30,8 +29,9 @@ int main(int, char**)
     */
 
     engine.load("assets/");
+    engine.run();
     
-    game_thread.join();
+
 
     return 0;
 }
