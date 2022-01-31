@@ -29,13 +29,21 @@
     :if petia_cooking_bread
         Една питка, запомнено.
         :set petia_cooking
-    :else_if petia_cooking_soup
+    :end
+    :if petia_cooking_soup
         Супа, разбира се.
         :set petia_cooking
-    :else_if !cooking
+    :end
+    :if !cooking
         Ама нищо не си ял днес!
         > Гошо
         Съседите ме черпиха мусака.
+    :end
+
+    :if cooking
+        ;stuff
+    :else
+        ;stuff
     :end
 
     > Гошо

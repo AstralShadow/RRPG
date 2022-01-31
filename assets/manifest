@@ -1,3 +1,4 @@
 :include characters/Gosho
+:include characters/Petia
 :include tilesets/example
 :include main

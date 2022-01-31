@@ -27,7 +27,7 @@ StoryParser::StoryParser(string root) :
 
 void StoryParser::parse_file(string uri)
 {
-    print("Parsing file ", uri);
+    print(" uri: ", uri);
     std::ifstream file(_root + uri, std::ios::in);
     std::array<char, 256> buff;
     while(file.getline(&buff[0], 255))
@@ -171,6 +171,37 @@ parse_story_command(string& line,
         return;
     }
 
+    if(args[0] == "if" && args.size() == 2)
+    {
+        Flag flag(args[1]);
+        auto block = new Condition;
+        block->flag = flag;
+        
+        _context_stack.top()->emplace_back(block);
+        _context_stack.push(&block->actions);
+        return;
+    }
+
+    if(args[0] == "else" && args.size() == 1)
+    {
+        auto prev_list = _context_stack.top();
+        _context_stack.pop();
+        auto last_action = _context_stack.top()->back();
+        auto last_type = last_action->type();
+        if(last_type != Action::action_condition)
+            throw std::runtime_error
+                ("You can call :else only after :if");
+        
+        auto condition = std::static_pointer_cast
+            <Condition>(last_action);
+        if(&(condition->alternative) == prev_list)
+            throw std::runtime_error
+                ("Only one else block per :if allowed");
+
+        _context_stack.push(&(condition->alternative));
+        return;
+    }
+
     if(args[0] == "end" && args.size() == 1)
     {
         _context_stack.pop();
@@ -282,12 +313,6 @@ void StoryParser::parse_state_block(string block)
 
 void StoryParser::set_speaker(string name)
 {
-    if(_context_stack.size() > 1)
-        throw std::runtime_error
-            ("Can not change speaker within "
-            "logic blocks. Instead, you can "
-            "set a flag and trigger an event.");
-
     if(name != "")
     {
         auto entity = _characters.find(name);
