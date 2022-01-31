@@ -1,5 +1,5 @@
-#ifndef CHARACTER_HPP
-#define CHARACTER_HPP
+#ifndef ENTITY_HPP
+#define ENTITY_HPP
 
 #include "globals.hpp"
 #include <string>
@@ -9,7 +9,7 @@ using std::string;
 using std::vector;
 
 
-struct Character
+struct Entity
 {
     id_t id;
     string name;

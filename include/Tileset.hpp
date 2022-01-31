@@ -14,7 +14,7 @@ struct Tileset
 {
     id_t id;
     string name;
-    string sprite;
+    string texture;
     SDL_Point size;
 };
 

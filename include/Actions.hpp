@@ -40,7 +40,7 @@ protected:
 struct Speech : public Action
 {
     Speech() = default;
-    string character;
+    string entity;
     string text; 
     virtual Type type() { return action_speech; }
 };
@@ -48,7 +48,7 @@ struct Speech : public Action
 struct Choice : public Action
 {
     Choice() = default;
-    string character;
+    string entity;
     map<string, vector<shared_ptr<Action>>> options;
     virtual Type type() { return action_choice; }
 };

@@ -6,10 +6,6 @@
 #include <vector>
 #include <map>
 #include <stack>
-#include "Story.hpp"
-#include "Character.hpp"
-#include "Tileset.hpp"
-#include "Map.hpp"
 
 using std::string;
 using std::vector;
@@ -34,7 +30,8 @@ public:
 
 private:
     string _root;
-    map<string, Character> _characters;
+    map<string, Sprite> _sprites;
+    map<string, Entity> _entities;
     map<string, Tileset> _tilesets;
     map<string, Map> _maps;
     map<StoryName, Story> _stories;
@@ -48,25 +45,48 @@ private:
 
     enum {
         state_none,
-        state_character,
+        state_sprite,
+        state_entity,
         state_tileset,
         state_map,
         state_story
     } _state;
 
+    
+    /* Sprite */
+    void begin_sprite_state(string& line,
+                            vector<string>& args);
+    void parse_sprite_command(string& line,
+                              vector<string>& args);
 
-    void parse_character_command(string& line,
-                                 vector<string>& args);
+    /* Entity */
+    void begin_entity_state(string& line,
+                            vector<string>& args);
+    void parse_entity_command(string& line,
+                              vector<string>& args);
+
+    /* Tileset */
+    void begin_tileset_state(string& line,
+                             vector<string>& args);
     void parse_tileset_command(string& line,
                                vector<string>& args);
-    void parse_story_command(string& line,
-                             vector<string>& args);
+    /* Map */
+    void begin_map_state(string& line,
+                         vector<string>& args);
     void parse_map_command(string& line,
                            vector<string>& args);
+    void parse_map_data(string line);
 
+    /* Story */
+    void begin_story_state(string& line,
+                           vector<string>& args);
+    void begin_event_state(string& line,
+                           vector<string>& args);
+    void parse_story_data(string line);
+    void parse_story_command(string& line,
+                             vector<string>& args);
     void set_speaker(string name);
     void store_text(string text);
-    void store_map_data(string line);
 };
 
 #endif

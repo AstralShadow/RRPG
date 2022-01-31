@@ -1,9 +1,11 @@
 #include "Engine.hpp"
 #include "StoryParser.hpp"
+#include "FontManager.hpp"
+
 #include "globals.hpp"
 #define ENABLE_PRINTING PRINT_LOAD_LOG
 #include "print.hpp"
-#include "FontManager.hpp"
+
 #include <chrono>
 #include <thread>
 
@@ -66,7 +68,7 @@ void Engine::cache_textures()
 {
     print("Caching textures.");
     for(auto pair : _story._tilesets)
-        get_texture(pair.second.sprite);
-    for(auto pair : _story._characters)
-        get_texture(pair.second.sprite);
+        get_texture(pair.second.texture);
+    for(auto pair : _story._sprites)
+        get_texture(pair.second.texture);
 }
