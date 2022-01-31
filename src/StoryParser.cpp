@@ -27,13 +27,14 @@ StoryParser::StoryParser(string root) :
 
 void StoryParser::parse_file(string uri)
 {
-    print(" uri: ", uri);
+#if PRINT_PARSE_READFILE_LOG
+    print(" readfile: ", uri);
+#endif
     std::ifstream file(_root + uri, std::ios::in);
     std::array<char, 256> buff;
     while(file.getline(&buff[0], 255))
     {
         string line(&buff[0]);
-        //print(uri, ": ", line);
         line = trim(line);
 
         if(!line.size())
@@ -53,20 +54,26 @@ void StoryParser::parse_file(string uri)
             continue;
         }
 
-        if(_state != state_story)
+        if(_state == state_story)
         {
-            print("Can not parse outside story mode:");
-            print(line);
+            if(line[0] == '>')
+            {
+                set_speaker(ltrim(line.substr(1)));
+                continue;
+            }
+
+            store_text(line);
             return;
         }
 
-        if(line[0] == '>')
+        if(_state == state_map)
         {
-            set_speaker(ltrim(line.substr(1)));
-            continue;
+            store_map_data(line);
+            return;
         }
 
-        store_text(line);
+        print("Can not parse line in current mode:");
+        print(line);
     }
 
     _state = state_none;
@@ -77,25 +84,17 @@ void StoryParser::parse_command(string line)
     auto args = explode(' ', line);
     
     if(args[0] == "include")
-    {
         parse_file(args[1]);
-    }
     else if(_state == state_character)
-    {
         parse_character_command(line, args);
-    }
     else if(_state == state_tileset)
-    {
         parse_tileset_command(line, args);
-    }
     else if(_state == state_story)
-    {
         parse_story_command(line, args);
-    }
+    else if(_state == state_map)
+        parse_map_command(line, args);
     else
-    {
         print("Unknown command: ", line);
-    }
 }
 
 void StoryParser::
@@ -213,6 +212,31 @@ parse_story_command(string& line,
     print("Unknown command: ", line);
 }
 
+void StoryParser::
+parse_map_command(string& line,
+                  vector<string>& args)
+{
+    if(args[0] == "size" && args.size() == 3)
+    {
+        _maps[_target].size.x = stoi(args[1]);
+        _maps[_target].size.y = stoi(args[2]);
+        return;
+    }
+
+    if(args[0] == "tileset" && args.size() > 1)
+    {
+        string tileset_name = args[1];
+        char key = ' ';
+        if(args.size() == 3)
+            key = args[2][0];
+
+        _maps[_target].tilesets[key] = tileset_name;
+        return;
+    }
+
+    print("Unknown command: ", line);
+}
+
 void StoryParser::parse_state_block(string block)
 {
     _state = state_none;
@@ -264,6 +288,29 @@ void StoryParser::parse_state_block(string block)
         _target = name;
         _state = state_tileset;
         print("Loading tileset ", name);
+
+        return;
+    }
+
+    if(args[0] == "map")
+    {
+        if(args.size() < 2)
+            throw std::runtime_error
+                ("Can not load unnamed map.");
+        if(args.size() > 2)
+            throw std::runtime_error
+                ("Map name can not contain spaces.");
+
+        auto id = _maps.size();
+        auto name = args[1];
+
+        auto &map = _maps[name];
+        map.id = id;
+        map.name = name;
+
+        _target = name;
+        _state = state_map;
+        print("Loading map ", name);
 
         return;
     }
@@ -322,8 +369,8 @@ void StoryParser::set_speaker(string name)
         auto entity = _characters.find(name);
         if(entity == _characters.end())
             print("WARNING: Character ", name,
-                " is not loaded, but used in story ",
-                _stories[_target].name);
+                  " is not loaded, but used in story ",
+                  _stories[_target].name);
     }
     _speaker = name;
 }
@@ -334,4 +381,10 @@ void StoryParser::store_text(string text)
     speech->character = _speaker;
     speech->text = text;
     _context_stack.top()->emplace_back(speech);
+}
+
+void StoryParser::store_map_data(string line)
+{
+    print("map data:");
+    print(line);
 }
