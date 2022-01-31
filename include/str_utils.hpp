@@ -16,4 +16,6 @@ vector<string> explode(char delimeter,
                        string input,
                        int limit = 0);
 
+vector<string> str_split(string input);
+
 #endif

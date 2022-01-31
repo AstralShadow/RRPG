@@ -46,3 +46,25 @@ vector<string> explode(char delimeter,
 
     return result;
 }
+
+vector<string> str_split(string input)
+{
+    vector<string> result;
+    input = trim(input);
+
+    auto start = input.begin();
+    for(auto itr = start; itr != input.end(); ++itr)
+    {
+        if(*itr == ' ' || *itr == '\t')
+        {
+            if(start != itr)
+                result.emplace_back(start, itr);
+            start = itr + 1;
+            continue;
+        }
+    }
+
+    result.emplace_back(start, input.end());
+
+    return result;
+}
