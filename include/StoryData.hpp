@@ -1,14 +1,15 @@
 #ifndef STORYDATA_HPP
 #define STORYDATA_HPP
+
 #include <map>
 #include <string>
+#include "Tileset.hpp"
+#include "Map.hpp"
+#include "Character.hpp"
+#include "Story.hpp"
 
 using std::map;
 using std::string;
-class Tileset;
-class Map;
-class Character;
-class Story;
 
 
 struct StoryData

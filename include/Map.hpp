@@ -7,6 +7,9 @@
 #include <map>
 #include <SDL2/SDL_rect.h>
 
+using std::string;
+using std::map;
+
 
 struct Map
 {
