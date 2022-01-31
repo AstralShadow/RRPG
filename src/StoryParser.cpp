@@ -383,6 +383,22 @@ void StoryParser::store_text(string text)
 
 void StoryParser::store_map_data(string line)
 {
-    print("map data:");
-    print(line);
+    auto data = str_split(line);
+    for(auto input : data)
+    {
+        char tileset = ' ';
+        if(input[0] < '0' || input[0] > '9')
+        {
+            tileset = input[0];
+            input = input.substr(1);
+        }
+
+        auto pos = explode('.', input, 1);
+        if(pos.size() == 1)
+            _maps[_target].data.emplace_back
+                (tileset, stoi(pos[0]));
+        else
+            _maps[_target].data.emplace_back
+                (tileset, stoi(pos[0]), stoi(pos[1]));
+    }
 }
