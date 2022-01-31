@@ -11,14 +11,14 @@ struct SpriteAnimationData
     int8_t left = -1;
     int8_t down = -1;
     int8_t right = -1;
-    uint8_t animation = 0;
+    uint8_t frames = 0;
 };
 
 struct Sprite
 {
     string name;
     string texture;
-    SDL_Point size;
+    SDL_Point size{-1,-1};
 
     SpriteAnimationData idle;
     SpriteAnimationData walking;

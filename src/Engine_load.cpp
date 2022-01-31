@@ -66,9 +66,10 @@ void Engine::load_fonts()
 
 void Engine::cache_textures()
 {
+    auto root = _story.assets_dir;
     print("Caching textures.");
     for(auto pair : _story._tilesets)
-        get_texture(pair.second.texture);
+        get_texture(root + pair.second.texture);
     for(auto pair : _story._sprites)
-        get_texture(pair.second.texture);
+        get_texture(root + pair.second.texture);
 }

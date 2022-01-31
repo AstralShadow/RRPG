@@ -18,7 +18,7 @@ typedef uint32_t id_t;
 #define PRINT_LOAD_LOG 1
 #define PRINT_PARSE_LOG 1
 #define PRINT_PARSE_READFILE_LOG 0
-#define LOAD_TEXTURES_CACHE 0
+#define LOAD_TEXTURES_CACHE 1
 using std::chrono::milliseconds;
 //#define DELAY_LOAD_TIME milliseconds(100)
 

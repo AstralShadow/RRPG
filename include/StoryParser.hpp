@@ -58,6 +58,8 @@ private:
                             vector<string>& args);
     void parse_sprite_command(string& line,
                               vector<string>& args);
+    void parse_sprite_animation_command(string& line,
+                                    vector<string>& args);
 
     /* Entity */
     void begin_entity_state(string& line,
