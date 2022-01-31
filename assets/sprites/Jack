@@ -1,0 +1,11 @@
+#sprite Jack
+    :file sprites/Jack.png
+    :size 4 6
+    :idle down 0.0
+    :idle up 0.1
+    :idlw right 0.2
+    :idle left 0.3
+    :walking down 1.0 5.0
+    :walking up 1.1 5.1
+    :walking right 1.2 5.2
+    :walking left 1.3 5.3

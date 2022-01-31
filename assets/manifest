@@ -1,6 +1,8 @@
+:include sprites/John
 :include characters/Gosho
-:include characters/Petia
-:include tilesets/kitchen
-:include tilesets/house
-:include maps/kitchen
-:include main
+:include backgrounds/Grass
+;:include characters/Petia
+;:include tilesets/kitchen
+;:include tilesets/house
+;:include maps/kitchen
+;:include main

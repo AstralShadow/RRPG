@@ -22,8 +22,11 @@ typedef uint32_t id_t;
 using std::chrono::milliseconds;
 //#define DELAY_LOAD_TIME milliseconds(100)
 
-// 32 - Loading Screen
-#define PRELOAD_FONT_SIZES {18, 28, 32, 36}
+#define PRELOAD_FONT_SIZES {32}
 #define FONT_NAME "comic_shanns_2.ttf"
+
+/* Used font sizes:
+ * 32 - Loading Screen
+ */
 
 #endif

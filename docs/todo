@@ -1,1 +1,7 @@
 Compile time assets loading will be pretty cool.
+
+Splitting the Parser to multiple classes.
+
+Runtime framerate selector (aka, switch to 30 if too much load)
+
+
