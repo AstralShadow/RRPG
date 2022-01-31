@@ -6,7 +6,7 @@
 
 int Texture::load(SDL_Renderer* renderer, std::string uri)
 {
-    auto surf = IMG_Load(_uri.c_str());
+    auto surf = IMG_Load(uri.c_str());
     if(!surf)
     {
         std::cout << "Could not load texture: "
