@@ -11,9 +11,6 @@ using std::vector;
 
 struct Character
 {
-    Character() = default;
-    ~Character() = default;
-    
     id_t id;
     string name;
     string sprite;
