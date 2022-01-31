@@ -4,6 +4,7 @@
 #include "globals.hpp"
 #include <string>
 #include <vector>
+#include <SDL2/SDL_rect.h>
 
 using std::string;
 using std::vector;
@@ -11,14 +12,10 @@ using std::vector;
 
 struct Tileset
 {
-    Tileset() = default;
-    ~Tileset() = default;
-    
     id_t id;
     string name;
     string sprite;
-    uint16_t width;
-    uint16_t height;
+    SDL_Point size;
 };
 
 #endif

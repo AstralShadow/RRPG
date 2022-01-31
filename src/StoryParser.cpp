@@ -116,8 +116,8 @@ parse_tileset_command(string& line,
         _tilesets[_target].sprite = args[1];
     else if(args[0] == "size" && args.size() == 3)
     {
-        _tilesets[_target].width = stoi(args[1]);
-        _tilesets[_target].height= stoi(args[2]);
+        _tilesets[_target].size.x = stoi(args[1]);
+        _tilesets[_target].size.y = stoi(args[2]);
     }
     else
         print("Unknown command: ", line);
@@ -258,8 +258,8 @@ void StoryParser::parse_state_block(string block)
         auto name = args[1];
 
         auto &tileset = _tilesets[name];
-        tileset.name = name;
         tileset.id = id;
+        tileset.name = name;
 
         _target = name;
         _state = state_tileset;
@@ -293,8 +293,12 @@ void StoryParser::parse_state_block(string block)
         return;
     }
 
-    if(args[0] == "when" && args.size() == 3)
+    if(args[0] == "when")
     {
+        if(args.size() != 3)
+            throw std::runtime_error
+                ("Format: #when <storyname> <flag>");
+
         auto story= args[1];
         auto flag = args[2];
         
@@ -308,7 +312,7 @@ void StoryParser::parse_state_block(string block)
         return;
     }
 
-    print("Unknown block #", block);
+    print("Unknown state block #", block);
 }
 
 void StoryParser::set_speaker(string name)
