@@ -20,7 +20,10 @@ typedef uint32_t id_t;
 #define PRINT_PARSE_READFILE_LOG 0
 #define LOAD_TEXTURES_CACHE 0
 using std::chrono::milliseconds;
-#define DELAY_LOAD_TIME milliseconds(1334)
+//#define DELAY_LOAD_TIME milliseconds(100)
 
+// 32 - Loading Screen
+#define PRELOAD_FONT_SIZES {18, 28, 32, 36}
+#define FONT_NAME "comic_shanns_2.ttf"
 
 #endif

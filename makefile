@@ -3,7 +3,7 @@ CXX=g++
 __CXXFLAGS= -Og -g -std=c++11 \
 	-Wall -Wpedantic -Wextra \
 	-pthread \
-	-lSDL2 -lSDL2_image # -lSDL2_ttf
+	-lSDL2 -lSDL2_image -lSDL2_ttf
 
 
 IDIR=include
