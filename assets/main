@@ -13,13 +13,15 @@
     Какво да приготвя за обяд?
 
     > Гошо
-    :choice
+    :choice Поискай хляб
         Хляб
         :set petia_cooking_bread
-    :choice
+    :end
+    :choice Поискай Супа
         Супа
         :set petia_cooking_soup 
-    :choice
+    :end
+    :choice Откажи учтиво
         Не съм гладен
     :end
 

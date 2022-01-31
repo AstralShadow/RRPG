@@ -5,9 +5,11 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <map>
 #include <SDL2/SDL_rect.h>
 using std::string;
 using std::vector;
+using std::map;
 using std::shared_ptr;
 
 typedef string Flag;
@@ -47,7 +49,7 @@ struct Choice : public Action
 {
     Choice() = default;
     string character;
-    std::pair<string, vector<shared_ptr<Action>>> options;
+    map<string, vector<shared_ptr<Action>>> options;
     virtual Type type() { return action_choice; }
 };
 

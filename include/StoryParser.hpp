@@ -59,8 +59,6 @@ private:
     void parse_story_command(string& line,
                              vector<string>& args);
 
-    void finish_state();
-
 };
 
 #endif

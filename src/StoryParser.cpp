@@ -146,7 +146,38 @@ parse_story_command(string& line,
         return;
     }
 
-    
+    if(args[0] == "choice" && args.size() > 2)
+    {
+        auto name = explode(' ', line, 1)[1];
+        auto& action_list = _context_stack.top();
+        auto last_action = action_list->back();
+        if(last_action->type() == Action::action_choice)
+        {
+            auto last = std::static_pointer_cast
+                <Choice>(last_action);
+            if(last->character == _speaker)
+            {
+                _context_stack.push
+                    (&(last->options[name]));
+                return;
+            }
+        }
+        
+        auto choice = new Choice;
+        choice->character = _speaker;
+
+        _context_stack.top()->emplace_back(choice);
+        _context_stack.push(&(choice->options[name]));
+        return;
+    }
+
+    if(args[0] == "end" && args.size() == 1)
+    {
+        _context_stack.pop();
+        if(_context_stack.size() == 0)
+            _state = state_none;
+        return;
+    }
 
     print("Unknown command: ", line);
 }
@@ -251,6 +282,12 @@ void StoryParser::parse_state_block(string block)
 
 void StoryParser::set_speaker(string name)
 {
+    if(_context_stack.size() > 1)
+        throw std::runtime_error
+            ("Can not change speaker within "
+            "logic blocks. Instead, you can "
+            "set a flag and trigger an event.");
+
     if(name != "")
     {
         auto entity = _characters.find(name);
