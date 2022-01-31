@@ -19,7 +19,7 @@ class Action;
 struct Story
 {
     id_t id;
-    StoryName name = ""; // nameless story will push to prev story's flags.
+    StoryName name;
     vector<shared_ptr<Action>> actions;
     vector<Flag> flags;
     map<Flag, vector<shared_ptr<Action>>> events;

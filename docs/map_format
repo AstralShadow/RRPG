@@ -1,5 +1,4 @@
-#map
-    :name kitchen
+#map kitchen
     :size 10 10
     :tileset kitchen
     :tileset house h

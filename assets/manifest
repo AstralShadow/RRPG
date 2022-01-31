@@ -1,2 +1,3 @@
 :include characters/Gosho
+:include tilesets/example
 :include main

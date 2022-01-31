@@ -17,8 +17,8 @@
         Хляб
         :set petia_cooking_bread
     :choice
-        :set petia_cooking_soup 
         Супа
+        :set petia_cooking_soup 
     :choice
         Не съм гладен
     :end

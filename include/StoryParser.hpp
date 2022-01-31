@@ -7,6 +7,7 @@
 #include <stack>
 #include "Story.hpp"
 #include "Character.hpp"
+#include "Tileset.hpp"
 
 using std::string;
 using std::vector;
@@ -33,6 +34,7 @@ public:
 private:
     string _root;
     map<string, Character> _characters;
+    map<string, Tileset> _tilesets;
     map<StoryName, Story> _stories;
 
     map<pair<StoryName, Flag>, vector<shared_ptr<Action>>>
@@ -45,12 +47,15 @@ private:
     enum {
         state_none,
         state_character,
+        state_tileset,
         state_story
     } _state;
 
 
     void parse_character_command(string& line,
                                  vector<string>& args);
+    void parse_tileset_command(string& line,
+                               vector<string>& args);
     void parse_story_command(string& line,
                              vector<string>& args);
 

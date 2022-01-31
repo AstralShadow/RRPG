@@ -27,7 +27,7 @@ StoryParser::StoryParser(string root) :
 
 void StoryParser::parse_file(string uri)
 {
-    print("Parsing: ", uri);
+    print("Parsing file ", uri);
     std::ifstream file(_root + uri, std::ios::in);
     std::array<char, 256> buff;
     while(file.getline(&buff[0], 255))
@@ -75,25 +75,27 @@ void StoryParser::parse_file(string uri)
 void StoryParser::parse_command(string line)
 {
     auto args = explode(' ', line);
+    
     if(args[0] == "include")
     {
         parse_file(args[1]);
-        return;
     }
-
-    if(_state == state_character)
+    else if(_state == state_character)
     {
         parse_character_command(line, args);
-        return;
     }
-
-    if(_state == state_story)
+    else if(_state == state_tileset)
+    {
+        parse_tileset_command(line, args);
+    }
+    else if(_state == state_story)
     {
         parse_story_command(line, args);
-        return;
     }
-
-    print("Unknown command: ", line);
+    else
+    {
+        print("Unknown command: ", line);
+    }
 }
 
 void StoryParser::
@@ -102,6 +104,21 @@ parse_character_command(string& line,
 {
     if(args[0] == "sprite")
         _characters[_target].sprite = args[1];
+    else
+        print("Unknown command: ", line);
+}
+
+void StoryParser::
+parse_tileset_command(string& line,
+                      vector<string>& args)
+{
+    if(args[0] == "sprite" && args.size() == 2)
+        _tilesets[_target].sprite = args[1];
+    else if(args[0] == "size" && args.size() == 3)
+    {
+        _tilesets[_target].width = stoi(args[1]);
+        _tilesets[_target].height= stoi(args[2]);
+    }
     else
         print("Unknown command: ", line);
 }
@@ -128,6 +145,8 @@ parse_story_command(string& line,
         _context_stack.top()->emplace_back(cmd);
         return;
     }
+
+    
 
     print("Unknown command: ", line);
 }
@@ -159,15 +178,42 @@ void StoryParser::parse_state_block(string block)
         
         _target = name;
         _state = state_character;
+        print("Loading character ", name);
         
         return;
     }
 
-    if(args[0] == "story" && args.size() == 2)
+    if(args[0] == "tileset")
+    {
+        if(args.size() < 2)
+            throw std::runtime_error
+                ("Can not load unnamed tileset.");
+        if(args.size() > 2)
+            throw std::runtime_error
+                ("Tileset name can not contain spaces.");
+
+        auto id = _tilesets.size();
+        auto name = args[1];
+
+        auto &tileset = _tilesets[name];
+        tileset.name = name;
+        tileset.id = id;
+
+        _target = name;
+        _state = state_tileset;
+        print("Loading tileset ", name);
+
+        return;
+    }
+
+    if(args[0] == "story")
     {
         if(args.size() < 2)
             throw std::runtime_error
                 ("Can not load unnamed story.");
+        if(args.size() > 2)
+            throw std::runtime_error
+                ("Story name can not contain spaces.");
         
         string name = args[1];
         auto id = _stories.size();
@@ -180,6 +226,7 @@ void StoryParser::parse_state_block(string block)
         _context_stack.empty();
         _context_stack.push(&(story.actions));
         _state = state_story;
+        print("Loading story ", name);
 
         return;
     }
@@ -194,6 +241,8 @@ void StoryParser::parse_state_block(string block)
         _context_stack
             .push(&(_stories[story].events[flag]));
         _state = state_story;
+        print("Loading ", flag, " event in ", story);
+
         return;
     }
 

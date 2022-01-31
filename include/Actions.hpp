@@ -74,7 +74,8 @@ struct Command : public Action
     enum {
         map,
         move,
-        spawn
+        spawn,
+        despawn
     } command;
     
     string name;
