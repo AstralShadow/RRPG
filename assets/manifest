@@ -1,6 +1,7 @@
 :include sprites/Jack
-;:include entities/Gosho
-;:include backgrounds/Grass
+:include entities/Gosho
+:include tilesets/grass
+:include maps/meadow
 ;:include entities/Petia
 ;:include tilesets/kitchen
 ;:include tilesets/house

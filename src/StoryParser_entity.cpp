@@ -21,7 +21,7 @@ begin_entity_state(string& line,
     
     _target = name;
     _state = state_entity;
-    print("Loading entity", name);
+    print("Loading entity ", name);
 }
 
 void StoryParser::
