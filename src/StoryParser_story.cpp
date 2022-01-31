@@ -26,10 +26,8 @@ begin_story_state(string&,
             ("Story name can not contain spaces.");
     
     string name = args[1];
-    auto id = _stories.size();
 
     auto& story = _stories[name];
-    story.id = id;
     story.name = name;
 
     _target = name;

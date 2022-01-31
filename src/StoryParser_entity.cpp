@@ -12,18 +12,16 @@ begin_entity_state(string& line,
 {
     if(args.size() < 2)
         throw std::runtime_error
-            ("Can not load unnamed character");
+            ("Can not load unnamed entity");
 
-    auto id = _stories.size();
     string name = explode(' ', line, 1)[1];
 
     auto &entity = _entities[name];
     entity.name = name;
-    entity.id = id;
     
     _target = name;
     _state = state_entity;
-    print("Loading character ", name);
+    print("Loading entity", name);
 }
 
 void StoryParser::
@@ -31,7 +29,8 @@ parse_entity_command(string& line,
                      vector<string>& args)
 {
     if(args[0] == "sprite")
-        _entities[_target].sprite = args[1];
+        _entities[_target].sprite =
+            explode(' ', line, 1)[1];
     else
         print("Unknown command: ", line);
 }

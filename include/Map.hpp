@@ -15,7 +15,6 @@ struct Map
 {
     struct TileData;
 
-    id_t id;
     string name;
     SDL_Point size;
     map<char, string> tilesets;

@@ -11,7 +11,7 @@ using std::string;
 
 void StoryParser::parse_file(string uri)
 {
-    #if PRINT_PARSE_READFILE_LOG || 1
+    #if PRINT_PARSE_READFILE_LOG
         print(" readfile: ", uri);
     #endif
 
@@ -21,6 +21,7 @@ void StoryParser::parse_file(string uri)
     while(file.getline(buffer, 255))
     {
         string line(buffer);
+        line = trim(line);
 
         if(!line.size() || line[0] == ';')
             continue;

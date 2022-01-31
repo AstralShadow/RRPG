@@ -1,7 +1,6 @@
 #ifndef STORY_HPP
 #define STORY_HPP
 
-#include "globals.hpp"
 #include <string>
 #include <vector>
 #include <map>
@@ -18,7 +17,6 @@ class Action;
 
 struct Story
 {
-    id_t id;
     StoryName name;
     vector<shared_ptr<Action>> actions;
     vector<Flag> flags;

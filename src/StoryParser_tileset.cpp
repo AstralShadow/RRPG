@@ -18,11 +18,9 @@ begin_tileset_state(string&,
         throw std::runtime_error
             ("Tileset name can not contain spaces.");
 
-    auto id = _tilesets.size();
     auto name = args[1];
 
     auto &tileset = _tilesets[name];
-    tileset.id = id;
     tileset.name = name;
 
     _target = name;

@@ -14,19 +14,14 @@ begin_sprite_state(string& line,
         throw std::runtime_error
             ("Can not load unnamed sprite");
 
-    print("Sprite loading not implemented.");
-    return;
-
-    auto id = _stories.size();
     string name = explode(' ', line, 1)[1];
 
-    auto &entity = _entities[name];
-    entity.name = name;
-    entity.id = id;
+    auto &sprite = _sprites[name];
+    sprite.name = name;
     
     _target = name;
-    _state = state_entity;
-    print("Loading character ", name);
+    _state = state_sprite;
+    print("Loading sprite ", name);
 }
 
 void StoryParser::
@@ -35,6 +30,7 @@ parse_sprite_command(string& line,
 {
     if(args[0] == "file")
         _sprites[_target].texture = args[1];
+    else if(args[0] == "");
     else
         print("Unknown command: ", line);
 }

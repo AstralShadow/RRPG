@@ -40,7 +40,6 @@ StoryData StoryParser::get_data()
 void StoryParser::parse_command(string line)
 {
     auto args = explode(' ', line);
-    print(line);
     
     if(args[0] == "include")
     {

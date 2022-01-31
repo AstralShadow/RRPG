@@ -16,6 +16,7 @@ struct SpriteAnimationData
 
 struct Sprite
 {
+    string name;
     string texture;
     SDL_Point size;
 

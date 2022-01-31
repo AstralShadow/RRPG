@@ -21,11 +21,9 @@ begin_map_state(string&,
         throw std::runtime_error
             ("Map name can not contain spaces.");
 
-    auto id = _maps.size();
     auto name = args[1];
 
     auto &map = _maps[name];
-    map.id = id;
     map.name = name;
 
     _target = name;
