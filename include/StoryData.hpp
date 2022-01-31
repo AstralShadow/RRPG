@@ -4,6 +4,7 @@
 #include <string>
 
 using std::map;
+using std::string;
 class Tileset;
 class Map;
 class Character;
@@ -12,7 +13,9 @@ class Story;
 
 struct StoryData
 {
-    typedef std::string Name;
+    string assets_dir;
+
+    typedef string Name;
     map<Name, Tileset> _tilesets;
     map<Name, Map> _maps;
     map<Name, Character> _characters;

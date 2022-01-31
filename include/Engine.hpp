@@ -40,6 +40,7 @@ private:
     int init_renderer();
 
     StoryData load_story(string assets_dir);
+    void cache_textures(StoryData const&);
 
     Texture load_texture(string uri);
     void clear_textures();
