@@ -1,4 +1,6 @@
 :include characters/Gosho
 :include characters/Petia
-:include tilesets/example
+:include tilesets/kitchen
+:include tilesets/house
+:include maps/kitchen
 :include main
