@@ -63,20 +63,18 @@ void StoryParser::parse_file(string uri)
             }
 
             store_text(line);
-            return;
+            continue;
         }
 
         if(_state == state_map)
         {
             store_map_data(line);
-            return;
+            continue;
         }
 
         print("Can not parse line in current mode:");
         print(line);
     }
-
-    _state = state_none;
 }
 
 void StoryParser::parse_command(string line)
@@ -354,7 +352,7 @@ void StoryParser::parse_state_block(string block)
         _context_stack
             .push(&(_stories[story].events[flag]));
         _state = state_story;
-        print("Loading ", flag, " event in ", story);
+        print("Loading event ", flag, " in ", story);
 
         return;
     }
