@@ -25,6 +25,19 @@ StoryParser::StoryParser(string root) :
 }
 
 
+ParserData StoryParser::get_data()
+{
+    ParserData data;
+
+    data._tilesets = _tilesets;
+    data._maps = _maps;
+    data._characters = _characters;
+    data._stories = _stories;
+
+    return data;
+}
+
+
 void StoryParser::parse_file(string uri)
 {
 #if PRINT_PARSE_READFILE_LOG

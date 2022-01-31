@@ -11,7 +11,7 @@ void Engine::load(string assets_dir)
 {
     print("Parsing story.");
     StoryParser parser(assets_dir);
-
     parser.parse_file("manifest");
-
+    auto data = parser.get_data();
+    print("Caching graphics");
 }

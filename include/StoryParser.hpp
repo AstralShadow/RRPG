@@ -1,6 +1,7 @@
 #ifndef STORYPARSER_HPP
 #define STORYPARSER_HPP
 
+#include "ParserData.hpp"
 #include <string>
 #include <vector>
 #include <map>
@@ -29,6 +30,7 @@ public:
     void parse_command(string line);
     void parse_state_block(string block);
 
+    ParserData get_data();
 
 private:
     string _root;
