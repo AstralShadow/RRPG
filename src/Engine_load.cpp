@@ -9,9 +9,13 @@ using std::string;
 
 void Engine::load(string assets_dir)
 {
+    auto data = load_story(assets_dir);
+}
+
+StoryData Engine::load_story(string assets_dir)
+{
     print("Parsing story.");
     StoryParser parser(assets_dir);
     parser.parse_file("manifest");
-    auto data = parser.get_data();
-    print("Caching graphics");
+    return parser.get_data();
 }

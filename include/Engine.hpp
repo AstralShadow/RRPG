@@ -3,6 +3,7 @@
 
 #include "globals.hpp"
 #include "Texture.hpp"
+#include "StoryData.hpp"
 #include <vector>
 #include <string>
 #include <memory>
@@ -37,6 +38,8 @@ private:
     int init_sdl_image();
     int init_window();
     int init_renderer();
+
+    StoryData load_story(string assets_dir);
 
     Texture load_texture(string uri);
     void clear_textures();

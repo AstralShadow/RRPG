@@ -25,9 +25,9 @@ StoryParser::StoryParser(string root) :
 }
 
 
-ParserData StoryParser::get_data()
+StoryData StoryParser::get_data()
 {
-    ParserData data;
+    StoryData data;
 
     data._tilesets = _tilesets;
     data._maps = _maps;

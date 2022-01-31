@@ -1,5 +1,5 @@
-#ifndef PARSERDATA_HPP
-#define PARSERDATA_HPP
+#ifndef STORYDATA_HPP
+#define STORYDATA_HPP
 #include <map>
 #include <string>
 
@@ -10,7 +10,7 @@ class Character;
 class Story;
 
 
-struct ParserData
+struct StoryData
 {
     typedef std::string Name;
     map<Name, Tileset> _tilesets;
