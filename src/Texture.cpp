@@ -6,8 +6,8 @@
 
 int Texture::load(SDL_Renderer* renderer, std::string uri)
 {
-    auto surf = IMG_Load(uri.c_str());
-    if(!surf)
+    auto surface = IMG_Load(uri.c_str());
+    if(!surface)
     {
         std::cout << "Could not load texture: "
             << uri << std::endl;
@@ -16,20 +16,22 @@ int Texture::load(SDL_Renderer* renderer, std::string uri)
         return 1;
     }
 
-    _uri = uri;
-    _data = SDL_CreateTextureFromSurface(renderer, surf);
-    _w = surf->w;
-    _h = surf->h;
-    SDL_FreeSurface(surf);
-
+    store(renderer, surface);
+    SDL_FreeSurface(surface);
     return 0;
+}
+
+void Texture::store(SDL_Renderer* rnd,
+                    SDL_Surface* surface)
+{
+    _data = SDL_CreateTextureFromSurface(rnd, surface);
+    _w = surface->w;
+    _h = surface->h;
 }
 
 void Texture::clear()
 {
     if(_data)
         SDL_DestroyTexture(_data);
-
     _data = nullptr;
-    _uri.clear();
 }

@@ -56,12 +56,11 @@ StoryData Engine::load_story(string assets_dir)
 void Engine::load_fonts()
 {
     print("Loading fonts.");
-    auto font_root = _story.assets_dir + "fonts/";
 
     int font_sizes[] = PRELOAD_FONT_SIZES;
     for(int size : font_sizes)
         FontManager::get_font
-            (font_root + FONT_NAME, size);
+            (DEFAULT_FONT, size);
 }
 
 void Engine::cache_textures()

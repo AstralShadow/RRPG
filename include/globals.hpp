@@ -22,13 +22,18 @@ typedef uint32_t id_t;
 #define PRINT_PARSE_READFILE_LOG 0
 #define LOAD_TEXTURES_CACHE 1
 using std::chrono::milliseconds;
-//#define DELAY_LOAD_TIME milliseconds(100)
+#define DELAY_LOAD_TIME milliseconds(300)
 
-#define PRELOAD_FONT_SIZES {32}
-#define FONT_NAME "comic_shanns_2.ttf"
+#define PRELOAD_FONT_SIZES {32, 18, 16, 14}
+#define DEFAULT_FONT "assets/fonts/comic_shanns_2.ttf"
 
 /* Used font sizes:
  * 32 - Loading Screen
+ * 14 - Engine default
  */
+
+struct SDL_Color;
+extern bool operator < (SDL_Color const&,
+                        SDL_Color const&);
 
 #endif

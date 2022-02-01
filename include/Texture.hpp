@@ -6,6 +6,7 @@
 using std::string;
 class Engine;
 class SDL_Texture;
+class SDL_Surface;
 class SDL_Renderer;
 
 
@@ -14,6 +15,7 @@ class Texture
 friend Engine;
 
 public:
+    Texture() = default;
     Texture(const Texture&) = default;
     ~Texture() = default;
 
@@ -23,13 +25,12 @@ public:
 
 private:
     SDL_Texture* _data = nullptr;
-    string _uri;
     int _w = 0;
     int _h = 0;
 
-    Texture() = default;
 
     int load(SDL_Renderer*, string uri);
+    void store(SDL_Renderer*, SDL_Surface*);
     void clear();
 
 };

@@ -8,12 +8,17 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <map>
+#include <tuple>
+#include <SDL2/SDL_pixels.h>
 
 using std::string;
 using std::shared_ptr;
+using std::map;
 
 class SDL_Window;
 class SDL_Renderer;
+
 
 enum struct EngineMode
 {
@@ -22,6 +27,7 @@ enum struct EngineMode
     playing,
     credits
 };
+
 
 class Engine
 {
@@ -40,12 +46,18 @@ public:
     void update_screen() { render(); }
 
     Texture get_texture(string uri);
+    Texture get_text(string, SDL_Color, int size = 14);
 
 private:
     bool _running;
     SDL_Window* _window;
     SDL_Renderer* _renderer;
-    std::vector<Texture> _textures;
+
+    typedef std::map<string, Texture> TextureCache;
+    typedef std::map<std::tuple<string, SDL_Color, int>,
+                     Texture> TextCache;
+    TextureCache  _textures;
+    TextCache _texts;
     StoryData _story;
 
     std::map<EngineMode, shared_ptr<Scene>> _scenes;
@@ -63,6 +75,7 @@ private:
     void cache_textures();
 
     Texture load_texture(string uri);
+    Texture render_text(string, SDL_Color, int size = 14);
     void clear_textures();
 
     void poll_events();
