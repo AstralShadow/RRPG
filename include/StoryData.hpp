@@ -18,11 +18,11 @@ struct StoryData
     string assets_dir;
 
     typedef string Name;
-    map<Name, Tileset> _tilesets;
-    map<Name, Map> _maps;
-    map<Name, Sprite> _sprites;
-    map<Name, Entity> _entities;
-    map<Name, Story> _stories;
+    map<Name, Tileset> tilesets;
+    map<Name, Map> maps;
+    map<Name, Sprite> sprites;
+    map<Name, Entity> entities;
+    map<Name, Story> stories;
 };
 
 #endif

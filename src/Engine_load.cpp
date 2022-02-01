@@ -67,8 +67,8 @@ void Engine::cache_textures()
 {
     auto root = _story.assets_dir;
     print("Caching textures.");
-    for(auto pair : _story._tilesets)
+    for(auto pair : _story.tilesets)
         get_texture(root + pair.second.texture);
-    for(auto pair : _story._sprites)
+    for(auto pair : _story.sprites)
         get_texture(root + pair.second.texture);
 }

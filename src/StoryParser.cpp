@@ -28,11 +28,11 @@ StoryData StoryParser::get_data()
 {
     StoryData data;
 
-    data._tilesets = _tilesets;
-    data._maps = _maps;
-    data._sprites = _sprites;
-    data._entities = _entities;
-    data._stories = _stories;
+    data.tilesets = _tilesets;
+    data.maps = _maps;
+    data.sprites = _sprites;
+    data.entities = _entities;
+    data.stories = _stories;
 
     return data;
 }
