@@ -6,6 +6,12 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+namespace EngineModeLog
+{
+    #define ENABLE_PRINTING PRINT_ENGINE_MODE
+    #include "print.hpp"
+}
+
 
 Engine::Engine() :
     _running(false),
@@ -32,11 +38,30 @@ void Engine::set_scene(EngineMode mode,
         scene->on_enter();
 }
 
+
 void Engine::set_mode(EngineMode mode)
 {
+    using EngineModeLog::print;
+    switch(mode)
+    {
+        case EngineMode::loading:
+            print("Engine mode: loading");
+            break;
+        case EngineMode::menu:
+            print("Engine mode: menu");
+            break;
+        case EngineMode::playing:
+            print("Engine mode: playing");
+            break;
+        case EngineMode::credits:
+            print("Engine mode: creadits");
+            break;
+    }
+
     _mode = mode;
     if(_scenes.find(_mode) != _scenes.end())
         _scenes[_mode]->on_enter();
+
 }
 
 

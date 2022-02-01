@@ -20,7 +20,7 @@ enum struct EngineMode
     loading,
     menu,
     playing,
-    creadits
+    credits
 };
 
 class Engine

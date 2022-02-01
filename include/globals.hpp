@@ -13,6 +13,8 @@ typedef uint32_t id_t;
 #define SCREEN_H 600
 
 /* DEBUG flags */
+#define PRINT_ENGINE_MODE 1
+#define PRINT_GAME_LOG 1
 #define PRINT_EXIT_MESSAGE 0
 #define PRINT_TICK_SLEEP_TIME 0
 #define PRINT_LOAD_LOG 1
