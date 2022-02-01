@@ -3,6 +3,7 @@
 
 #include "Scene.hpp"
 #include "Actions.hpp"
+#include "Texture.hpp"
 #include <string>
 #include <stack>
 #include <vector>
@@ -16,6 +17,7 @@ using std::shared_ptr;
 class SDL_Texture;
 class SDL_Surface;
 class StoryData;
+class Map;
 
 
 struct ActionPointer
@@ -42,9 +44,21 @@ private:
     string _story;
     stack<ActionPointer> _linestack;
 
+    /* Story processing */
     void process_action();
     void increment_action_iterator();
+    void process_command(shared_ptr<Command>);
+    void set_map(string name);
 
+    /* Rendering */
+    Map* _map;
+    map<char, std::pair<Texture, SDL_Point>> _tilesets;
+    
+    SDL_Point _screen_size;
+    SDL_Point _camera_offset;
+
+    void fit_map_on_screen();
+    void render_map(SDL_Renderer*);
 };
 
 #endif

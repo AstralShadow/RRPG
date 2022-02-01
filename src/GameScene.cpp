@@ -13,7 +13,10 @@ GameScene::GameScene(Engine* engine, string main_story) :
     Scene(engine),
     _data(&engine->get_story()),
     _story(main_story),
-    _linestack()
+    _map(nullptr),
+    _tilesets(),
+    _linestack(),
+    _camera_offset{0, 0}
 {
     ActionPointer beginning {
         &(_data->stories[_story].actions),
@@ -36,15 +39,11 @@ void GameScene::tick(milliseconds progress)
 
 }
 
-void GameScene::render(SDL_Renderer* renderer)
-{
-
-}
-
 void GameScene::process(SDL_Event const& e)
 {
     if(e.type == SDL_MOUSEBUTTONDOWN)
         process_action();
+        
 }
 
 void GameScene::process_action()
@@ -61,6 +60,11 @@ void GameScene::process_action()
 
     switch(act->type())
     {
+        case Action::action_command:
+            process_command(std::static_pointer_cast
+                            <Command>(act));
+            break;
+
         default:
             print("Not parsing action of type ",
                   act->type_name());

@@ -2,6 +2,7 @@
 :include entities/Gosho
 :include tilesets/grass
 :include maps/meadow
+:include maps/meadow2
 :include meadow_story
 
 ;:include entities/Petia

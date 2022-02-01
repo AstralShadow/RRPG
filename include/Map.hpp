@@ -23,6 +23,22 @@ struct Map
 
 struct Map::TileData
 {
+    char tileset;
+
+    union {
+        struct Point{
+            uint8_t x;
+            uint8_t y;
+        } pos;
+        uint16_t id;
+    } tile;
+    
+    enum : uint8_t
+    {
+        mode_pos,
+        mode_id
+    } mode;
+
     TileData(char t, uint16_t id) :
         tileset(t),
         mode(mode_id)
@@ -39,22 +55,6 @@ struct Map::TileData
     }
 
     ~TileData() = default;
-
-    char tileset;
-
-    union {
-        struct Point{
-            uint8_t x;
-            uint8_t y;
-        } pos;
-        uint16_t id;
-    } tile;
-    
-    enum : uint8_t
-    {
-        mode_pos,
-        mode_id
-    } mode;
 };
 
 #endif
