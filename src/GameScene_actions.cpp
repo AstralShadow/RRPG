@@ -93,7 +93,7 @@ void GameScene::set_map(string name)
 
 void GameScene::spawn_entity(string name, SDL_Point pos)
 {
-    print("Spawning entity");
+    print("Spawning entity: Mr. Not Implemented");
 
 }
 

@@ -13,12 +13,19 @@ using std::map;
 
 struct SpriteAnimationData
 {
-    int up = -1;
-    int left = -1;
-    int down = -1;
-    int right = -1;
-    uint8_t frames = 0;
-    milliseconds delay = milliseconds(200);
+    /** Description
+     * Direction falues are tile ids in sprite.
+     * Frames means how many tiles to count in animation
+     * Frames in one animation must be consecutive.
+     * For example: up=5 frames=3 means up takes 5, 6, 7
+     * Speed = FPS
+     */
+    uint16_t up = -1;
+    uint16_t left = -1;
+    uint16_t down = -1;
+    uint16_t right = -1;
+    uint16_t frames = 1;
+    uint16_t speed = 1;
 };
 
 struct Sprite
@@ -29,8 +36,6 @@ struct Sprite
 
     typedef string State;
     map<State, SpriteAnimationData> animation;
-    SpriteAnimationData idle;
-    SpriteAnimationData walking;
 };
 
 #endif

@@ -43,7 +43,7 @@ parse_sprite_command(string& line,
         return;
     }
 
-    if(args[0] == "idle" || args[0] == "walking")
+    if(args[0] == "animation" || args[0] == "anim")
     {
         parse_sprite_animation_command(line, args);
         return;
@@ -56,41 +56,48 @@ void StoryParser::
 parse_sprite_animation_command(string& line,
                                vector<string>& args)
 {
-    int argc = args.size();
-    if(argc < 2 || (args[1] == "frames" && argc != 3))
+    
+    if(args.size() < 3)
     {
-        print("Unfinished command: ", line);
-        return;
+        print("Throwing exception at unfinished line:");
+        print(line);
+        throw std::runtime_error
+            ("Finish commands that you start.");
     }
-        
 
-    string mode = args[0];
+    string state = args[1];
     int8_t frame_id = -1;
 
+    auto& ani_data = _sprites[_target].animation[state];
 
-    if(mode != "idle" && mode != "walking")
+
+    if(args[2] == "frames")
     {
-        string msg = "Unknown sprite mode: " + mode;
-        throw std::runtime_error(msg);
-    }
-
-    SpriteAnimationData* ani_data = nullptr;
-    if(mode == "idle")
-        ani_data = &(_sprites[_target].idle);
-    else 
-        ani_data = &(_sprites[_target].walking);
-
-
-    if(args[1] == "frames")
-    {
-        uint8_t frames = stoi(args[2]);
-        ani_data->frames = frames;
+        if(args.size() < 3)
+            print("Unfinished command: ", line);
+        else
+        {
+            uint8_t frames = stoi(args[3]);
+            ani_data.frames = frames;
+        }
         return;
     }
 
-    auto pos = explode('.', args[1], 1);
+    if(args[2] == "speed")
+    {
+        if(args.size() < 3)
+            print("Unfinished command: ", line);
+        else
+        {
+            uint8_t speed = stoi(args[3]);
+            ani_data.speed = speed;
+        }
+        return;
+    }
+
+    auto pos = explode('.', args[2], 1);
     if(pos.size() == 1)
-        frame_id = stoi(args[1]);
+        frame_id = stoi(pos[0]);
     else
     {
         int height = _sprites[_target].size.y;
@@ -103,21 +110,21 @@ parse_sprite_animation_command(string& line,
     }
 
     
-    if(argc == 2)
+    if(args.size() == 3)
     {
-        ani_data->up = frame_id;
-        ani_data->left = frame_id;
-        ani_data->down = frame_id;
-        ani_data->right = frame_id;
+        ani_data.up = frame_id;
+        ani_data.left = frame_id;
+        ani_data.down = frame_id;
+        ani_data.right = frame_id;
     }
-    else if(args[2] == "up")
-        ani_data->up = frame_id;
-    else if(args[2] == "left")
-        ani_data->left = frame_id;
-    else if(args[2] == "down")
-        ani_data->down = frame_id;
-    else if(args[2] == "right")
-        ani_data->right = frame_id;
+    else if(args[3] == "up")
+        ani_data.up = frame_id;
+    else if(args[3] == "left")
+        ani_data.left = frame_id;
+    else if(args[3] == "down")
+        ani_data.down = frame_id;
+    else if(args[3] == "right")
+        ani_data.right = frame_id;
     else
         print("Could not parse sprite command: ", line);
 }
