@@ -13,9 +13,9 @@ GameScene::GameScene(Engine* engine, string main_story) :
     Scene(engine),
     _data(&engine->get_story()),
     _story(),
+    _linestack(),
     _map(),
     _tilesets(),
-    _linestack(),
     _camera_offset{0, 0}
 {
     set_story(main_story);
@@ -26,12 +26,15 @@ GameScene::~GameScene()
 
 void GameScene::on_enter()
 {
-    process_action();
+    _wait = false;
 }
 
-void GameScene::tick(milliseconds progress)
+void GameScene::tick(milliseconds)
 {
-
+    while(!_wait)
+    {
+        process_action();
+    }
 }
 
 void GameScene::process(SDL_Event const& e)
@@ -39,7 +42,7 @@ void GameScene::process(SDL_Event const& e)
     if(e.type == SDL_MOUSEBUTTONUP)
     {
         if(!_dragging)
-            process_action();
+            _wait = false;
         _dragging = false;
     }
     if(e.type == SDL_MOUSEMOTION)
@@ -62,11 +65,6 @@ void GameScene::process_action()
         return;
     }
 
-    if(_linestack.top().act == _linestack.top().line->begin())
-        print("We're at the beginning.");
-    if(_linestack.top().act == _linestack.top().line->end())
-        print("We're at the end.");
-
     auto& act_itr = _linestack.top().act;
     auto act = *act_itr;
     auto& line = *(_linestack.top().line);
@@ -74,6 +72,8 @@ void GameScene::process_action()
     act_itr++;
     if(act_itr == line.end())
         _linestack.pop();
+
+    _wait = true;
 
     switch(act->type())
     {

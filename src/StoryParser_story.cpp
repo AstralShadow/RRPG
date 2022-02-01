@@ -69,7 +69,7 @@ parse_story_command(string& line,
         return;
     }
 
-    if(args[0] == "set_map" && args.size() == 2)
+    if(args[0] == "map" && args.size() == 2)
     {
         auto cmd = new Command;
         cmd->command = Command::map;
@@ -85,6 +85,24 @@ parse_story_command(string& line,
         cmd->name = args[1];
         _context_stack.top()->emplace_back(cmd);
         return;
+    }
+
+    if(args[0] == "spawn" && args.size() == 4)
+    {
+        auto cmd = new Command;
+        cmd->command = Command::spawn;
+        cmd->name = args[1];
+        cmd->pos.x = stoi(args[2]);
+        cmd->pos.y = stoi(args[3]);
+        _context_stack.top()->emplace_back(cmd);
+    }
+
+    if(args[0] == "remove" && args.size() == 2)
+    {
+        auto cmd = new Command;
+        cmd->command = Command::remove;
+        cmd->name = args[1];
+        _context_stack.top()->emplace_back(cmd);
     }
 
     if(args[0] == "move" && args.size() == 3)

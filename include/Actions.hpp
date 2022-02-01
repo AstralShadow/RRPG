@@ -77,7 +77,7 @@ struct Command : public Action
         map,
         move,
         spawn,
-        despawn,
+        remove,
         story
     } command;
     

@@ -2,7 +2,7 @@
 #include "Map.hpp"
 #include <SDL2/SDL_render.h>
 #define ENABLE_PRINTING PRINT_GAME_LOG
-#include "print.hpp"
+//#include "print.hpp"
 
 
 void GameScene::render(SDL_Renderer* rnd)

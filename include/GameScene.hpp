@@ -26,6 +26,7 @@ struct ActionPointer
     vector<shared_ptr<Action>>::iterator act;
 };
 
+
 class GameScene : public Scene
 {
 public:
@@ -44,14 +45,19 @@ private:
     string _story;
     stack<ActionPointer> _linestack;
 
+
     /* Story processing */
-    void set_story(string);
     void process_action();
     void increment_action_iterator();
     void process_command(shared_ptr<Command>);
+
+    void set_story(string);
     void set_map(string name);
+    void spawn_entity(string name, SDL_Point pos);
+
 
     /* Input */
+    bool _wait = true;
     bool _dragging = false;
 
     /* Rendering */

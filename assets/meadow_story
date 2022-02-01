@@ -1,4 +1,7 @@
 #story main
-    :set_map meadow
-    :set_map meadow2
+    :map meadow
+    :spawn Гошо 1 1
+    :remove Гошо
+    :map meadow2
+    :spawn Гошо 2 2
     :next main

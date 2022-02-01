@@ -14,4 +14,9 @@ struct Entity
     string sprite;
 };
 
+struct ActiveEntity : public Entity
+{
+    
+};
+
 #endif

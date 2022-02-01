@@ -2,16 +2,23 @@
 #define SPRITE_HPP
 
 #include <string>
+#include <chrono>
+#include <map>
 #include <SDL2/SDL_rect.h>
+
 using std::string;
+using std::chrono::milliseconds;
+using std::map;
+
 
 struct SpriteAnimationData
 {
-    int8_t up = -1;
-    int8_t left = -1;
-    int8_t down = -1;
-    int8_t right = -1;
+    int up = -1;
+    int left = -1;
+    int down = -1;
+    int right = -1;
     uint8_t frames = 0;
+    milliseconds delay = milliseconds(200);
 };
 
 struct Sprite
@@ -20,6 +27,8 @@ struct Sprite
     string texture;
     SDL_Point size{-1,-1};
 
+    typedef string State;
+    map<State, SpriteAnimationData> animation;
     SpriteAnimationData idle;
     SpriteAnimationData walking;
 };
