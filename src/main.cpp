@@ -17,18 +17,20 @@ int main(int, char**)
 
 
     engine.set_scene(EngineMode::loading, std::make_shared
-                     <LoadingScreen>(&engine, "assets/"));
+                     <LoadingScreen>(&engine));
     engine.update_screen();
+    engine.load("assets/");
+
     engine.set_scene(EngineMode::menu, std::make_shared
                      <MainMenu>(&engine));
+
     /*
     engine.set_scene(EngineMode::credits, std::make_shared
                      <CreditsScreen>(&engine));
     */
     engine.set_scene(EngineMode::playing, std::make_shared
-                     <GameScene>(&engine));
+                     <GameScene>(&engine, "main"));
 
-    engine.load("assets/");
     engine.run();
     
 

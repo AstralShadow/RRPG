@@ -13,8 +13,8 @@ class SDL_Surface;
 class LoadingScreen : public Scene
 {
 public:
-    LoadingScreen(Engine*, string root);
-    virtual ~LoadingScreen();
+    LoadingScreen(Engine*);
+    virtual ~LoadingScreen() = default;
 
     void on_enter() { }
     void tick(duration_t) { }
@@ -22,9 +22,9 @@ public:
     void process(SDL_Event const&) { }
 
 private:
-    SDL_Surface* _logo_raw;
-    SDL_Texture* _logo;
     SDL_Rect _pos;
+    const char* _message = "Loading...";
+    SDL_Color _color{255, 255, 255, 255};
 
 };
 

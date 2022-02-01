@@ -14,7 +14,7 @@ class StoryData;
 class GameScene : public Scene
 {
 public:
-    GameScene(Engine*);
+    GameScene(Engine*, string);
     virtual ~GameScene();
 
     void on_enter();
@@ -23,7 +23,7 @@ public:
     void process(SDL_Event const&);
 
 private:
-    StoryData* _story;
+    StoryData* _data;
 };
 
 #endif
