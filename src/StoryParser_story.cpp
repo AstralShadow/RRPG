@@ -81,7 +81,7 @@ parse_story_command(string& line,
     if(args[0] == "next" && args.size() == 2)
     {
         auto cmd = new Command;
-        cmd->command = Command::next_story;
+        cmd->command = Command::story;
         cmd->name = args[1];
         _context_stack.top()->emplace_back(cmd);
         return;

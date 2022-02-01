@@ -45,6 +45,7 @@ private:
     stack<ActionPointer> _linestack;
 
     /* Story processing */
+    void set_story(string);
     void process_action();
     void increment_action_iterator();
     void process_command(shared_ptr<Command>);

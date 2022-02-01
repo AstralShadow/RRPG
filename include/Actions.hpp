@@ -78,7 +78,7 @@ struct Command : public Action
         move,
         spawn,
         despawn,
-        next_story
+        story
     } command;
     
     string name;

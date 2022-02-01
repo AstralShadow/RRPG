@@ -12,22 +12,17 @@ using std::string;
 GameScene::GameScene(Engine* engine, string main_story) :
     Scene(engine),
     _data(&engine->get_story()),
-    _story(main_story),
-    _map(nullptr),
+    _story(),
+    _map(),
     _tilesets(),
     _linestack(),
     _camera_offset{0, 0}
 {
-    ActionPointer beginning {
-        &(_data->stories[_story].actions),
-        _data->stories[_story].actions.begin()
-    };
-    _linestack.push(beginning);
+    set_story(main_story);
 }
 
 GameScene::~GameScene()
 { }
-
 
 void GameScene::on_enter()
 {
@@ -67,9 +62,18 @@ void GameScene::process_action()
         return;
     }
 
+    if(_linestack.top().act == _linestack.top().line->begin())
+        print("We're at the beginning.");
+    if(_linestack.top().act == _linestack.top().line->end())
+        print("We're at the end.");
+
     auto& act_itr = _linestack.top().act;
-    auto& act = *act_itr;
+    auto act = *act_itr;
     auto& line = *(_linestack.top().line);
+
+    act_itr++;
+    if(act_itr == line.end())
+        _linestack.pop();
 
     switch(act->type())
     {
@@ -83,7 +87,4 @@ void GameScene::process_action()
                   act->type_name());
             break;
     }
-
-    if(++act_itr == line.end())
-        _linestack.pop();
 }

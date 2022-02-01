@@ -49,7 +49,7 @@ int Engine::init_window()
     _window = SDL_CreateWindow(
         WINDOW_TITLE,
         SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-        SCREEN_W, SCREEN_H, 0
+        SCREEN_W, SCREEN_H, WINDOW_FLAGS
     );
 
     if(_window)

@@ -11,6 +11,7 @@ typedef uint32_t id_t;
 #define WINDOW_TITLE "my window"
 #define SCREEN_W 800
 #define SCREEN_H 600
+#define WINDOW_FLAGS 0 //SDL_WINDOW_RESIZABLE
 
 /* DEBUG flags */
 #define PRINT_ENGINE_MODE 1
