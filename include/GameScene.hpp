@@ -50,6 +50,9 @@ private:
     void process_command(shared_ptr<Command>);
     void set_map(string name);
 
+    /* Input */
+    bool _dragging = false;
+
     /* Rendering */
     Map* _map;
     map<char, std::pair<Texture, SDL_Point>> _tilesets;

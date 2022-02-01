@@ -41,8 +41,21 @@ void GameScene::tick(milliseconds progress)
 
 void GameScene::process(SDL_Event const& e)
 {
-    if(e.type == SDL_MOUSEBUTTONDOWN)
-        process_action();
+    if(e.type == SDL_MOUSEBUTTONUP)
+    {
+        if(!_dragging)
+            process_action();
+        _dragging = false;
+    }
+    if(e.type == SDL_MOUSEMOTION)
+    {
+        if(e.motion.state & SDL_BUTTON_LMASK)
+        {
+            _dragging = true;
+            _camera_offset.x += e.motion.xrel;
+            _camera_offset.y += e.motion.yrel;
+        }
+    }
         
 }
 
