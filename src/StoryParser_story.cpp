@@ -69,6 +69,24 @@ parse_story_command(string& line,
         return;
     }
 
+    if(args[0] == "set_map" && args.size() == 2)
+    {
+        auto cmd = new Command;
+        cmd->command = Command::map;
+        cmd->name = args[1];
+        _context_stack.top()->emplace_back(cmd);
+        return;
+    }
+
+    if(args[0] == "next" && args.size() == 2)
+    {
+        auto cmd = new Command;
+        cmd->command = Command::next_story;
+        cmd->name = args[1];
+        _context_stack.top()->emplace_back(cmd);
+        return;
+    }
+
     if(args[0] == "move" && args.size() == 3)
     {
         auto cmd = new Command;

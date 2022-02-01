@@ -2,6 +2,8 @@
 :include entities/Gosho
 :include tilesets/grass
 :include maps/meadow
+:include meadow_story
+
 ;:include entities/Petia
 ;:include tilesets/kitchen
 ;:include tilesets/house
