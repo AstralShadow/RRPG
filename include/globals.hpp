@@ -24,6 +24,7 @@ typedef uint32_t id_t;
 #define LOAD_TEXTURES_CACHE 1
 using std::chrono::milliseconds;
 #define DELAY_LOAD_TIME milliseconds(300)
+#define DISABLE_BATCH_PROGRESS_EXECUTION 0
 
 #define PRELOAD_FONT_SIZES {32, 18, 16, 14}
 #define DEFAULT_FONT "assets/fonts/comic_shanns_2.ttf"

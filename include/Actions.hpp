@@ -74,14 +74,18 @@ struct Command : public Action
 {
     Command() = default;
     enum {
+        STORY,
         MAP,
+
         SPAWN, // idle state default
+        REMOVE,
+
         STATE, // affects sprite
         MOVE,
-        SLEEP,
         LOOK,
-        REMOVE,
-        STORY
+        
+        SLEEP,
+        WAIT
     } command;
     
     string name;

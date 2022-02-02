@@ -12,14 +12,17 @@
 #include <vector>
 #include <memory>
 #include <chrono>
+#include <forward_list>
 #include <SDL2/SDL_rect.h>
 
 using std::string;
 using std::stack;
 using std::vector;
 using std::shared_ptr;
-using std::chrono::time_point;
 using std::chrono::steady_clock;
+using std::chrono::time_point;
+using std::chrono::milliseconds;
+using std::forward_list;
 class SDL_Texture;
 class SDL_Surface;
 class StoryData;
@@ -42,6 +45,15 @@ struct EntityState
     string state;
     duration_t animation_progress;
     Direction direction;
+};
+
+struct Motion
+{
+    string entity;
+    duration_t progress;
+    duration_t length;
+    Point start;
+    Point end;
 };
 
 
@@ -76,6 +88,7 @@ private:
     void spawn_entity(Name, SDL_Point, string state);
     void set_entity_state(Name, string state);
     void set_entity_direction(Name, string direction);
+    void move_entity(Name, SDL_Point);
     void remove_entity(Name);
 
     /* Input */
@@ -85,8 +98,13 @@ private:
     float _zoom = 2.5;
 
     /* Ticking */
-    void update_entity_frames(duration_t progress);
+    forward_list<Motion> _motions;
+
+    void update_animations(duration_t progress);
+    void update_motions(duration_t progress);
     void sleep(milliseconds);
+    void wait_entity_motion(Name);
+    void finish_motion(Motion& motion);
 
     /* Rendering */
     Map* _map;

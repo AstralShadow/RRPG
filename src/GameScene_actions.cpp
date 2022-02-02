@@ -5,9 +5,11 @@
 #define ENABLE_PRINTING PRINT_GAME_LOG
 #include "print.hpp"
 #include <stdexcept>
+#include <cmath>
 
 using std::string;
 using std::runtime_error;
+using std::sqrt;
 
 
 void GameScene::process_command(shared_ptr<Command> cmd)
@@ -29,6 +31,10 @@ void GameScene::process_command(shared_ptr<Command> cmd)
                          cmd->state);
             break;
 
+        case Command::MOVE:
+            move_entity(cmd->name, cmd->pos);
+            break;
+
         case Command::STATE:
             set_entity_state(cmd->name,
                              cmd->state);
@@ -46,8 +52,12 @@ void GameScene::process_command(shared_ptr<Command> cmd)
             sleep(milliseconds(std::stoi(cmd->name)));
             break;
 
+        case Command::WAIT:
+            wait_entity_motion(cmd->name);
+            break;
+
         default:
-            print("Not parsing command: not implemented");
+            print("Unknown command: ", cmd->command);
             break;
     }
 }
@@ -87,6 +97,8 @@ void GameScene::set_map(string name)
     print("Preparing map: ", name);
     _map = &(map->second);
     _tilesets.empty();
+    _entities.empty();
+    _motions.empty();
 
     for(auto pair : _map->tilesets)
     {
@@ -196,3 +208,55 @@ void GameScene::remove_entity(string name)
     _entities.erase(name);
 }
 
+void GameScene::move_entity(string name, SDL_Point pos)
+{
+    auto entity = _entities.find(name);
+    if(entity == _entities.end())
+    {
+        print("Can not move entity that doesn't exist.");
+        return;
+    }
+
+    Motion motion;
+    motion.entity = name;
+    motion.progress = duration_t(0);
+
+    Point delta{
+        pos.x - entity->second.pos.x,
+        pos.y - entity->second.pos.y
+    };
+    int duration =
+        sqrt (delta.x * delta.x + delta.y * delta.y)
+        * 1000 / 3;
+    motion.length = duration_t(duration);
+    motion.start.x = entity->second.pos.x;
+    motion.start.y = entity->second.pos.y;
+    motion.end.x = pos.x;
+    motion.end.y = pos.y;
+
+    _motions.push_front(motion);
+}
+
+void GameScene::wait_entity_motion(string name)
+{
+    duration_t max(0);
+    for(auto& motion : _motions)
+    {
+        if(motion.entity != name) continue;
+        auto ETA = motion.length - motion.progress;
+        if(ETA > max)
+            max = ETA;
+    }
+    
+    auto ETF = steady_clock::now() + max;
+    if(ETF > _action_end)
+        _action_end = ETF;
+}
+
+void GameScene::finish_motion(Motion& motion)
+{
+    _entities[motion.entity].pos.x = motion.end.x;
+    _entities[motion.entity].pos.y = motion.end.y;
+    print("Finished motion to ", motion.end.x, 
+            ":", motion.end.y);
+}
