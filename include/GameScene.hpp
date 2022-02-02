@@ -84,7 +84,7 @@ private:
     /* Input */
     bool _wait = true;
     bool _dragging = false;
-    float _zoom = 2.0;
+    float _zoom = 2.5;
 
     /* Ticking */
     void update_entity_frames(duration_t progress);

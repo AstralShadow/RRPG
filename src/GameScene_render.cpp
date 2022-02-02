@@ -107,7 +107,6 @@ void GameScene::render_entities(SDL_Renderer* rnd)
             (entity.animation_progress * ani_data.speed)
             .count()) % ani_data.frames;
 
-        print("ani frame: ",frame, "(",entity.state,")");
         switch(entity.direction)
         {
             case Direction::LEFT:
@@ -123,11 +122,9 @@ void GameScene::render_entities(SDL_Renderer* rnd)
                 frame += ani_data.right;
                 break;
         }
-        print("ani frame total: ", frame);
 
         from.x = frame % entity.sprite->size.x;
         from.y = frame / entity.sprite->size.x;
-        print("ani frame pos: ", from.x, ":", from.y);
         from.x *= from.w;
         from.y *= from.h;
 
