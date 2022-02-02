@@ -1,9 +1,40 @@
+:include sprites/Cooker
+:include sprites/Grandmother
 :include sprites/Jack
-:include entities/Gosho
+:include sprites/Jessy
+:include sprites/John
+:include sprites/Keily
+:include sprites/Klara
+:include sprites/Lora
+:include sprites/Necromant
+:include sprites/Negyr
+:include sprites/Ron
+:include sprites/Sofia
+
+:include entities/Cale
+:include entities/Jack
+:include entities/Jessy
+:include entities/John
+:include entities/Keily
+:include entities/Klara
+:include entities/Lora
+:include entities/Lucy
+:include entities/Necromancer
+:include entities/Petia
+:include entities/Ron
+:include entities/Sofia
+
 :include tilesets/grass
+:include tilesets/olddarkwood
+:include tilesets/darkwood
+:include tilesets/lightwood
+:include tilesets/oldlightwood
+
+:include maps/floor
 :include maps/meadow
 :include maps/meadow2
-:include meadow_story
+
+:include meadow_story1
 
 ;:include entities/Petia
 ;:include tilesets/kitchen

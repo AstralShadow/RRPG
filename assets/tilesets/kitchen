@@ -1,4 +1,0 @@
-#tileset kitchen
-    :sprite kitchen.png
-    :size 10 10
-        ;tiles in kitchen.png
