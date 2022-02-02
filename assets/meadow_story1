@@ -14,19 +14,6 @@
     :spawn Ron 4 4 walking
     :spawn Sofia 3 1 walking
     :sleep 2500
-    :look Cale down
-    :look Jack down
-    :look Jessy down
-    :look John down
-    :look Keily down
-    :look Klara down
-    :look Lora down
-    :look Lucy down
-    :look Necromancer down
-    :look Petia down
-    :look Ron down
-    :look Sofia down
-    :sleep 2500
     :look Cale left
     :look Jack left
     :look Jessy left

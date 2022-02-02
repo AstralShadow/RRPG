@@ -25,7 +25,12 @@
 :include entities/Sofia
 
 :include tilesets/grass
+:include tilesets/olddarkwood
+:include tilesets/darkwood
+:include tilesets/lightwood
+:include tilesets/oldlightwood
 
+:include maps/floor
 :include maps/meadow
 :include maps/meadow2
 
