@@ -1,9 +1,9 @@
-#sprite Klara
-    :file sprites/Klara.png
+#sprite Keily
+    :file sprites/Keily.png
     :size 6 4
 
 ;anim is alias for animation
-;anim tStae frame [direction]
+;anim State frame [direction]
 ;anim State frames <count>
 ;anim State speed <fps>
 
