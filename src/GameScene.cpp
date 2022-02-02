@@ -5,6 +5,8 @@
 #include "print.hpp"
 #include <SDL2/SDL_events.h>
 
+using std::chrono::steady_clock;
+using std::chrono::duration_cast;
 using std::chrono::milliseconds;
 using std::string;
 
@@ -12,10 +14,7 @@ using std::string;
 GameScene::GameScene(Engine* engine, string main_story) :
     Scene(engine),
     _data(&engine->get_story()),
-    _story(),
-    _linestack(),
-    _map(),
-    _tilesets(),
+    _action_end(steady_clock::now()),
     _camera_offset{0, 0}
 {
     set_story(main_story);
@@ -26,16 +25,31 @@ GameScene::~GameScene()
 
 void GameScene::on_enter()
 {
-    _wait = false;
+    _wait_input = false;
 }
 
 void GameScene::tick(duration_t progress)
 {
     update_entity_frames(progress);
-    while(!_wait)
+    bool in_action = _action_end > steady_clock::now();
+
+    auto start = steady_clock::now();
+    while(!_wait_input && !in_action)
     {
         process_action();
+        break;
+
+        auto now = steady_clock::now();
+        auto duration = duration_cast
+                    <milliseconds>(now - start);
+
+        if(duration.count() > 1) break;
     }
+}
+
+void GameScene::sleep(milliseconds time)
+{
+    _action_end = steady_clock::now() + time;
 }
 
 void GameScene::update_entity_frames(duration_t progress)
@@ -52,7 +66,7 @@ void GameScene::process(SDL_Event const& e)
     if(e.type == SDL_MOUSEBUTTONUP)
     {
         if(!_dragging && SDL_BUTTON_LEFT)
-            _wait = false;
+            _wait_input = false;
         if(!_dragging && SDL_BUTTON_RIGHT)
             _zoom = 2.5;
         _dragging = false;
@@ -95,7 +109,7 @@ void GameScene::process_action()
     if(act_itr == line.end())
         _linestack.pop();
 
-    _wait = true;
+    _wait_input = true;
 
     switch(act->type())
     {

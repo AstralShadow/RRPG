@@ -12,6 +12,7 @@ using std::runtime_error;
 
 void GameScene::process_command(shared_ptr<Command> cmd)
 {
+    _wait_input = false;
     switch(cmd->command)
     {
         case Command::MAP:
@@ -20,7 +21,6 @@ void GameScene::process_command(shared_ptr<Command> cmd)
 
         case Command::STORY:
             set_story(cmd->name);
-            _wait = false;
             break;
 
         case Command::SPAWN:
@@ -30,7 +30,20 @@ void GameScene::process_command(shared_ptr<Command> cmd)
             break;
 
         case Command::STATE:
-            set_entity_state(cmd->name, cmd->state);
+            set_entity_state(cmd->name,
+                             cmd->state);
+            break;
+
+        case Command::LOOK:
+            set_entity_direction(cmd->name, cmd->state);
+            break;
+
+        case Command::REMOVE:
+            remove_entity(cmd->name);
+            break;
+
+        case Command::SLEEP:
+            sleep(milliseconds(std::stoi(cmd->name)));
             break;
 
         default:
@@ -95,6 +108,7 @@ void GameScene::set_map(string name)
         cached.first = texture;
         cached.second = size;
     }
+
 }
 
 void GameScene::spawn_entity(string name, 
@@ -151,5 +165,34 @@ void GameScene::set_entity_state(string name,
     entity->second.state = state;
     entity->second.animation_progress = 
        entity->second.animation_progress.zero();
+}
+
+void GameScene::set_entity_direction(string name,
+                                     string direction)
+{
+    auto entity = _entities.find(name);
+    if(entity == _entities.end())
+    {
+        print("Can not set direction: Entity not here.");
+        return;
+    }
+
+    auto& value = entity->second.direction;
+
+    if(direction == "left")
+        value = Direction::LEFT;
+    else if(direction == "right")
+        value = Direction::RIGHT;
+    else if(direction == "down")
+        value = Direction::DOWN;
+    else if(direction == "up")
+        value = Direction::UP;
+    else print("Unknown direction: ", direction);
+
+}
+
+void GameScene::remove_entity(string name)
+{
+    _entities.erase(name);
 }
 

@@ -77,7 +77,9 @@ struct Command : public Action
         MAP,
         SPAWN, // idle state default
         STATE, // affects sprite
-        MOVE, // idle => walking state default
+        MOVE,
+        SLEEP,
+        LOOK,
         REMOVE,
         STORY
     } command;

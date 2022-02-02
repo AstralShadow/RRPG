@@ -100,13 +100,13 @@ parse_sprite_animation_command(string& line,
         frame_id = stoi(pos[0]);
     else
     {
-        int height = _sprites[_target].size.y;
-        if(height < 1)
+        int width = _sprites[_target].size.x;
+        if(width < 1)
             throw std::runtime_error
                 ("You have to define sprite size"
                 " to use position notation on it.");
 
-        frame_id = stoi(pos[0]) + stoi(pos[1]) * height;
+        frame_id = stoi(pos[0]) + stoi(pos[1]) * width;
     }
 
     

@@ -104,13 +104,15 @@ parse_story_command(string& line,
         cmd->command = Command::STATE;
         cmd->name = args[1];
         cmd->state = args[2];
+        _context_stack.top()->emplace_back(cmd);
     }
-
-    if(args[0] == "remove" && args.size() == 2)
+    
+    if(args[0] == "look" && args.size() == 3)
     {
         auto cmd = new Command;
-        cmd->command = Command::REMOVE;
+        cmd->command = Command::LOOK;
         cmd->name = args[1];
+        cmd->state = args[2];
         _context_stack.top()->emplace_back(cmd);
     }
 
@@ -123,6 +125,22 @@ parse_story_command(string& line,
         cmd->pos.y = stoi(args[2]);
         _context_stack.top()->emplace_back(cmd);
         return;
+    }
+
+    if(args[0] == "remove" && args.size() == 2)
+    {
+        auto cmd = new Command;
+        cmd->command = Command::REMOVE;
+        cmd->name = args[1];
+        _context_stack.top()->emplace_back(cmd);
+    }
+
+    if(args[0] == "sleep" && args.size() == 2)
+    {
+        auto cmd = new Command;
+        cmd->command = Command::SLEEP;
+        cmd->name = args[1];
+        _context_stack.top()->emplace_back(cmd);
     }
 
     if(args[0] == "choice" && args.size() > 2)

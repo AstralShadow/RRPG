@@ -1,8 +1,25 @@
 #story main
     :map meadow
-    :spawn Гошо 1 1
+
+    :spawn Гошо 1 1 idle
+    :sleep 1500
+    :look Гошо left
+    :sleep 1500
+    :look Гошо up
+    :sleep 1500
+    :look Гошо right
+    :sleep 1500
     :state Гошо walking
+    :look Гошо down
+    :sleep 1500
+    :look Гошо left
+    :sleep 1500
+    :look Гошо up
+    :sleep 1500
+    :look Гошо right
+    :sleep 1500
     :remove Гошо
+
     :map meadow2
     :spawn Гошо 2 2 walking
     :next main
