@@ -12,7 +12,7 @@
 :include sprites/Sofia
 
 :include entities/Cale
-:include entities/Gosho
+:include entities/Jack
 :include entities/Jessy
 :include entities/John
 :include entities/Keily

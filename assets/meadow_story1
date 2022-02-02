@@ -1,25 +1,70 @@
 #story main
     :map meadow
 
-    :spawn Гошо 1 1 idle
-    :sleep 1500
-    :look Гошо left
-    :sleep 1500
-    :look Гошо up
-    :sleep 1500
-    :look Гошо right
-    :sleep 1500
-    :state Гошо walking
-    :look Гошо down
-    :sleep 1500
-    :look Гошо left
-    :sleep 1500
-    :look Гошо up
-    :sleep 1500
-    :look Гошо right
-    :sleep 1500
-    :remove Гошо
+    :spawn Cale 1 1 walking
+    :spawn Jack 6 5 walking
+    :spawn Jessy 5 1 walking
+    :spawn John 7 1 walking
+    :spawn Keily 2 2 walking
+    :spawn Klara 4 2 walking
+    :spawn Lora 6 2 walking
+    :spawn Lucy 3 3 walking
+    :spawn Necromancer 2 5 walking
+    :spawn Petia 5 3 walking
+    :spawn Ron 4 4 walking
+    :spawn Sofia 3 1 walking
+    :sleep 2500
+    :look Cale down
+    :look Jack down
+    :look Jessy down
+    :look John down
+    :look Keily down
+    :look Klara down
+    :look Lora down
+    :look Lucy down
+    :look Necromancer down
+    :look Petia down
+    :look Ron down
+    :look Sofia down
+    :sleep 2500
+    :look Cale left
+    :look Jack left
+    :look Jessy left
+    :look John left
+    :look Keily left
+    :look Klara left
+    :look Lora left
+    :look Lucy left
+    :look Necromancer left
+    :look Petia left
+    :look Ron left
+    :look Sofia left
+    :sleep 2500
+    :look Cale up
+    :look Jack up
+    :look Jessy up
+    :look John up
+    :look Keily up
+    :look Klara up
+    :look Lora up
+    :look Lucy up
+    :look Necromancer up
+    :look Petia up
+    :look Ron up
+    :look Sofia up
+    :sleep 2500
+    :look Cale right
+    :look Jack right
+    :look Jessy right
+    :look John right
+    :look Keily right
+    :look Klara right
+    :look Lora right
+    :look Lucy right
+    :look Necromancer right
+    :look Petia right
+    :look Ron right
+    :look Sofia right
+    :sleep 2500
 
-    :map meadow2
-    :spawn Гошо 2 2 walking
     :next main
