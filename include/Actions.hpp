@@ -74,14 +74,16 @@ struct Command : public Action
 {
     Command() = default;
     enum {
-        map,
-        move,
-        spawn,
-        remove,
-        story
+        MAP,
+        SPAWN, // idle state default
+        STATE, // affects sprite
+        MOVE, // idle => walking state default
+        REMOVE,
+        STORY
     } command;
     
     string name;
+    string state;
     SDL_Point pos;
     virtual Type type() { return action_command; }
 };

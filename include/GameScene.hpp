@@ -4,16 +4,20 @@
 #include "Scene.hpp"
 #include "Actions.hpp"
 #include "Texture.hpp"
+#include "Sprite.hpp"
 #include <string>
 #include <stack>
 #include <vector>
 #include <memory>
+#include <chrono>
 #include <SDL2/SDL_rect.h>
 
 using std::string;
 using std::stack;
 using std::vector;
 using std::shared_ptr;
+using std::chrono::time_point;
+using std::chrono::steady_clock;
 class SDL_Texture;
 class SDL_Surface;
 class StoryData;
@@ -24,6 +28,16 @@ struct ActionPointer
 {
     vector<shared_ptr<Action>>* line;
     vector<shared_ptr<Action>>::iterator act;
+};
+
+struct EntityState
+{
+    string name;
+    SDL_Point pos;
+
+    Sprite* sprite;
+    string state;
+    time_point<steady_clock> state_animation_start;
 };
 
 
@@ -44,6 +58,7 @@ private:
     /* Progress context */
     string _story;
     stack<ActionPointer> _linestack;
+    map<string, EntityState> _entities;
 
 
     /* Story processing */
@@ -51,9 +66,11 @@ private:
     void increment_action_iterator();
     void process_command(shared_ptr<Command>);
 
-    void set_story(string);
-    void set_map(string name);
-    void spawn_entity(string name, SDL_Point pos);
+    typedef string Name;
+    void set_story(Name);
+    void set_map(Name);
+    void spawn_entity(Name, SDL_Point, string state);
+    void set_entity_state(Name, string state);
 
 
     /* Input */
@@ -69,6 +86,7 @@ private:
 
     void fit_map_on_screen();
     void render_map(SDL_Renderer*);
+    void render_entities(SDL_Renderer*);
 };
 
 #endif

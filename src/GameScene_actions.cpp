@@ -14,17 +14,23 @@ void GameScene::process_command(shared_ptr<Command> cmd)
 {
     switch(cmd->command)
     {
-        case Command::map:
+        case Command::MAP:
             set_map(cmd->name);
             break;
 
-        case Command::story:
+        case Command::STORY:
             set_story(cmd->name);
             _wait = false;
             break;
 
-        case Command::spawn:
-            spawn_entity(cmd->name, cmd->pos);
+        case Command::SPAWN:
+            spawn_entity(cmd->name,
+                         cmd->pos,
+                         cmd->state);
+            break;
+
+        case Command::STATE:
+            set_entity_state(cmd->name, cmd->state);
             break;
 
         default:
@@ -91,9 +97,53 @@ void GameScene::set_map(string name)
     }
 }
 
-void GameScene::spawn_entity(string name, SDL_Point pos)
+void GameScene::spawn_entity(string name, 
+                             SDL_Point pos,
+                             string state)
 {
-    print("Spawning entity: Mr. Not Implemented");
+    auto metadata_itr = _data->entities.find(name);
+    if(metadata_itr == _data->entities.end())
+    {
+        print("Can not find entity: ", name);
+        throw runtime_error("Can not find entity.");
+    }
+    auto& metadata = metadata_itr->second;
 
+    auto sprite = _data->sprites.find(metadata.sprite);
+    if(sprite == _data->sprites.end())
+    {
+        print("Can not find sprite: ", metadata.sprite);
+        throw runtime_error("Can not find sprite.");
+    }
+
+    auto& entity = _entities[name];
+    entity.name = name;
+    entity.pos = pos;
+    entity.sprite = &(sprite->second);
+    set_entity_state(name, state);
+
+    print("Spawning entity: ", name);
+}
+
+void GameScene::set_entity_state(string name,
+                                 string state)
+{
+    auto entity = _entities.find(name);
+    if(entity == _entities.end())
+    {
+        print("Can not set state: Entity not in scene.");
+        return;
+    }
+
+    auto sprite = entity->second.sprite;
+    auto sprite_state = sprite->animation.find(state);
+    if(sprite_state == sprite->animation.end())
+    {
+        print("Entity state not in sprite animations.");
+        print("Entity: ", name, " State: ", state);
+        throw std::runtime_error("Invalid entity state");
+    }
+
+    entity->second.state = state;
 }
 

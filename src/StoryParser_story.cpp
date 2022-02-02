@@ -72,7 +72,7 @@ parse_story_command(string& line,
     if(args[0] == "map" && args.size() == 2)
     {
         auto cmd = new Command;
-        cmd->command = Command::map;
+        cmd->command = Command::MAP;
         cmd->name = args[1];
         _context_stack.top()->emplace_back(cmd);
         return;
@@ -81,26 +81,35 @@ parse_story_command(string& line,
     if(args[0] == "next" && args.size() == 2)
     {
         auto cmd = new Command;
-        cmd->command = Command::story;
+        cmd->command = Command::STORY;
         cmd->name = args[1];
         _context_stack.top()->emplace_back(cmd);
         return;
     }
 
-    if(args[0] == "spawn" && args.size() == 4)
+    if(args[0] == "spawn" && args.size() >= 4)
     {
         auto cmd = new Command;
-        cmd->command = Command::spawn;
+        cmd->command = Command::SPAWN;
         cmd->name = args[1];
         cmd->pos.x = stoi(args[2]);
         cmd->pos.y = stoi(args[3]);
+        cmd->state = args.size() > 4 ? args[4] : "idle";
         _context_stack.top()->emplace_back(cmd);
+    }
+
+    if(args[0] == "state" && args.size() == 3)
+    {
+        auto cmd = new Command;
+        cmd->command = Command::STATE;
+        cmd->name = args[1];
+        cmd->state = args[2];
     }
 
     if(args[0] == "remove" && args.size() == 2)
     {
         auto cmd = new Command;
-        cmd->command = Command::remove;
+        cmd->command = Command::REMOVE;
         cmd->name = args[1];
         _context_stack.top()->emplace_back(cmd);
     }
@@ -108,7 +117,7 @@ parse_story_command(string& line,
     if(args[0] == "move" && args.size() == 3)
     {
         auto cmd = new Command;
-        cmd->command = Command::move;
+        cmd->command = Command::MOVE;
         cmd->name = _speaker;
         cmd->pos.x = stoi(args[1]);
         cmd->pos.y = stoi(args[2]);
