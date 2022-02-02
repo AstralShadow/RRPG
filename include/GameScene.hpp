@@ -5,6 +5,7 @@
 #include "Actions.hpp"
 #include "Texture.hpp"
 #include "Sprite.hpp"
+#include "Point.hpp"
 #include <string>
 #include <stack>
 #include <vector>
@@ -30,14 +31,21 @@ struct ActionPointer
     vector<shared_ptr<Action>>::iterator act;
 };
 
+enum struct Direction : uint8_t
+{
+    UP, LEFT, DOWN, RIGHT
+};
+
 struct EntityState
 {
     string name;
-    SDL_Point pos;
+    Point pos;
 
     Sprite* sprite;
+    Texture texture;
     string state;
-    time_point<steady_clock> state_animation_start;
+    duration_t animation_progress;
+    Direction direction;
 };
 
 
@@ -76,6 +84,10 @@ private:
     /* Input */
     bool _wait = true;
     bool _dragging = false;
+    float _zoom = 2.0;
+
+    /* Ticking */
+    void update_entity_frames(duration_t progress);
 
     /* Rendering */
     Map* _map;

@@ -29,11 +29,21 @@ void GameScene::on_enter()
     _wait = false;
 }
 
-void GameScene::tick(milliseconds)
+void GameScene::tick(duration_t progress)
 {
+    update_entity_frames(progress);
     while(!_wait)
     {
         process_action();
+    }
+}
+
+void GameScene::update_entity_frames(duration_t progress)
+{
+    for(auto& pair : _entities)
+    {
+        auto& entity = pair.second;
+        entity.animation_progress += progress;
     }
 }
 

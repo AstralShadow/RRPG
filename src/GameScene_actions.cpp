@@ -113,6 +113,7 @@ void GameScene::spawn_entity(string name,
     if(sprite == _data->sprites.end())
     {
         print("Can not find sprite: ", metadata.sprite);
+        print("requested by entity: ", name);
         throw runtime_error("Can not find sprite.");
     }
 
@@ -120,7 +121,10 @@ void GameScene::spawn_entity(string name,
     entity.name = name;
     entity.pos = pos;
     entity.sprite = &(sprite->second);
+    entity.direction = Direction::DOWN;
     set_entity_state(name, state);
+    entity.texture = _engine->get_texture
+        (_data->assets_dir + sprite->second.texture);
 
     print("Spawning entity: ", name);
 }
@@ -145,5 +149,7 @@ void GameScene::set_entity_state(string name,
     }
 
     entity->second.state = state;
+    entity->second.animation_progress = 
+       entity->second.animation_progress.zero();
 }
 

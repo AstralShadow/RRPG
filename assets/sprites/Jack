@@ -1,6 +1,6 @@
 #sprite Jack
     :file sprites/Jack.png
-    :size 4 6
+    :size 6 4
 
 ;anim is alias for animation
 ;anim State frame [direction]

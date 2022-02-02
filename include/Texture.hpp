@@ -20,6 +20,7 @@ public:
     ~Texture() = default;
 
     SDL_Texture* get() const { return _data; }
+    operator SDL_Texture*() const { return _data; }
     int w() const { return _w; }
     int h() const { return _h; }
 

@@ -15,6 +15,13 @@ struct Point
         p.y = y + 0.5;
         return p;
     }
+    
+    Point& operator =(SDL_Point p)
+    {
+        x = p.x;
+        y = p.y;
+        return *this;
+    }
 };
 
 #endif
