@@ -85,11 +85,14 @@ void GameScene::set_story(string name)
 void GameScene::
 run_story_arc(vector<shared_ptr<Action>>* arc)
 {
-    ActionPointer beginning {
-        arc,
-        arc->begin()
-    };
-    _linestack.push(beginning);
+    if(arc->size())
+    {
+        ActionPointer beginning {
+            arc,
+            arc->begin()
+        };
+        _linestack.push(beginning);
+    }
 }
 
 void GameScene::set_map(string name)

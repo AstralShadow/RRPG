@@ -161,6 +161,11 @@ void GameScene::process_action()
                      <SetFlag>(act));
             break;
 
+        case Action::action_condition:
+            process_condition(std::static_pointer_cast
+                              <Condition>(act));
+            break;
+
         default:
             print("Not parsing action of type ",
                   act->type_name());

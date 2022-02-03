@@ -86,6 +86,7 @@ private:
     void increment_action_iterator();
     void process_command(shared_ptr<Command>);
     void set_flag(shared_ptr<SetFlag>);
+    void process_condition(shared_ptr<Condition>);
 
     typedef string Name;
     void set_story(Name);

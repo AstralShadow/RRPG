@@ -28,3 +28,14 @@ void GameScene::set_flag(shared_ptr<SetFlag> cmd)
 
     run_story_arc(&arc_itr->second);
 }
+
+void GameScene::
+process_condition(shared_ptr<Condition> cmd)
+{
+    auto condition = _flags.find(cmd->flag);
+    if(condition != _flags.end())
+        run_story_arc(&cmd->actions);
+    else
+        run_story_arc(&cmd->alternative);
+}
+
