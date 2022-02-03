@@ -46,7 +46,8 @@ void GameScene::tick(duration_t progress)
         auto duration = duration_cast
                     <milliseconds>(now - start);
 
-        if(duration.count() > 5) break;
+        if(duration.count() > 5)
+        break;
     }
 }
 
@@ -153,6 +154,11 @@ void GameScene::process_action()
         case Action::action_command:
             process_command(std::static_pointer_cast
                             <Command>(act));
+            break;
+
+        case Action::action_flag:
+            set_flag(std::static_pointer_cast
+                     <SetFlag>(act));
             break;
 
         default:

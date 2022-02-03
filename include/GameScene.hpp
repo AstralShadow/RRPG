@@ -9,9 +9,11 @@
 #include "Direction.hpp"
 #include <string>
 #include <stack>
-#include <vector>
 #include <memory>
 #include <chrono>
+#include <set>
+#include <map>
+#include <vector>
 #include <forward_list>
 #include <SDL2/SDL_rect.h>
 
@@ -23,6 +25,7 @@ using std::chrono::steady_clock;
 using std::chrono::time_point;
 using std::chrono::milliseconds;
 using std::forward_list;
+using std::set;
 class SDL_Texture;
 class SDL_Surface;
 class StoryData;
@@ -75,15 +78,18 @@ private:
     string _story;
     stack<ActionPointer> _linestack;
     map<string, EntityState> _entities;
+    set<Flag> _flags;
 
 
     /* Story processing */
     void process_action();
     void increment_action_iterator();
     void process_command(shared_ptr<Command>);
+    void set_flag(shared_ptr<SetFlag>);
 
     typedef string Name;
     void set_story(Name);
+    void run_story_arc(vector<shared_ptr<Action>>*);
     void set_map(Name);
     void spawn_entity(Name, SDL_Point, string state);
     void set_entity_state(Name, string state);

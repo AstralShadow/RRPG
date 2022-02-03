@@ -19,7 +19,6 @@ struct Story
 {
     StoryName name;
     vector<shared_ptr<Action>> actions;
-    vector<Flag> flags;
     map<Flag, vector<shared_ptr<Action>>> events;
 };
 

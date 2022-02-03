@@ -53,6 +53,7 @@ struct Choice : public Action
     virtual Type type() { return action_choice; }
 };
 
+// Move that to Command.
 struct SetFlag : public Action
 {
     SetFlag() = default;
@@ -70,6 +71,9 @@ struct Condition : public Action
     virtual Type type() { return action_condition; }
 };
 
+// Or entirely split this to more Actions.
+// Or make this more abstract by adding vector<> args
+// Tho i do like the named args.
 struct Command : public Action
 {
     Command() = default;
