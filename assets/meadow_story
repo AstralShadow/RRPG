@@ -11,6 +11,17 @@
     :end
     :set repeating
     
+    :sleep 1000
+    :choice A
+        You clicked A.
+    :end
+    :choice B
+        You clicked B.
+    :end
+    :choice C
+        You clicked C
+    :end
+
     :look right
     :move 3 3
     :wait 
@@ -33,9 +44,11 @@
 
     :look right
     :move 10 1
-    :wait 
 
+    :sleep 2000
     But i still follow AzCraft's scripts.
+
+    :wait 
 
     :spawn Jack -1 1 walking
     :look right

@@ -1,4 +1,6 @@
 #include "GameScene.hpp"
+#include "StoryData.hpp"
+#include "Engine.hpp"
 #include "Map.hpp"
 #include <SDL2/SDL_render.h>
 #define ENABLE_PRINTING PRINT_GAME_LOG
@@ -145,8 +147,16 @@ void GameScene::render_speeches(SDL_Renderer* rnd)
         to.y = speech.pos.y * _zoom * 32;
         to.x += _camera_offset.x;
         to.y += _camera_offset.y;
-        to.w = speech.text.w();
-        to.h = speech.text.h();
+        if(!speech.choice)
+        {
+            to.w = speech.text.w();
+            to.h = speech.text.h();
+        }
+        else
+        {
+            to.w = 100;
+            to.h = 100;
+        }
         to.x -= to.w / 2;
         to.y -= to.h / 2;
 
@@ -179,10 +189,24 @@ void GameScene::render_speeches(SDL_Renderer* rnd)
 
 
         SDL_Rect from {0, 0, to.w, to.h};
-        render_speech_bubble(rnd, to, pos, alpha);
-        SDL_SetTextureAlphaMod(speech.text, alpha);
-        SDL_RenderCopy(rnd, speech.text, &from, &to);
-        SDL_SetTextureAlphaMod(speech.text, 255);
+        
+        string texture_uri = _data->assets_dir;
+        if(speech.choice)
+            texture_uri += "img/choice_bubble.png";
+        else
+            texture_uri += "img/speech_bubble.png";
+
+        auto texture = _engine->get_texture(texture_uri);
+        SDL_SetTextureAlphaMod(texture, alpha);
+        render_speech_bubble(rnd, texture, to, pos);
+        SDL_SetTextureAlphaMod(texture, 255);
+
+        if(!speech.choice)
+        {
+            SDL_SetTextureAlphaMod(speech.text, alpha);
+            SDL_RenderCopy(rnd, speech.text, &from, &to);
+            SDL_SetTextureAlphaMod(speech.text, 255);
+        }
     }
 }
 

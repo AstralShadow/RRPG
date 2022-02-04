@@ -32,10 +32,12 @@ class StoryData;
 class Map;
 
 
+typedef vector<shared_ptr<Action>> StoryArc;
+
 struct ActionPointer
 {
-    vector<shared_ptr<Action>>* line;
-    vector<shared_ptr<Action>>::iterator act;
+    StoryArc* line;
+    StoryArc::iterator act;
 };
 
 struct EntityState
@@ -67,7 +69,12 @@ struct SpeechBubble
     Point pos;
     duration_t age;
 
-    int same_entity_speeches_after_this= 0;
+    
+    typedef string Option;
+    typedef map<Option, StoryArc> ChoiceOptions;
+    ChoiceOptions* choice = nullptr;
+
+    int same_entity_speeches_after_this = 0;
 };
 
 
@@ -100,10 +107,11 @@ private:
     void set_flag(shared_ptr<SetFlag>);
     void process_condition(shared_ptr<Condition>);
     void create_speech(shared_ptr<Speech>);
+    void create_choice(shared_ptr<Choice>);
 
     typedef string Name;
     void set_story(Name);
-    void run_story_arc(vector<shared_ptr<Action>>*);
+    void run_story_arc(StoryArc*);
     void set_map(Name);
     void spawn_entity(Name, SDL_Point, string state);
     void set_entity_state(Name, string state);
@@ -144,9 +152,9 @@ private:
     void render_speeches(SDL_Renderer*);
 
     void render_speech_bubble(SDL_Renderer*,
+                              Texture& texture,
                               SDL_Rect area,
-                              Point* entity_pos,
-                              uint8_t alpha = 255);
+                              Point* entity_pos);
     void render_speech_bubble_edges
         (SDL_Renderer*, Texture&, SDL_Rect area);
     void render_speech_bubble_vertical_borders

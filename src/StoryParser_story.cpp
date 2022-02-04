@@ -188,7 +188,7 @@ parse_story_command(string& line,
         return;
     }
 
-    if(args[0] == "choice" && args.size() > 2)
+    if(args[0] == "choice" && args.size() > 1)
     {
         auto name = explode(' ', line, 1)[1];
         auto& action_list = _context_stack.top();

@@ -61,7 +61,7 @@ void GameScene::remove_old_speeches(duration_t progress)
     while(itr != _speeches.end())
     {
         itr->age += progress;
-        if(itr->age > seconds(5))
+        if(itr->age > seconds(5) && !itr->choice)
         {
             itr = _speeches.erase(itr);
             continue;

@@ -1,6 +1,4 @@
 #include "GameScene.hpp"
-#include "StoryData.hpp"
-#include "Engine.hpp"
 #include <SDL2/SDL_render.h>
 #define ENABLE_PRINTING PRINT_GAME_LOG
 #include "print.hpp"
@@ -18,14 +16,10 @@ using std::chrono::steady_clock;
  */
 void GameScene::
 render_speech_bubble(SDL_Renderer* rnd,
+                     Texture& texture,
                      SDL_Rect area,
-                     Point* entity_pos,
-                     uint8_t alpha)
+                     Point* entity_pos)
 {
-    static Texture texture = _engine->get_texture
-        (_data->assets_dir + "img/speech_bubble.png");
-    SDL_SetTextureAlphaMod(texture, alpha);
-    
     render_speech_bubble_edges
         (rnd, texture, area);
     render_speech_bubble_vertical_borders

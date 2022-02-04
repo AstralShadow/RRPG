@@ -108,9 +108,11 @@ void GameScene::process(SDL_Event const& e)
 {
     if(e.type == SDL_MOUSEBUTTONUP)
     {
-        if(!_dragging && SDL_BUTTON_LEFT)
+        if(!_dragging && e.button.button
+                                == SDL_BUTTON_LEFT)
             _wait_input = false;
-        if(!_dragging && SDL_BUTTON_RIGHT)
+        if(!_dragging && e.button.button
+                                == SDL_BUTTON_RIGHT)
             _zoom = 2.5;
         _dragging = false;
     }
@@ -140,6 +142,7 @@ void GameScene::process_action()
     if(_linestack.size() == 0)
     {
         print("Story finished.");
+        sleep(milliseconds(5000));
         return;
     }
 
@@ -173,6 +176,11 @@ void GameScene::process_action()
         case Action::action_speech:
             create_speech(std::static_pointer_cast
                           <Speech>(act));
+            break;
+
+        case Action::action_choice:
+            create_choice(std::static_pointer_cast
+                          <Choice>(act));
             break;
 
         default:
