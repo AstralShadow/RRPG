@@ -138,10 +138,23 @@ private:
     void render_map(SDL_Renderer*);
     void render_entities(SDL_Renderer*);
     void render_speeches(SDL_Renderer*);
+
     void render_speech_bubble(SDL_Renderer*,
                               SDL_Rect area,
                               Point* entity_pos,
                               uint8_t alpha = 255);
+    void render_speech_bubble_edges
+        (SDL_Renderer*, Texture&, SDL_Rect area);
+    void render_speech_bubble_vertical_borders
+        (SDL_Renderer*, Texture&, SDL_Rect area);
+    void render_speech_bubble_horizontal_borders
+        (SDL_Renderer*, Texture&, SDL_Rect, int ptr_pos);
+    void render_speech_bubble_background
+        (SDL_Renderer*, Texture&, SDL_Rect, int ptr_pos);
+    void render_speech_bubble_horizontal_borders
+        (SDL_Renderer*, Texture&, SDL_Rect);
+    void render_speech_bubble_background
+        (SDL_Renderer*, Texture&, SDL_Rect);
 };
 
 #endif
