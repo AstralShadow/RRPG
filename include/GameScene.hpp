@@ -65,7 +65,9 @@ struct SpeechBubble
     Texture text;
 
     Point pos;
-    time_point<steady_clock> created;
+    duration_t age;
+
+    int same_entity_speeches_after_this= 0;
 };
 
 
@@ -111,7 +113,7 @@ private:
 
     /* Input */
     bool _wait_input = true;
-    time_point<steady_clock> _action_end;
+    duration_t _time_to_wait;
     bool _dragging = false;
     float _zoom = 2.5;
 
@@ -120,8 +122,10 @@ private:
 
     void update_animations(duration_t);
     void update_motions(duration_t);
-    void remove_old_speeches();
-    void position_speeches(duration_t);
+    void remove_old_speeches(duration_t);
+    void position_speeches();
+    void position_speeches_horizontally();
+    void position_speeches_vertically();
 
     void sleep(milliseconds);
     void wait_entity_motion(Name);

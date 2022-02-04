@@ -34,10 +34,6 @@
 :include maps/meadow
 :include maps/meadow2
 
-:include meadow_story1
+:include meadow_story
 
-;:include entities/Petia
-;:include tilesets/kitchen
-;:include tilesets/house
-;:include maps/kitchen
 ;:include main

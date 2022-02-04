@@ -1,24 +1,40 @@
 #story main
     :map meadow
 
-    > Гошо
-    :spawn Гошо 1 1 walking
+    :spawn Jack 1 1 walking
+    > Jack
+    
+    Dear friends.
+    
     :look right
     :move 3 3
     :wait 
+
     :look up
     :move 3 1
     :wait 
+    
+    I am Jack.
+
     :look left
     :move 1 2
     :wait 
+    
     :look up
     :move 1 1
     :wait 
+    
+    I do walk in random pattern.
+
     :look right
-    :move 11 1
+    :move 10 1
     :wait 
 
-    ;:map meadow2
+    But i still follow AzCraft's scripts.
+
+    :spawn Jack -1 1 walking
+    :look right
+    :move 1 1
+    :wait
 
     :next main

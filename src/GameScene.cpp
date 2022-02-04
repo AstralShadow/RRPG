@@ -14,7 +14,7 @@ using std::string;
 GameScene::GameScene(Engine* engine, string main_story) :
     Scene(engine),
     _data(&engine->get_story()),
-    _action_end(steady_clock::now()),
+    _time_to_wait(0),
     _camera_offset{0, 0}
 {
     set_story(main_story);
@@ -30,14 +30,15 @@ void GameScene::on_enter()
 
 void GameScene::tick(duration_t progress)
 {
+    _time_to_wait -= progress;
+
     update_animations(progress);
     update_motions(progress);
-    remove_old_speeches();
-    position_speeches(progress);
+    remove_old_speeches(progress);
+    position_speeches();
 
     auto start = steady_clock::now();
-    while(!_wait_input &&
-          _action_end < steady_clock::now())
+    while(!_wait_input && _time_to_wait.count() <= 0)
     {
         process_action();
         #if DISABLE_BATCH_PROGRESS_EXECUTION
@@ -55,7 +56,8 @@ void GameScene::tick(duration_t progress)
 
 void GameScene::sleep(milliseconds time)
 {
-    _action_end = steady_clock::now() + time;
+    if(time > _time_to_wait)
+        _time_to_wait = duration_cast<duration_t>(time);
 }
 
 void GameScene::update_animations(duration_t progress)

@@ -30,8 +30,14 @@ render_speech_bubble(SDL_Renderer* rnd,
         (rnd, texture, area);
     render_speech_bubble_vertical_borders
         (rnd, texture, area);
-
-    if(entity_pos)
+    
+    /* 42 is the answer and fixes one rendering bug
+     * Most likely no one will see this.
+     * If you wanna see the bug, remove "&& area.w >= 42"
+     * and enable slow-motion. To get slow-motion just do
+     * progress /= 3; in GameScene::tick().
+     */
+    if(entity_pos && area.w >= 42)
     {
         int ptr_pos = (entity_pos->x * 32 + 16) * _zoom;
         ptr_pos += _camera_offset.x;

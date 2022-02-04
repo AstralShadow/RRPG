@@ -10,6 +10,8 @@
 using std::string;
 using std::runtime_error;
 using std::sqrt;
+using std::chrono::duration_cast;
+using std::chrono::milliseconds;
 
 
 void GameScene::process_command(shared_ptr<Command> cmd)
@@ -255,10 +257,8 @@ void GameScene::wait_entity_motion(string name)
         if(ETA > max)
             max = ETA;
     }
-    
-    auto ETF = steady_clock::now() + max;
-    if(ETF > _action_end)
-        _action_end = ETF;
+
+    sleep(duration_cast<milliseconds>(max));
 }
 
 void GameScene::finish_motion(Motion& motion)

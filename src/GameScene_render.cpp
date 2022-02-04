@@ -138,8 +138,6 @@ void GameScene::render_entities(SDL_Renderer* rnd)
 
 void GameScene::render_speeches(SDL_Renderer* rnd)
 {
-    auto now = steady_clock::now();
-
     SDL_Rect to;
     for(auto& speech : _speeches)
     {
@@ -156,9 +154,11 @@ void GameScene::render_speeches(SDL_Renderer* rnd)
         Point* pos = nullptr;
         if(entity != _entities.end())
             pos = &entity->second.pos;
+        if(speech.same_entity_speeches_after_this)
+            pos = nullptr;
 
-        auto age = duration_cast<milliseconds>
-                (now - speech.created);
+        auto age = duration_cast
+                    <milliseconds>(speech.age);
 
         uint8_t alpha = 255;
         if(age.count() > 3000)
