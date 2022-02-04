@@ -14,7 +14,6 @@ using std::sqrt;
 
 void GameScene::process_command(shared_ptr<Command> cmd)
 {
-    _wait_input = false;
     switch(cmd->command)
     {
         case Command::MAP:

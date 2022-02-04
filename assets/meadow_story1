@@ -13,7 +13,15 @@
     :spawn Petia 5 3 walking
     :spawn Ron 4 4 walking
     :spawn Sofia 3 1 walking
+    
+    > Necromancer
+    I'ma tha necro dancar.
+
+    > Keily
+    And i'm have can speak.
+
     :sleep 2500
+
     :look Cale left
     :look Jack left
     :look Jessy left

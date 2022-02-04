@@ -32,6 +32,8 @@ void GameScene::tick(duration_t progress)
 {
     update_animations(progress);
     update_motions(progress);
+    remove_old_speeches();
+    position_speeches(progress);
 
     auto start = steady_clock::now();
     while(!_wait_input &&
@@ -147,7 +149,7 @@ void GameScene::process_action()
     if(act_itr == line.end())
         _linestack.pop();
 
-    _wait_input = true;
+    _wait_input = false;
 
     switch(act->type())
     {
@@ -164,6 +166,11 @@ void GameScene::process_action()
         case Action::action_condition:
             process_condition(std::static_pointer_cast
                               <Condition>(act));
+            break;
+
+        case Action::action_speech:
+            create_speech(std::static_pointer_cast
+                          <Speech>(act));
             break;
 
         default:

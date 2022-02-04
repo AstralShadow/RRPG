@@ -59,6 +59,15 @@ struct Motion
     Point end;
 };
 
+struct SpeechBubble
+{
+    string entity;
+    Texture text;
+
+    Point pos;
+    time_point<steady_clock> created;
+};
+
 
 class GameScene : public Scene
 {
@@ -79,6 +88,7 @@ private:
     stack<ActionPointer> _linestack;
     map<string, EntityState> _entities;
     set<Flag> _flags;
+    vector<SpeechBubble> _speeches;
 
 
     /* Story processing */
@@ -87,6 +97,7 @@ private:
     void process_command(shared_ptr<Command>);
     void set_flag(shared_ptr<SetFlag>);
     void process_condition(shared_ptr<Condition>);
+    void create_speech(shared_ptr<Speech>);
 
     typedef string Name;
     void set_story(Name);
@@ -107,8 +118,11 @@ private:
     /* Ticking */
     forward_list<Motion> _motions;
 
-    void update_animations(duration_t progress);
-    void update_motions(duration_t progress);
+    void update_animations(duration_t);
+    void update_motions(duration_t);
+    void remove_old_speeches();
+    void position_speeches(duration_t);
+
     void sleep(milliseconds);
     void wait_entity_motion(Name);
     void finish_motion(Motion& motion);
@@ -123,6 +137,11 @@ private:
     void fit_map_on_screen();
     void render_map(SDL_Renderer*);
     void render_entities(SDL_Renderer*);
+    void render_speeches(SDL_Renderer*);
+    void render_speech_bubble(SDL_Renderer*,
+                              SDL_Rect area,
+                              Point* entity_pos,
+                              uint8_t alpha = 255);
 };
 
 #endif

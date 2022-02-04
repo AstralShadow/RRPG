@@ -46,7 +46,7 @@ public:
     void update_screen() { render(); }
 
     Texture get_texture(string uri);
-    Texture get_text(string, SDL_Color, int size = 14);
+    Texture get_text(string, SDL_Color, int size = 18);
 
 private:
     bool _running;

@@ -1,11 +1,16 @@
 #include "GameScene.hpp"
+#include "StoryData.hpp"
+#include "Engine.hpp"
 #include "Map.hpp"
 #include <SDL2/SDL_render.h>
 #define ENABLE_PRINTING PRINT_GAME_LOG
 #include "print.hpp"
+#include <chrono>
 
 using std::chrono::duration_cast;
 using std::chrono::seconds;
+using std::chrono::milliseconds;
+using std::chrono::steady_clock;
 
 
 void GameScene::render(SDL_Renderer* rnd)
@@ -17,6 +22,7 @@ void GameScene::render(SDL_Renderer* rnd)
         fit_map_on_screen();
         render_map(rnd);
         render_entities(rnd);
+        render_speeches(rnd);
     }
 }
 
@@ -130,6 +136,162 @@ void GameScene::render_entities(SDL_Renderer* rnd)
 
 
         SDL_RenderCopy(rnd, entity.texture, &from, &to);
+    }
+}
+
+void GameScene::render_speeches(SDL_Renderer* rnd)
+{
+    auto now = steady_clock::now();
+
+    SDL_Rect to;
+    for(auto& speech : _speeches)
+    {
+        to.x = speech.pos.x * _zoom * 32;
+        to.y = speech.pos.y * _zoom * 32;
+        to.x += _camera_offset.x;
+        to.y += _camera_offset.y;
+        to.w = speech.text.w();
+        to.h = speech.text.h();
+        to.x -= to.w / 2;
+        to.y -= to.h / 2;
+
+        auto entity = _entities.find(speech.entity);
+        Point* pos = nullptr;
+        if(entity != _entities.end())
+            pos = &entity->second.pos;
+
+        auto age = duration_cast<milliseconds>
+                (now - speech.created);
+
+        uint8_t alpha = 255;
+        if(age.count() > 3000)
+        {
+            int opacity = 4000 - age.count();
+            if(opacity < 0) opacity = 0;
+            alpha = opacity * 32 / 125;
+        }
+        if(age.count() < 500)
+        {
+            auto width = to.w * age.count() / 500;
+            to.x += (to.w - width) / 2;
+            to.w = width;
+        }
+        
+        if(age.count() < 0)
+            continue;
+
+
+        SDL_Rect from {0, 0, to.w, to.h};
+        render_speech_bubble(rnd, to, pos, alpha);
+        SDL_SetTextureAlphaMod(speech.text, alpha);
+        SDL_RenderCopy(rnd, speech.text, &from, &to);
+        SDL_SetTextureAlphaMod(speech.text, 255);
+    }
+}
+
+
+void GameScene::
+render_speech_bubble(SDL_Renderer* rnd,
+                     SDL_Rect area,
+                     Point* entity_pos,
+                     uint8_t alpha)
+{
+    /*
+     * Assuming our speech bubble is 4x3 tiles. Content:
+     * [edge]   [t line] [top line + poitner] [edge]
+     * [l line] [bg]     [bg + pointer]       [r wall]
+     * [edge]   [b line] [b line + pointer]   [edge]
+     */
+    SDL_Rect from {0, 0, 32, 32};
+    SDL_Rect to {0, 0, 32, 32};
+    static Texture texture = _engine->get_texture
+        (_data->assets_dir + "img/speech_bubble.png");
+    SDL_SetTextureAlphaMod(texture, alpha);
+    
+    /* Edges */
+    from.x = 0;
+    from.y = 0;
+    to.x = area.x - 32;
+    to.y = area.y - 32;
+    SDL_RenderCopy(rnd, texture, &from, &to);
+    from.x = 96;
+    to.x = area.x + area.w;
+    SDL_RenderCopy(rnd, texture, &from, &to);
+    from.y = 64;
+    to.y = area.y + area.h;
+    SDL_RenderCopy(rnd, texture, &from, &to);
+    from.x = 0;
+    to.x = area.x - 32;
+    SDL_RenderCopy(rnd, texture, &from, &to);
+
+    /* Vertical borders */
+    to = {area.x, area.y, 32, 32};
+    from = {0, 32, 32, 32};
+
+    int left_h = area.h;
+    while(left_h > 0)
+    {
+        left_h -= 32;
+        int h = left_h > 0 ? 32 : 32 + left_h;
+        from.h = h; to.h = h;
+        
+        to.x = area.x - 32;
+        from.x = 0;
+        SDL_RenderCopy(rnd, texture, &from, &to);
+        to.x = area.x + area.w;
+        from.x = 96;
+        SDL_RenderCopy(rnd, texture, &from, &to);
+        
+        to.y += 32;
+    }
+
+    /* Horizontal borders */
+    to = {area.x, area.y, 32, 32};
+    from = {32, 0, 32, 32};
+
+    int left_w = area.w;
+    while(left_w > 0)
+    {
+        left_w -= 32;
+        int w = left_w > 0 ? 32 : 32 + left_w;
+        from.w = w;
+        to.w = w;
+        
+        from.y = 0;
+        to.y = area.y - 32;
+        SDL_RenderCopy(rnd, texture, &from, &to);
+        from.y = 64;
+        to.y = area.y + area.h;
+        SDL_RenderCopy(rnd, texture, &from, &to);
+        
+        to.x += 32;
+    }
+
+    /* Background */
+    to = {area.x, area.y, 32, 32};
+    from = {32, 32, 32, 32};
+
+    left_w = area.w;
+    while(left_w > 0)
+    {
+        left_w -= 32;
+        int w = left_w > 0 ? 32: 32 + left_w;
+        from.w = w; to.w = w;
+
+        left_h = area.h;
+        to.y = area.y;
+        while(left_h > 0)
+        {
+            left_h -= 32;
+            int h = left_h > 0 ? 32 : 32 + left_h;
+            from.h = h; to.h = h;
+
+            SDL_RenderCopy(rnd, texture, &from, &to);
+
+            to.y += 32;
+        }
+
+        to.x += 32;
     }
 }
 

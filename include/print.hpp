@@ -10,21 +10,22 @@ namespace
 {
 #if ENABLE_PRINTING
     template<typename... T>
-    void print(T...);
+    [[gnu::unused]] void print(T...);
 
     template<typename T, typename... R>
-    void print(T text, R... other)
+    [[gnu::unused]] void print(T text, R... other)
     {
             std::cout << text;
             print(other...);
     }
 
-    template<> void print() {
+    template<>
+    [[gnu::unused]]  void print() {
         std::cout << std::endl;
     }
 #else
     template<typename... T>
-    void print(T...)
+    [[gnu::unused]] void print(T...)
     { }
 #endif
 }
