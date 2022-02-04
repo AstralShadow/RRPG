@@ -73,7 +73,7 @@ void GameScene::set_story(string name)
         throw std::runtime_error("Can not load story.");
     }
     
-    print("Playing story: ", name);
+    print("\nPlaying story: ", name);
 
     _linestack.empty();
     _map = nullptr;
@@ -162,7 +162,7 @@ void GameScene::spawn_entity(string name,
     entity.texture = _engine->get_texture
         (_data->assets_dir + sprite->second.texture);
 
-    print("Spawning entity: ", name);
+    // print("Spawning entity: ", name);
 }
 
 void GameScene::set_entity_state(string name,
@@ -265,6 +265,4 @@ void GameScene::finish_motion(Motion& motion)
 {
     _entities[motion.entity].pos.x = motion.end.x;
     _entities[motion.entity].pos.y = motion.end.y;
-    print("Finished motion to ", motion.end.x, 
-            ":", motion.end.y);
 }

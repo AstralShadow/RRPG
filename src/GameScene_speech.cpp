@@ -52,7 +52,6 @@ void GameScene::create_speech(shared_ptr<Speech> cmd)
         other.same_entity_speeches_after_this++;
     }
 
-    print("Addin' speech bubblo");
     _speeches.push_back(speech);
 }
 

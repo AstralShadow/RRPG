@@ -4,7 +4,12 @@
     :spawn Jack 1 1 walking
     > Jack
     
-    Dear friends.
+    :if repeating
+        So, dear friends.
+    :else
+        Dear friends!
+    :end
+    :set repeating
     
     :look right
     :move 3 3
