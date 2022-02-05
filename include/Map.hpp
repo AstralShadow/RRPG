@@ -36,8 +36,11 @@ struct Map::TileData
     enum : uint8_t
     {
         mode_pos,
-        mode_id
+        mode_id,
+        mode_empty
     } mode;
+
+    TileData() : mode(mode_empty) {}
 
     TileData(char t, uint16_t id) :
         tileset(t),

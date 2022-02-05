@@ -68,6 +68,12 @@ void StoryParser::parse_map_data(string line)
             input = input.substr(1);
         }
 
+        if(tileset == '.')
+        {
+            _maps[_target].data.emplace_back();
+            continue;
+        }
+
         auto pos = explode('.', input, 1);
         if(pos.size() == 1)
             _maps[_target].data.emplace_back

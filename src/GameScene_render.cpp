@@ -64,16 +64,30 @@ void GameScene::render_map(SDL_Renderer* rnd)
         auto& size = cache.second;
         
         SDL_Point pos;
-        if(tile.mode == Map::TileData::mode_pos)
+        switch(tile.mode)
         {
-            pos.x = tile.tile.pos.x;
-            pos.y = tile.tile.pos.y;
-        }
-        else
-        {
-            auto id = tile.tile.id;
-            pos.x = id % size.y;
-            pos.y = id / size.y;
+            case Map::TileData::mode_pos:
+            {
+                pos.x = tile.tile.pos.x;
+                pos.y = tile.tile.pos.y;
+                break;
+            }
+
+            case Map::TileData::mode_id:
+            {
+                auto id = tile.tile.id;
+                pos.x = id % size.y;
+                pos.y = id / size.y;
+                break;
+            }
+
+            case Map::TileData::mode_empty:
+            {
+                map_i++;
+                if(map_i >= map_size.x * map_size.y)
+                    return;
+                continue;
+            }
         }
 
         from.x = pos.x * from.w;
