@@ -154,24 +154,31 @@ void GameScene::render_speeches(SDL_Renderer* rnd)
         }
         else
         {
-            to.w = 100;
-            to.h = 100;
+            to.w = 0;
+            to.h = -5;
+            for(auto pair : *speech.options)
+            {
+                auto texture = pair.first;
+                if(texture.w() > to.w)
+                    to.w = texture.w();
+                to.h += 5 + texture.h();
+            }
         }
         to.x -= to.w / 2;
-        to.y -= to.h / 2;
+        to.y -= to.h;
 
         auto entity = _entities.find(speech.entity);
         Point* pos = nullptr;
         if(entity != _entities.end())
             pos = &entity->second.pos;
-        if(speech.same_entity_speeches_after_this)
+        if(speech.bottom_margin > 0)
             pos = nullptr;
 
         auto age = duration_cast
                     <milliseconds>(speech.age);
 
         uint8_t alpha = 255;
-        if(age.count() > 3000)
+        if(age.count() > 3000 && !speech.options)
         {
             int opacity = 4000 - age.count();
             if(opacity < 0) opacity = 0;
@@ -187,8 +194,6 @@ void GameScene::render_speeches(SDL_Renderer* rnd)
         if(age.count() < 0)
             continue;
 
-
-        SDL_Rect from {0, 0, to.w, to.h};
         
         string texture_uri = _data->assets_dir;
         if(speech.options)
@@ -203,9 +208,28 @@ void GameScene::render_speeches(SDL_Renderer* rnd)
 
         if(!speech.options)
         {
+            SDL_Rect from {0, 0, to.w, to.h};
+
             SDL_SetTextureAlphaMod(speech.text, alpha);
             SDL_RenderCopy(rnd, speech.text, &from, &to);
             SDL_SetTextureAlphaMod(speech.text, 255);
+        }
+        else
+        {
+            for(auto pair : *speech.options)
+            {
+                auto text = pair.first;
+                SDL_SetTextureAlphaMod(text, alpha);
+                
+                to.h = text.h();
+
+                SDL_Rect from {0, 0, to.w, to.h};
+                SDL_RenderCopy(rnd, text, &from, &to);
+
+                to.y += text.h() + 5;
+
+                SDL_SetTextureAlphaMod(text, 255);
+            }
         }
     }
 }

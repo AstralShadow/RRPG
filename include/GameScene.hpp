@@ -28,6 +28,7 @@ using std::forward_list;
 using std::set;
 class SDL_Texture;
 class SDL_Surface;
+class SDL_MouseButtonEvent;
 class StoryData;
 class Map;
 
@@ -70,10 +71,12 @@ struct SpeechBubble
     duration_t age;
 
     
-    typedef map<Texture, StoryArc*> ChoiceOptions;
+    typedef vector<std::pair<Texture,
+                             StoryArc*>> ChoiceOptions;
+
     shared_ptr<ChoiceOptions> options = nullptr;
 
-    int same_entity_speeches_after_this = 0;
+    float bottom_margin = 0;
 };
 
 
@@ -87,6 +90,7 @@ public:
     void tick(duration_t);
     void render(SDL_Renderer*);
     void process(SDL_Event const&);
+    void process(SDL_MouseButtonEvent const&);
 
 private:
     StoryData* _data;

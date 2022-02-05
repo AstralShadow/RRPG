@@ -7,6 +7,7 @@
 #include <memory>
 #include <stdexcept>
 #include <chrono>
+#include <SDL2/SDL_events.h>
 
 
 using std::string;
@@ -28,10 +29,12 @@ void GameScene::create_choice(shared_ptr<Choice> cmd)
     speech.options = std::make_shared
                      <SpeechBubble::ChoiceOptions>();
 
+    float height = 16.0f;
     for(auto& pair : cmd->options)
     {
         auto text = _engine->get_text(pair.first, color);
-        (*speech.options)[text] = &pair.second;
+        speech.options->emplace_back(text, &pair.second);
+        height += text.h() + 5;
     }
 
     speech.pos = _screen_size;
@@ -56,9 +59,15 @@ void GameScene::create_choice(shared_ptr<Choice> cmd)
         if(other.entity != speech.entity)
             continue;
 
-        other.same_entity_speeches_after_this++;
+        other.bottom_margin += height;
     }
 
     _speeches.push_back(speech);
+    _wait_input = true;
+}
+
+void GameScene::process(SDL_MouseButtonEvent const& e)
+{
+    print("Ya attemtped ta click");
 }
 

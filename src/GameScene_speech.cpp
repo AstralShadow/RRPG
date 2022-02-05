@@ -49,7 +49,8 @@ void GameScene::create_speech(shared_ptr<Speech> cmd)
         if(other.entity != speech.entity)
             continue;
 
-        other.same_entity_speeches_after_this++;
+        const float margin = 16.0f;
+        other.bottom_margin += speech.text.h() + margin;
     }
 
     _speeches.push_back(speech);
@@ -115,9 +116,9 @@ void GameScene::position_speeches_vertically()
         auto entity_itr = _entities.find(speech.entity);
         if(entity_itr == _entities.end()) continue;
         auto& entity = entity_itr->second;
-        int id = speech.same_entity_speeches_after_this;
-        speech.pos.y = entity.pos.y - 0.3;
-        speech.pos.y -= id * 1.1 / _zoom;
+        float margin = speech.bottom_margin;
+        speech.pos.y = entity.pos.y;
+        speech.pos.y -= margin / (32 * _zoom);
         
     }
 }

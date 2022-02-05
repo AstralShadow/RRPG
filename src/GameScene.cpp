@@ -108,12 +108,13 @@ void GameScene::process(SDL_Event const& e)
 {
     if(e.type == SDL_MOUSEBUTTONUP)
     {
-        if(!_dragging && e.button.button
-                                == SDL_BUTTON_LEFT)
-            _wait_input = false;
-        if(!_dragging && e.button.button
-                                == SDL_BUTTON_RIGHT)
-            _zoom = 2.5;
+        if(!_dragging)
+        {
+            if(e.button.button == SDL_BUTTON_LEFT)
+                process(e.button);
+            if(e.button.button == SDL_BUTTON_RIGHT)
+                _zoom = 2.5;
+        }
         _dragging = false;
     }
     if(e.type == SDL_MOUSEMOTION)
