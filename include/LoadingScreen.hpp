@@ -13,15 +13,21 @@ class SDL_Surface;
 class LoadingScreen : public Scene
 {
 public:
-    LoadingScreen(Engine*);
+    LoadingScreen(Engine*, string assets_dir);
     virtual ~LoadingScreen() = default;
 
-    void on_enter() { }
-    void tick(duration_t) { }
+    void on_enter();
+    void tick(duration_t);
     void render(SDL_Renderer*);
-    void process(SDL_Event const&) { }
+    void process(SDL_Event const&);
 
 private:
+    string _root;
+    bool _loaded = false;
+    #if BUILD_LEVEL_EDITOR
+        bool _map_editor = false;
+    #endif
+
     SDL_Rect _pos;
     const char* _message = "Loading...";
     SDL_Color _color{255, 255, 255, 255};

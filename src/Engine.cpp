@@ -56,6 +56,12 @@ void Engine::set_mode(EngineMode mode)
         case EngineMode::credits:
             print("Engine mode: creadits");
             break;
+        case EngineMode::map_editor:
+            print("Engine mode: Map editor");
+            break;
+        default:
+            print("Engine mode: unnamed");
+            break;
     }
 
     _mode = mode;

@@ -25,7 +25,8 @@ enum struct EngineMode
     loading,
     menu,
     playing,
-    credits
+    credits,
+    map_editor
 };
 
 

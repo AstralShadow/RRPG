@@ -41,8 +41,6 @@ void Engine::load(string assets_dir)
           "ms to let you see the loading screen.");
     std::this_thread::sleep_for(DELAY_LOAD_TIME);
 #endif
-
-    set_mode(EngineMode::menu);
 }
 
 StoryData Engine::load_story(string assets_dir)

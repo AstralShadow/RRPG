@@ -5,6 +5,12 @@
 #include "GameScene.hpp"
 #include <memory>
 
+#include "globals.hpp"
+#if BUILD_LEVEL_EDITOR
+    #include "LevelEditor.hpp"
+#endif
+
+
 namespace {
     Engine engine;
     const string assets_dir;
@@ -17,9 +23,15 @@ int main(int, char**)
 
 
     engine.set_scene(EngineMode::loading, std::make_shared
-                     <LoadingScreen>(&engine));
+                     <LoadingScreen>(&engine, "assets/"));
     engine.update_screen();
     engine.load("assets/");
+
+#if BUILD_LEVEL_EDITOR
+    engine.set_scene(EngineMode::map_editor,
+                     std::make_shared<LevelEditor>
+                     (&engine));
+#endif
 
     engine.set_scene(EngineMode::menu, std::make_shared
                      <MainMenu>(&engine));
