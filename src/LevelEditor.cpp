@@ -139,6 +139,9 @@ void LevelEditor::set_tileset(Tileset* ptr)
         _selection.y = 0;
         _selection.h = 1;
     }
+
+    _tileset_offset.x = 0;
+    _tileset_offset.y = 0;
 }
 
 void LevelEditor::save()
@@ -163,7 +166,6 @@ void LevelEditor::process(SDL_MouseButtonEvent const& e)
 
             case SDL_BUTTON_RIGHT:
                 _dragging_mode = D_MOVE_MENU;
-                process_selection_dragging(e.x, e.y);
                 break;
 
             default: break;
@@ -190,6 +192,11 @@ void LevelEditor::process(SDL_MouseMotionEvent const& e)
     {
         case D_SELECTION:
             process_selection_dragging(e.x, e.y);
+            break;
+
+        case D_MOVE_MENU:
+            _tileset_offset.x += e.xrel;
+            _tileset_offset.y += e.yrel;
             break;
 
         default:

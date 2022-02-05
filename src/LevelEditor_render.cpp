@@ -30,6 +30,7 @@ void LevelEditor::render_menu(SDL_Renderer* rnd)
 {
     SDL_SetRenderDrawColor(rnd, 32, 0, 32, 255);
     SDL_RenderFillRect(rnd, &_menu);
+    SDL_RenderSetClipRect(rnd, &_menu);
 
     string uri = _engine->get_story().assets_dir
                 + _tileset->texture;
@@ -40,13 +41,11 @@ void LevelEditor::render_menu(SDL_Renderer* rnd)
         to.h = texture.h() * 1.5;
     if(to.w > texture.w() * 1.5)
         to.w = texture.w() * 1.5;
+    
+    to.x += _tileset_offset.x;
+    to.y += _tileset_offset.y;
 
-    SDL_Rect from = {
-        _tileset_offset.x,
-        _tileset_offset.y,
-        to.w,
-        to.h
-    };
+    SDL_Rect from = {0, 0, to.w, to.h};
     from.w /= 1.5;
     from.h /= 1.5;
 
@@ -59,4 +58,5 @@ void LevelEditor::render_menu(SDL_Renderer* rnd)
     SDL_SetRenderDrawColor(rnd, 255, 255, 255, 255);
     SDL_RenderDrawRect(rnd, &selection);
 
+    SDL_RenderSetClipRect(rnd, nullptr);
 }
