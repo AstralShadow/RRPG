@@ -24,8 +24,15 @@ void GameScene::create_choice(shared_ptr<Choice> cmd)
 {
     SpeechBubble speech;
     speech.entity = cmd->entity;
-    speech.choice = &cmd->options;
     speech.age = duration_t(0);
+    speech.options = std::make_shared
+                     <SpeechBubble::ChoiceOptions>();
+
+    for(auto& pair : cmd->options)
+    {
+        auto text = _engine->get_text(pair.first, color);
+        (*speech.options)[text] = &pair.second;
+    }
 
     speech.pos = _screen_size;
     speech.pos.x /= 2;

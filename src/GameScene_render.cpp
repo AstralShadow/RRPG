@@ -147,7 +147,7 @@ void GameScene::render_speeches(SDL_Renderer* rnd)
         to.y = speech.pos.y * _zoom * 32;
         to.x += _camera_offset.x;
         to.y += _camera_offset.y;
-        if(!speech.choice)
+        if(!speech.options)
         {
             to.w = speech.text.w();
             to.h = speech.text.h();
@@ -191,7 +191,7 @@ void GameScene::render_speeches(SDL_Renderer* rnd)
         SDL_Rect from {0, 0, to.w, to.h};
         
         string texture_uri = _data->assets_dir;
-        if(speech.choice)
+        if(speech.options)
             texture_uri += "img/choice_bubble.png";
         else
             texture_uri += "img/speech_bubble.png";
@@ -201,7 +201,7 @@ void GameScene::render_speeches(SDL_Renderer* rnd)
         render_speech_bubble(rnd, texture, to, pos);
         SDL_SetTextureAlphaMod(texture, 255);
 
-        if(!speech.choice)
+        if(!speech.options)
         {
             SDL_SetTextureAlphaMod(speech.text, alpha);
             SDL_RenderCopy(rnd, speech.text, &from, &to);

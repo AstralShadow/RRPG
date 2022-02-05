@@ -70,9 +70,8 @@ struct SpeechBubble
     duration_t age;
 
     
-    typedef string Option;
-    typedef map<Option, StoryArc> ChoiceOptions;
-    ChoiceOptions* choice = nullptr;
+    typedef map<Texture, StoryArc*> ChoiceOptions;
+    shared_ptr<ChoiceOptions> options = nullptr;
 
     int same_entity_speeches_after_this = 0;
 };
