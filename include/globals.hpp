@@ -43,4 +43,7 @@ struct SDL_Color;
 extern bool operator < (SDL_Color const&,
                         SDL_Color const&);
 
+struct SDL_Rect;
+extern SDL_Rect operator * (SDL_Rect const&, float);
+
 #endif
