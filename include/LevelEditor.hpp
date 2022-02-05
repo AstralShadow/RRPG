@@ -23,9 +23,9 @@ public:
         struct TileData
         {
             bool empty = true;
-            string tileset;
-            int x;
-            int y;
+            Tileset* tileset = nullptr;
+            int x = 0;
+            int y = 0;
         };
 
         Map();
@@ -37,8 +37,8 @@ public:
         TileData& operator [](int);
 
     private:
-        SDL_Point _actual_size {10, 10};
-        SDL_Point _size {10, 10};
+        SDL_Point _actual_size {7, 7};
+        SDL_Point _size {7, 7};
         TileData* _data = nullptr;
 
         void resize(SDL_Point);
@@ -54,6 +54,7 @@ public:
     void process(SDL_KeyboardEvent const&);
     void process(SDL_MouseButtonEvent const&);
     void process(SDL_MouseMotionEvent const&);
+    void post_process(SDL_MouseButtonEvent const&);
 
 private:
     bool _show_menu = true;
@@ -65,6 +66,7 @@ private:
 
     Map _map;
     SDL_Point _map_offset{0, 0};
+    float _map_zoom = 2.5;
     
     string _tileset_name;
     Tileset* _tileset = nullptr;
@@ -75,9 +77,11 @@ private:
         D_NONE,
         D_SELECTION,
         D_MOVE_MENU,
-        D_MOVE_MAP
+        D_MOVE_MAP,
+        D_ZOOM_MAP
     } _dragging_mode;
     SDL_Point _dragging_start{0, 0};
+    bool _dragged = false;
 
 
     void process_selection_dragging(int x, int y);

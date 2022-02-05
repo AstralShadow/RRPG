@@ -8,7 +8,7 @@ LevelEditor::Map::Map()
 }
 
 LevelEditor::Map::TileData&
-LevelEditor::Map::operator [] (int pos)
+LevelEditor::Map::operator [](int pos)
 {
     return at(pos % _size.x, pos / _size.x);
 }

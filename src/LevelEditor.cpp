@@ -36,7 +36,7 @@ void LevelEditor::process(SDL_Event const& e)
     if(e.type == SDL_MOUSEBUTTONDOWN)
         process(e.button);
     if(e.type == SDL_MOUSEBUTTONUP)
-        _dragging_mode = D_NONE;
+        post_process(e.button);
 
     if(e.type == SDL_MOUSEMOTION)
         process(e.motion);
@@ -180,14 +180,38 @@ void LevelEditor::process(SDL_MouseButtonEvent const& e)
        switch(e.button)
        {
             case SDL_BUTTON_LEFT:
+                _dragging_mode = D_MOVE_MAP;
                 break;
             
             case SDL_BUTTON_RIGHT:
+                _dragging_mode = D_ZOOM_MAP;
                 break;
 
             default: break;
        }
     }
+}
+
+void LevelEditor::
+post_process(SDL_MouseButtonEvent const& e)
+{
+    if(!_dragged)
+    {
+        switch(_dragging_mode)
+        {
+            case D_ZOOM_MAP:
+                _map_zoom = 2.5;
+                break;
+
+            case D_MOVE_MAP:
+                print("Should've placed some blocks");
+                break;
+
+            default: break;
+        }
+    }
+    _dragged = false;
+    _dragging_mode = D_NONE;
 }
 
 void LevelEditor::process(SDL_MouseMotionEvent const& e)
@@ -203,9 +227,20 @@ void LevelEditor::process(SDL_MouseMotionEvent const& e)
             _tileset_offset.y += e.yrel;
             break;
 
-        default:
+        case D_MOVE_MAP:
+            _map_offset.x += e.xrel;
+            _map_offset.y += e.yrel;
             break;
+
+        case D_ZOOM_MAP:
+            _map_zoom += e.xrel / 100.0f;
+            break;
+
+        default:
+            return;
     }
+
+    _dragged = true;
 }
 
 void LevelEditor::
@@ -244,4 +279,5 @@ process_selection_dragging(int x, int y)
 
     _selection = {x1, y1, x2, y2};
 }
+
 
