@@ -59,15 +59,60 @@ void GameScene::create_choice(shared_ptr<Choice> cmd)
         if(other.entity != speech.entity)
             continue;
 
-        other.bottom_margin += height;
+        other.bottom_margin += height - 5;
     }
 
     _speeches.push_back(speech);
     _wait_input = true;
 }
 
-void GameScene::process(SDL_MouseButtonEvent const& e)
+void GameScene::
+make_choice(SDL_MouseButtonEvent const& e)
 {
-    print("Ya attemtped ta click");
+    auto itr = _speeches.begin();
+    while(itr != _speeches.end() && !itr->options)
+        itr++;
+
+    if(itr == _speeches.end())
+    {
+        print("No choice bubble found, story resumes.");
+        _wait_input = false;
+        return;
+    }
+
+    SDL_Point mouse_pos {e.x, e.y};
+    SDL_Rect area {0, 0, 0, -5};
+    area.x = _camera_offset.x + itr->pos.x * _zoom * 32;
+    area.y = _camera_offset.y + itr->pos.y * _zoom * 32;
+    
+
+    for(auto pair : *itr->options)
+    {
+        if(area.w < pair.first.w())
+            area.w = pair.first.w();
+        area.h += pair.first.h() + 5;
+    }
+
+    area.w += 16;
+    auto speech_height = area.h + 16;
+
+    area.x -= area.w / 2;
+    area.y -= area.h;
+    
+    for(auto pair : *itr->options)
+    {
+        area.h = pair.first.h();
+        if(SDL_PointInRect(&mouse_pos, &area))
+        {
+            run_story_arc(pair.second);
+            _speeches.erase(itr);
+            for(auto& speech : _speeches)
+                speech.bottom_margin
+                        -= speech_height;
+            _wait_input = false;
+            return;
+        }
+        area.y += area.h + 5;
+    }
 }
 

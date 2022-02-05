@@ -110,10 +110,15 @@ void GameScene::process(SDL_Event const& e)
     {
         if(!_dragging)
         {
-            if(e.button.button == SDL_BUTTON_LEFT)
-                process(e.button);
+            if(e.button.button == SDL_BUTTON_LEFT
+                && _wait_input)
+            {
+                make_choice(e.button);
+            }
             if(e.button.button == SDL_BUTTON_RIGHT)
+            {
                 _zoom = 2.5;
+            }
         }
         _dragging = false;
     }

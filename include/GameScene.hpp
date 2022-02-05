@@ -90,7 +90,7 @@ public:
     void tick(duration_t);
     void render(SDL_Renderer*);
     void process(SDL_Event const&);
-    void process(SDL_MouseButtonEvent const&);
+    void make_choice(SDL_MouseButtonEvent const&);
 
 private:
     StoryData* _data;
