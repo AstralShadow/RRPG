@@ -45,39 +45,43 @@ void LevelEditor::process(SDL_Event const& e)
 
 void LevelEditor::process(SDL_KeyboardEvent const& e)
 {
+    SDL_Point map_size = _map.size();
     switch(e.keysym.scancode)
     {
         case SDL_SCANCODE_D:
-            _map_size.x++;
+            map_size.x++;
+            _map.size(map_size);
             break;
         case SDL_SCANCODE_S:
-            _map_size.y++;
+            map_size.y++;
+            _map.size(map_size);
             break;
         case SDL_SCANCODE_A:
-            _map_size.x--;
+            map_size.x--;
+            _map.size(map_size);
             break;
         case SDL_SCANCODE_W:
-            _map_size.y--;
+            map_size.y--;
+            _map.size(map_size);
             break;
+
         case SDL_SCANCODE_Q:
             prev_tileset();
             break;
         case SDL_SCANCODE_E:
             next_tileset();
             break;
-        case SDL_SCANCODE_SPACE:
-            save();
-            break;
         case SDL_SCANCODE_LSHIFT:
             _show_menu = !_show_menu;
             break;
+
+        case SDL_SCANCODE_SPACE:
+            save();
+            break;
+
+
         default: break;
     }
-
-    if(_map_size.x < 1)
-        _map_size.x = 1;
-    if(_map_size.y < 1)
-        _map_size.y = 1;
 }
 
 void LevelEditor::next_tileset()
@@ -155,7 +159,7 @@ void LevelEditor::process(SDL_MouseButtonEvent const& e)
     SDL_Point pos {e.x, e.y};
     _dragging_start = pos;
 
-    if(_show_menu && SDL_PointInRect(&pos, &_menu))
+    if(_show_menu && SDL_PointInRect(&pos, &_menu_area))
     {
         switch(e.button)
         {
@@ -209,8 +213,8 @@ process_selection_dragging(int x, int y)
 {
     SDL_Point pos = _dragging_start;
     SDL_Point delta = {x - pos.x, y - pos.y};
-    pos.x -= _menu.x + _tileset_offset.x;
-    pos.y -= _menu.y + _tileset_offset.y;
+    pos.x -= _menu_area.x + _tileset_offset.x;
+    pos.y -= _menu_area.y + _tileset_offset.y;
     float tile_size = 32 * 1.5;
 
     int x1 = pos.x / tile_size;

@@ -3,6 +3,7 @@
 
 #include "Scene.hpp"
 #include <string>
+#include <vector>
 #include <SDL2//SDL_rect.h>
 class Tileset;
 struct SDL_KeyboardEvent;
@@ -10,11 +11,39 @@ struct SDL_MouseButtonEvent;
 struct SDL_MouseMotionEvent;
 
 using std::string;
+using std::vector;
 
 
 class LevelEditor : public Scene
 {
 public:
+    class Map
+    {
+    public:
+        struct TileData
+        {
+            bool empty = true;
+            string tileset;
+            int x;
+            int y;
+        };
+
+        Map();
+
+        SDL_Point size() { return _size; }
+        void size(SDL_Point);
+
+        TileData& at(int x, int y);
+        TileData& operator [](int);
+
+    private:
+        SDL_Point _actual_size {10, 10};
+        SDL_Point _size {10, 10};
+        TileData* _data = nullptr;
+
+        void resize(SDL_Point);
+    };
+
     LevelEditor(Engine* engine);
     virtual ~LevelEditor() = default;
 
@@ -31,10 +60,10 @@ private:
 
     SDL_Point _screen;
     
-    SDL_Rect _map{0, 0, -1, -1};
-    SDL_Rect _menu{-1, -1, 240, 240};
+    SDL_Rect _map_area{0, 0, -1, -1};
+    SDL_Rect _menu_area{-1, -1, 240, 240};
 
-    SDL_Point _map_size{10, 10};
+    Map _map;
     SDL_Point _map_offset{0, 0};
     
     string _tileset_name;
@@ -61,6 +90,8 @@ private:
     void next_tileset();
     void set_tileset(Tileset*);
     void save();
+
 };
+
 
 #endif
