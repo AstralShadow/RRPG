@@ -184,6 +184,11 @@ void LevelEditor::process(SDL_MouseButtonEvent const& e)
                 break;
             
             case SDL_BUTTON_RIGHT:
+                _dragging_mode = D_ERASE;
+                erase_tile_on_map(e.x, e.y);
+                break;
+
+            case SDL_BUTTON_MIDDLE:
                 _dragging_mode = D_ZOOM_MAP;
                 break;
 
@@ -204,7 +209,7 @@ post_process(SDL_MouseButtonEvent const& e)
                 break;
 
             case D_MOVE_MAP:
-                print("Should've placed some blocks");
+                put_tiles_on_map(e.x, e.y);
                 break;
 
             default: break;
@@ -220,6 +225,10 @@ void LevelEditor::process(SDL_MouseMotionEvent const& e)
     {
         case D_SELECTION:
             process_selection_dragging(e.x, e.y);
+            break;
+
+        case D_ERASE:
+            erase_tile_on_map(e.x, e.y);
             break;
 
         case D_MOVE_MENU:
@@ -280,4 +289,42 @@ process_selection_dragging(int x, int y)
     _selection = {x1, y1, x2, y2};
 }
 
+void LevelEditor::put_tiles_on_map(int m_x, int m_y)
+{
+    SDL_Point source {_selection.x, _selection.y};
+    SDL_Point target;
+    target.x = (m_x - _map_offset.x) / (32 * _map_zoom);
+    target.y = (m_y - _map_offset.y) / (32 * _map_zoom);
+    SDL_Point map_size = _map.size();
+
+    for(int x = 0; x < _selection.w; x++)
+    {
+        if(target.x + x >= map_size.x) break;
+        for(int y = 0; y < _selection.h; y++)
+        {
+            if(target.y + y >= map_size.y) break;
+            
+            auto& tile = _map.at(target.x + x,
+                                 target.y + y);
+            tile.x = source.x + x;
+            tile.y = source.y + y;
+            tile.tileset = _tileset;
+            tile.empty = false;
+        }
+    }
+}
+
+void LevelEditor::erase_tile_on_map(int m_x, int m_y)
+{
+    SDL_Point target;
+    target.x = (m_x - _map_offset.x) / (32 * _map_zoom);
+    target.y = (m_y - _map_offset.y) / (32 * _map_zoom);
+
+    if(target.x < 0 || target.y < 0) return;
+
+    SDL_Point size = _map.size();
+    if(target.x >= size.x || target.y >= size.y) return;
+
+    _map.at(target.x, target.y).empty = true;
+}
 

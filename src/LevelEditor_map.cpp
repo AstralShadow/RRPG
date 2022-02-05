@@ -42,6 +42,7 @@ void LevelEditor::Map::resize(SDL_Point size)
             tile = at(x, y);
         }
     }
+
     delete[] _data;
     _data = data;
     _size = size;
