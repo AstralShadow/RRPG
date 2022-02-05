@@ -24,8 +24,6 @@ int main(int, char**)
 
     engine.set_scene(EngineMode::loading, std::make_shared
                      <LoadingScreen>(&engine, "assets/"));
-    engine.update_screen();
-    engine.load("assets/");
 
 #if BUILD_LEVEL_EDITOR
     engine.set_scene(EngineMode::map_editor,

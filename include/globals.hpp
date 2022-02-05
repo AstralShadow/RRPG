@@ -11,7 +11,7 @@ typedef uint32_t id_t;
 
 extern std::mt19937 mt_generator;
 
-#define BUILD_LEVEL_EDITOR 1
+#define BUILD_LEVEL_EDITOR 2
 
 #define WINDOW_TITLE "my window"
 #define SCREEN_W 800
@@ -28,7 +28,7 @@ extern std::mt19937 mt_generator;
 #define PRINT_PARSE_READFILE_LOG 0
 #define LOAD_TEXTURES_CACHE 1
 using std::chrono::milliseconds;
-#define DELAY_LOAD_TIME milliseconds(500)
+#define DELAY_LOAD_TIME milliseconds(200)
 #define DISABLE_BATCH_PROGRESS_EXECUTION 0
 
 #define PRELOAD_FONT_SIZES {32, 18}
