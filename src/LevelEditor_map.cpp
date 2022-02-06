@@ -121,8 +121,8 @@ void LevelEditor::Map::save(string uri, string name)
     for(auto pair : chars)
     {
         file << "    :tileset ";
-        file << pair.first->name << " "
-             << pair.second << "\n";
+        file << pair.first->name << ' '
+             << pair.second << '\n';
     }
     file << "\n";
 
@@ -154,6 +154,9 @@ map<Tileset*, char> LevelEditor::Map::map_tileset_chars()
         auto& tile = (*this)[i];
         auto itr = chars.find(tile.tileset);
         if(itr != chars.end())
+            continue;
+
+        if(tile.empty || tile.tileset == nullptr)
             continue;
 
         chars[tile.tileset] = next;
