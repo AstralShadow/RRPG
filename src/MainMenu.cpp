@@ -4,6 +4,7 @@
 #include "print.hpp"
 #include <cmath>
 #include <SDL2/SDL_render.h>
+#include <SDL2/SDL_events.h>
 
 
 MainMenu::MainMenu(Engine* e) :
@@ -172,7 +173,30 @@ void MainMenu::update_art_cache(SDL_Renderer* rnd)
 }
 
 
-void MainMenu::process(SDL_Event const&)
+void MainMenu::process(SDL_Event const& e)
 {
+    switch(e.type)
+    {
+        #if BUILD_LEVEL_EDITOR == 2
+        case SDL_KEYDOWN:
+        {
+            if(e.key.keysym.scancode == SDL_SCANCODE_M)
+                _engine->set_mode
+                    (EngineMode::map_editor);
+            break;
+        }
+        #endif
 
+        case SDL_MOUSEBUTTONUP:
+        {
+            SDL_Point pos {e.button.x, e.button.y};
+            if(SDL_PointInRect(&pos, &_play_area))
+                _engine->set_mode
+                    (EngineMode::playing);
+
+            break;
+        }
+
+        default: break;
+    }
 }
