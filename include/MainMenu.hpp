@@ -20,7 +20,7 @@ class MainMenu : public Scene
 
 public:
     MainMenu(Engine* e);
-    virtual ~MainMenu() = default;
+    virtual ~MainMenu();
 
     void on_enter();
     void tick(duration_t);
@@ -28,15 +28,20 @@ public:
     void process(SDL_Event const&);
 
 private:
-    Texture _art;
-    Texture _play;
     milliseconds _ani_progress;
+    SDL_Point _screen_size {0, 0};
 
-    SDL_Point _screen_size {800, 600};
+    Texture _play;
     SDL_Rect _play_area;
-    int _art_offset_x = 0;
+
+    Texture _art;
+    SDL_Texture* _art_cache = nullptr;
+    SDL_Point _cache_size;
+    float _art_offset_x = 0.0f;
 
     void render_art(SDL_Renderer*);
+    void update_art_cache(SDL_Renderer*);
+    void render_cache_art(SDL_Renderer*);
 };
 
 #endif
