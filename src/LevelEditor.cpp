@@ -15,12 +15,19 @@ LevelEditor::LevelEditor(Engine* engine) :
 
 void LevelEditor::on_enter()
 {
-    auto& tilesets = _engine->get_story().tilesets;
+    auto& story = _engine->get_story();
+
+    auto& tilesets = story.tilesets;
     if(tilesets.size() == 0)
         throw std::runtime_error
             ("Level editor can't work without tilesets");
 
     set_tileset(&tilesets.begin()->second);
+
+    auto map = story.maps.find("test");
+    if(map == story.maps.end())
+        return;
+    _map.load_map(&map->second, _engine);
 }
 
 void LevelEditor::tick(duration_t)
@@ -130,7 +137,7 @@ void LevelEditor::prev_tileset()
 void LevelEditor::set_tileset(Tileset* ptr)
 {
     _tileset = ptr;
-    print("Tileset: ", ptr->name);
+    //print("Tileset: ", ptr->name);
 
     if(_selection.x + _selection.w > ptr->size.x)
     {

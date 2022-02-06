@@ -1,4 +1,8 @@
 #include "LevelEditor.hpp"
+#include "Map.hpp"
+#include "Engine.hpp"
+#define ENABLE_PRINTING 1
+#include "print.hpp"
 
 
 LevelEditor::Map::Map()
@@ -48,3 +52,55 @@ void LevelEditor::Map::resize(SDL_Point size)
     _size = size;
     _actual_size = size;
 }
+
+void LevelEditor::Map::load_map(::Map* map, Engine* core)
+{
+    print("Loadin map: ", map->name);
+    resize(map->size);
+    
+    auto& tilesets = core->get_story().tilesets;
+
+    SDL_Point pos {0, 0};
+    for(auto data : map->data)
+    {
+        if(pos.x >= map->size.x)
+        {
+            pos.x = 0;
+            pos.y++;
+        }
+
+        if(data.mode == ::Map::TileData::mode_empty)
+        {
+            pos.x++;
+            continue;
+        }
+
+        auto& tile = at(pos.x, pos.y);
+        
+        auto& tileset = tilesets.find
+                (map->tilesets[data.tileset])->second;
+
+        tile.empty = false;
+        tile.tileset = &tileset;
+
+        switch(data.mode)
+        {
+            case ::Map::TileData::mode_pos:
+                tile.x = data.tile.pos.x;
+                tile.y = data.tile.pos.y;
+                break;
+
+            case ::Map::TileData::mode_id:
+                tile.x = data.tile.id % tileset.size.x;
+                tile.y = data.tile.id / tileset.size.x;
+                break;
+
+            default:
+                tile.empty = true;
+                break;
+        }
+
+        pos.x++;
+    }
+}
+

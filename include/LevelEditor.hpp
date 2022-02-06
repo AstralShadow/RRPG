@@ -9,6 +9,7 @@ class Tileset;
 struct SDL_KeyboardEvent;
 struct SDL_MouseButtonEvent;
 struct SDL_MouseMotionEvent;
+class Map;
 
 using std::string;
 using std::vector;
@@ -29,6 +30,8 @@ public:
         };
 
         Map();
+
+        void load_map(::Map*, Engine*);
 
         SDL_Point size() { return _size; }
         void size(SDL_Point);
