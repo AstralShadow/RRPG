@@ -52,10 +52,23 @@ void LevelEditor::render_map(SDL_Renderer* rnd)
             
             if(!tile.empty)
             {
-                auto texture = _engine->get_texture
+                auto img = _engine->get_texture
                     (assets_dir + tile.tileset->texture);
 
-                SDL_RenderCopy(rnd, texture, &from, &to);
+                
+                if(!_show_grid)
+                    SDL_RenderCopy(rnd, img, &from, &to);
+                else
+                {
+                    SDL_Rect to2 = to;
+                    to2.w -= 2;
+                    to2.h -= 2;
+                    to2.x++;
+                    to2.y++;
+                    SDL_RenderCopy(rnd, img,
+                                   &from, &to2);
+                }
+
             }
             else
             {

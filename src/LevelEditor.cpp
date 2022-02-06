@@ -72,6 +72,10 @@ void LevelEditor::process(SDL_KeyboardEvent const& e)
             _map.size(map_size);
             break;
 
+        case SDL_SCANCODE_G:
+            _show_grid = !_show_grid;
+            break;
+
         case SDL_SCANCODE_Q:
             prev_tileset();
             break;

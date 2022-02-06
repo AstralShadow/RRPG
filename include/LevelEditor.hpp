@@ -61,6 +61,7 @@ public:
 
 private:
     bool _show_menu = true;
+    bool _show_grid = true;
 
     SDL_Point _screen;
     
