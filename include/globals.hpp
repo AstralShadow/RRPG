@@ -11,7 +11,14 @@ typedef uint32_t id_t;
 
 extern std::mt19937 mt_generator;
 
+/* Level editor.
+ * 0 - disabled
+ * 1 - press M while loading
+ * 2 - press M in main menu
+ * 3 - instant open
+ */
 #define BUILD_LEVEL_EDITOR 2
+
 
 #define WINDOW_TITLE "my window"
 #define SCREEN_W 800
