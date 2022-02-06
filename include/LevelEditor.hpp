@@ -4,6 +4,7 @@
 #include "Scene.hpp"
 #include <string>
 #include <vector>
+#include <map>
 #include <SDL2//SDL_rect.h>
 class Tileset;
 struct SDL_KeyboardEvent;
@@ -13,6 +14,7 @@ class Map;
 
 using std::string;
 using std::vector;
+using std::map;
 
 
 class LevelEditor : public Scene
@@ -32,6 +34,7 @@ public:
         Map();
 
         void load_map(::Map*, Engine*);
+        void save(string uri, string name = "test");
 
         SDL_Point size() { return _size; }
         void size(SDL_Point);
@@ -45,6 +48,7 @@ public:
         TileData* _data = nullptr;
 
         void resize(SDL_Point);
+        map<Tileset*, char> map_tileset_chars();
     };
 
     LevelEditor(Engine* engine);

@@ -3,6 +3,10 @@
 #include "Engine.hpp"
 #define ENABLE_PRINTING 1
 #include "print.hpp"
+#include <fstream>
+#include <stdexcept>
+
+using std::ofstream;
 
 
 LevelEditor::Map::Map()
@@ -52,6 +56,7 @@ void LevelEditor::Map::resize(SDL_Point size)
     _size = size;
     _actual_size = size;
 }
+
 
 void LevelEditor::Map::load_map(::Map* map, Engine* core)
 {
@@ -103,4 +108,71 @@ void LevelEditor::Map::load_map(::Map* map, Engine* core)
         pos.x++;
     }
 }
+
+
+void LevelEditor::Map::save(string uri, string name)
+{
+    auto chars = map_tileset_chars();
+    ofstream file(uri);
+    file << "#map " << name << "\n    ";
+    file << ":size " << _size.x << " "
+                     << _size.y << "\n";
+
+    for(auto pair : chars)
+    {
+        file << "    :tileset ";
+        file << pair.first->name << " "
+             << pair.second << "\n";
+    }
+    file << "\n";
+
+    for(int y = 0; y < _size.y; y++)
+    {
+        for(int x = 0; x < _size.x; x++)
+        {
+            file << ' ';
+            auto& tile = at(x, y);
+            if(tile.empty)
+            {
+                file << '.';
+                continue;
+            }
+            file << chars[tile.tileset];
+            file << tile.x << '.' << tile.y;
+        }
+        file << "\n";
+    }
+}
+
+map<Tileset*, char> LevelEditor::Map::map_tileset_chars()
+{
+    map<Tileset*, char> chars;
+    char next = 'a';
+    
+    for(int i = 0; i < _size.x * _size.y; ++i)
+    {
+        auto& tile = (*this)[i];
+        auto itr = chars.find(tile.tileset);
+        if(itr != chars.end())
+            continue;
+
+        chars[tile.tileset] = next;
+        if(next == 'z')
+            next = 'A';
+        else if(next == 'Z')
+        {
+            throw std::runtime_error
+                ("We all knew that's gonna happen."
+                "\nOur map format supports limited "
+                "number of tilesets used per map.\n"
+                "Still, congratulations for using "
+                "over the soft-limited 56 tilesets "
+                "in a single map.");
+        }
+        else next++;
+    }
+
+    return chars;
+}
+
 

@@ -161,7 +161,8 @@ void LevelEditor::set_tileset(Tileset* ptr)
 
 void LevelEditor::save()
 {
-    print("Save not implemented");
+    auto root = _engine->get_story().assets_dir;
+    _map.save(root + "maps/test", "test");
 }
 
 
