@@ -187,6 +187,9 @@ void LevelEditor::process(SDL_MouseButtonEvent const& e)
                 _dragging_mode = D_MOVE_MENU;
                 break;
 
+            case SDL_BUTTON_MIDDLE:
+                _dragging_mode = D_RESIZE_MENU;
+
             default: break;
         }
     }
@@ -225,6 +228,11 @@ post_process(SDL_MouseButtonEvent const& e)
 
             case D_MOVE_MAP:
                 put_tiles_on_map(e.x, e.y);
+                break;
+
+            case D_RESIZE_MENU:
+                _menu_area.w = _tileset_size.x * 48;
+                _menu_area.h = _tileset_size.y * 48;
                 break;
 
             default: break;
@@ -266,6 +274,17 @@ void LevelEditor::process(SDL_MouseMotionEvent const& e)
 
             break;
         }
+
+        case D_RESIZE_MENU:
+            _menu_area.w -= e.xrel;
+            _menu_area.h -= e.yrel;
+
+            if(_menu_area.w > _screen.x)
+                _menu_area.w = _screen.x;
+            if(_menu_area.h > _screen.y)
+                _menu_area.h = _screen.y;
+
+            break;
 
         case D_MOVE_MAP:
             _map_offset.x += e.xrel;

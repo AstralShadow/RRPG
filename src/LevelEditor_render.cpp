@@ -78,7 +78,7 @@ void LevelEditor::render_map(SDL_Renderer* rnd)
 
 void LevelEditor::render_menu(SDL_Renderer* rnd)
 {
-    SDL_SetRenderDrawColor(rnd, 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(rnd, 32, 32, 32, 255);
     SDL_RenderFillRect(rnd, &_menu_area);
     SDL_RenderSetClipRect(rnd, &_menu_area);
 

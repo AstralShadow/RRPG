@@ -84,11 +84,14 @@ private:
 
     enum {
         D_NONE,
+        
         D_SELECTION,
         D_MOVE_MENU,
+        D_RESIZE_MENU,
+
         D_MOVE_MAP,
-        D_ZOOM_MAP,
-        D_ERASE
+        D_ERASE,
+        D_ZOOM_MAP
     } _dragging_mode;
     SDL_Point _dragging_start{0, 0};
     bool _dragged = false;
