@@ -1,0 +1,15 @@
+#tileset interior
+    :file tilesets/interior.png
+    :size 9 10
+
+#tileset path
+    :file tilesets/path.png
+    :size 4 4
+
+#tileset exterior
+    :file tilesets/exterior.png
+    :size 9 6
+
+#tileset grass
+    :file tilesets/grass.png
+    :size 8 8
