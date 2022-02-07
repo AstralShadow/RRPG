@@ -1,0 +1,11 @@
+#map house2
+    :size 6 7
+    :tileset interior a
+
+ a1.0 a2.0 a2.0 a2.0 a3.0 .
+ a0.1 a5.8 a5.2 a5.4 a4.1 .
+ a1.0 a2.0 a5.3 a5.7 a4.2 a3.0
+ a0.1 a1.7 a5.2 a6.0 a0.8 a4.1
+ a0.1 a5.6 a5.1 a6.1 a4.7 a4.1
+ a1.1 a1.7 a5.2 a6.2 a5.2 a3.1
+ . a2.2 a2.2 a2.2 a2.2 .
