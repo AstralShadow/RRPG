@@ -28,7 +28,7 @@ void LoadingScreen::tick(duration_t)
         return;
     
 #if BUILD_LEVEL_EDITOR
-    #if BUILD_LEVEL_EDITOR == 2
+    #if BUILD_LEVEL_EDITOR == 3
         _map_editor = true;
     #endif
     if(_map_editor)
