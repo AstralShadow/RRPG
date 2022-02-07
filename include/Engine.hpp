@@ -57,7 +57,7 @@ private:
     typedef std::map<string, Texture> TextureCache;
     typedef std::map<std::tuple<string, SDL_Color, int>,
                      Texture> TextCache;
-    TextureCache  _textures;
+    TextureCache _textures;
     TextCache _texts;
     StoryData _story;
 

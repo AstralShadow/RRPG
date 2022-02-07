@@ -91,18 +91,22 @@ void LevelEditor::render_menu(SDL_Renderer* rnd)
     auto texture = _engine->get_texture(uri);
 
     SDL_Rect to = _menu_area;
-    if(to.h > texture.h() * 1.5)
-        to.h = texture.h() * 1.5;
-    if(to.w > texture.w() * 1.5)
-        to.w = texture.w() * 1.5;
+    SDL_Rect from = {
+        (int) (-_tileset_offset.x / 1.5),
+        (int) (-_tileset_offset.y / 1.5),
+        (int) (to.w / 1.5),
+        (int) (to.h / 1.5)
+    };
+    if(from.w + from.x > texture.w())
+        from.w = texture.w() - from.x;
+    if(from.h + from.y > texture.h())
+        from.h = texture.h() - from.y;
+
+    if(to.w > from.w * 1.5)
+        to.w = from.w * 1.5;
+    if(to.h > from.h * 1.5)
+        to.h = from.h * 1.5;
     
-    to.x += _tileset_offset.x;
-    to.y += _tileset_offset.y;
-
-    SDL_Rect from = {0, 0, to.w, to.h};
-    from.w /= 1.5;
-    from.h /= 1.5;
-
     SDL_RenderCopy(rnd, texture, &from, &to);
     
     SDL_Rect selection = _selection * 32 * 1.5;

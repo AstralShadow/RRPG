@@ -157,6 +157,9 @@ void LevelEditor::set_tileset(Tileset* ptr)
 
     _tileset_offset.x = 0;
     _tileset_offset.y = 0;
+
+    _tileset_size.x = ptr->size.x;
+    _tileset_size.y = ptr->size.y;
 }
 
 void LevelEditor::save()
@@ -244,9 +247,25 @@ void LevelEditor::process(SDL_MouseMotionEvent const& e)
             break;
 
         case D_MOVE_MENU:
+        {
             _tileset_offset.x += e.xrel;
             _tileset_offset.y += e.yrel;
+            
+            int w = _tileset_size.x * 32 * 1.5;
+            int h = _tileset_size.y * 32 * 1.5;
+            
+            if(-_tileset_offset.x > w - _menu_area.w)
+                _tileset_offset.x = _menu_area.w - w;
+            if(-_tileset_offset.y > h - _menu_area.h)
+                _tileset_offset.y = _menu_area.h - h;
+
+            if(_tileset_offset.x > 0)
+                _tileset_offset.x = 0;
+            if(_tileset_offset.y > 0)
+                _tileset_offset.y = 0;
+
             break;
+        }
 
         case D_MOVE_MAP:
             _map_offset.x += e.xrel;

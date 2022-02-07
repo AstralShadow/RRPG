@@ -79,6 +79,7 @@ private:
     string _tileset_name;
     Tileset* _tileset = nullptr;
     SDL_Point _tileset_offset{0, 0};
+    SDL_Point _tileset_size{1, 1};
     SDL_Rect _selection{0, 0, 1, 1};
 
     enum {
