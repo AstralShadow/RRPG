@@ -24,13 +24,28 @@
 :include entities/Ron
 :include entities/Sofia
 
-:include tilesets/grass
-:include tilesets/olddarkwood
 :include tilesets/darkwood
+:include tilesets/grass
 :include tilesets/lightwood
+:include tilesets/olddarkwood
 :include tilesets/oldlightwood
+:include tilesets/StoneHouseLeft
+:include tilesets/StoneHouseRight
+:include tilesets/StoneHouseUp
+:include tilesets/StrawHouse96on96
+:include tilesets/interior
+:include tilesets/VillagePath64on64CornerDownToLeft
+:include tilesets/VillagePath64on64CornerDownToRight
+:include tilesets/VillagePath64on64CornerUpToLeft
+:include tilesets/VillagePath64on64CornerUpToRight
+:include tilesets/VillagePath64on64DownToUp
+:include tilesets/VillagePath64on64RightToLeft
+:include tilesets/WaterWell64on64
+:include tilesets/path
+
 
 :include maps/floor
+:include maps/village
 :include maps/meadow
 :include maps/meadow2
 
