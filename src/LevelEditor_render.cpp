@@ -21,9 +21,9 @@ void LevelEditor::render(SDL_Renderer* rnd)
 
 void LevelEditor::render_map(SDL_Renderer* rnd)
 {
-    SDL_SetRenderDrawColor(rnd, 0, 32, 0, 255);
-    SDL_RenderFillRect(rnd, &_map_area);
     SDL_SetRenderDrawColor(rnd, 0, 0, 0, 255);
+    SDL_RenderFillRect(rnd, &_map_area);
+    SDL_SetRenderDrawColor(rnd, 32, 32, 32, 255);
     
     int tile_size = 32 * _map_zoom;
     SDL_Rect to {
@@ -32,6 +32,14 @@ void LevelEditor::render_map(SDL_Renderer* rnd)
         tile_size,
         tile_size
     };
+
+    if(_show_grid)
+    {
+        to.x++;
+        to.y++;
+        to.w -= 2;
+        to.h -= 2;
+    }
 
     SDL_Point size = _map.size();
     string assets_dir = _engine->get_story().assets_dir;
@@ -55,19 +63,7 @@ void LevelEditor::render_map(SDL_Renderer* rnd)
                 auto img = _engine->get_texture
                     (assets_dir + tile.tileset->texture);
 
-                
-                if(!_show_grid)
-                    SDL_RenderCopy(rnd, img, &from, &to);
-                else
-                {
-                    SDL_Rect to2 = to;
-                    to2.w -= 2;
-                    to2.h -= 2;
-                    to2.x++;
-                    to2.y++;
-                    SDL_RenderCopy(rnd, img,
-                                   &from, &to2);
-                }
+                SDL_RenderCopy(rnd, img, &from, &to);
 
             }
             else
@@ -82,7 +78,7 @@ void LevelEditor::render_map(SDL_Renderer* rnd)
 
 void LevelEditor::render_menu(SDL_Renderer* rnd)
 {
-    SDL_SetRenderDrawColor(rnd, 32, 0, 32, 255);
+    SDL_SetRenderDrawColor(rnd, 0, 0, 0, 255);
     SDL_RenderFillRect(rnd, &_menu_area);
     SDL_RenderSetClipRect(rnd, &_menu_area);
 
