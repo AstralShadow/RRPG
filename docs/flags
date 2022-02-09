@@ -1,11 +1,27 @@
+
+house2 - John and Klara's house. Ron lives there as well.
+house9 - Petia (chef)'s house.
+
 john_comes_home:
     a) stranger_gave_the_gold 
         a1) stranger_looks_old
             > talk_with_granny_about_stranger
-        a2) stranger_looks_dark
-            > research_stranger
-        a3) stranger_looks_tired
+        a2) stranger_looks_tired
             > talk_with_granny_about_stranger
+        a3) stranger_looks_dark
+            > research_stranger
     b) chef_cooks_ron
         > visit_chef_and_ron
+
+talk_with_granny_about_stranger
+
+
+visit_chef_and_ron:
+    > meet_chef_and_ron
+
+meet_chef_and_ron
+    ron_helps_with_research
+    > research_stranger
+
+research_stranger
 

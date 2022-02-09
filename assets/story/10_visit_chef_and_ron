@@ -1,0 +1,24 @@
+#story visit_chef_and_ron
+    :map village
+    :include 00_vllage_default
+
+    :spawn Jack 14 6 walking
+    :camera 11 8
+
+    > Jack
+    :move 12 10
+    :wait
+
+    :move 8 11
+    :look left
+    :wait
+    
+    :move 8 13
+    :look down
+    :wait
+    :move 5 13
+    :look left
+    RON!!!
+    :wait
+    
+    :next meet_chef_and_ron

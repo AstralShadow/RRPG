@@ -5,3 +5,6 @@
 :include story/01_jack_enters_the_village
 :include story/02_jack_comes_home
 
+:include story/10_visit_chef_and_ron
+:include story/11_meet_chef_and_ron
+

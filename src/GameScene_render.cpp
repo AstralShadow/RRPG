@@ -104,7 +104,7 @@ void GameScene::render_map(SDL_Renderer* rnd)
 
         if(_show_grid_locations)
         {
-            const SDL_Color color {128, 0, 128, 255};
+            const SDL_Color color {255, 255, 255, 255};
             auto text = _engine->get_text
                 (std::to_string(map_x) + "x"
                  + std::to_string(map_y), color);
