@@ -1,28 +1,8 @@
-:include sprites/Cooker
-:include sprites/Grandmother
-:include sprites/Jack
-:include sprites/Jessy
-:include sprites/John
-:include sprites/Keily
-:include sprites/Klara
-:include sprites/Lora
-:include sprites/Necromant
-:include sprites/Negyr
-:include sprites/Ron
-:include sprites/Sofia
+:include sprites/manifest
 
-:include entities/Cale
-:include entities/Jack
-:include entities/Jessy
-:include entities/John
-:include entities/Keily
-:include entities/Klara
-:include entities/Lora
-:include entities/Lucy
-:include entities/Necromancer
-:include entities/Petia
-:include entities/Ron
-:include entities/Sofia
+; Objects are entities...
+:include objects/manifest
+:include entities/manifest
 
 :include tilesets/manifest
 

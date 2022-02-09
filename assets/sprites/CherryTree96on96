@@ -2,21 +2,6 @@
     :file sprites/CherryTree96on96.png
     :size 3 1
 
-;anim is alias for animation
-;anim State frame [direction]
-;anim State frames <count>
-;anim State speed <fps>
-
-    :anim idle 0.0 down 
-    :anim idle 0.1 up
-    :anim idle 0.2 right
-    :anim idle 0.3 left
+    :anim idle 0
     :anim idle frames 1
-    :anim idle speed 3
-    
-    :anim walking 0.0 down
-    :anim walking 0.1 up
-    :anim walking 0.2 right
-    :anim walking 0.3 left
-    :anim walking frames 6
-    :anim walking speed 7
+    :anim idle speed 1
