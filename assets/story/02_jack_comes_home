@@ -18,7 +18,7 @@
     :sleep 2000
 
     > Jack
-    I sold the horses.
+    I sold the horse.
     :sleep 100
 
     > Klara
@@ -36,7 +36,7 @@
     > Klara
     :choice > How could you think that??
         > Klara
-        :set friend_gave_the_gold
+        :set stranger_gave_the_gold
 
         Calm down dear. You must be very tired.
         :sleep 3000
@@ -62,16 +62,94 @@
         :sleep 1500
 
         > Klara
-        He seemed quite old.
-        :sleep 1600
-        He had a strange walking stick.
-        :sleep 2000
-        He was wearing dark clothers.
-        :sleep 1800
-        And he sounded quite tired,
-        :sleep 1300
-        but he also didn't want to stay for dinner.
-        :sleep 2500
+        :choice > He wore dark clothes.
+            :set stranger_looks_dark
+
+            He wore some strange dark clothes.
+            :sleep 2000
+            I couldn't see his face pretty well.
+            :sleep 1800
+
+            > Jack
+            Sounds like no good stuff.
+            :sleep 1500
+            No one normal walks dressed like that.
+            :sleep 2000
+            And definitely no one gives away gold.
+            :sleep 2000
+            Or at least not without a good reason.
+            :sleep 2000
+            
+            > Klara
+            What did you expect me to do?
+            :sleep 1600
+            We were so poor that we could starve together!
+            :sleep 1800
+            I had to accept the money so we can survive.
+            :sleep 2500
+
+            > Jack
+            Sorry, I didn't mean to make you feel bad.
+            :sleep 1800
+            I'm simply worried about you.
+            :sleep 2000
+            Please, don't open to strangers.
+            :sleep 1800
+            
+            > Klara
+            I won't, don't worry darling.
+            :sleep 1800
+            You should be tired, let's eat.
+            :sleep 1800
+
+            > Jack
+            Sure, i'll go find Ron.
+            :sleep 1800
+            You should start before us.
+            :sleep 1600
+
+            > Klara
+            Be fast, the food'll get cold.
+            :sleep 1300
+
+            > Jack
+            Of course, darling.
+            :sleep 1100
+            :move 3 5
+            :state walking
+            :look down
+            :sleep 300
+            
+            > Klara
+            :look up
+
+            >Jack
+            :wait
+            :sleep 900
+
+            :next research_stranger
+
+        :end
+        > Klara
+        :choice > He seemed old.
+            :set stranger_looks_old
+            
+            He seemed quite old
+            :sleep 1600
+            and he had a strange walking stick.
+            :sleep 1800
+        :end
+        > Klara
+        :choice > He looked tired.
+            :set stranger_looks_tired
+
+            He was moving slowly and looked very tired.
+            :sleep 2500
+            I invited him to stay for diner,
+            :sleep 1600
+            but he refused. Seems like he was busy.
+            :sleep 2000
+        :end
 
         > Jack
         I can't think of anyone like that.
@@ -95,6 +173,8 @@
 
         > Jack
         :move 3 5
+        :state walking
+        :look down
         :wait
         :remove
         :sleep 100
@@ -102,6 +182,8 @@
         > Klara
         :look up
         :sleep 1000
+
+        :next talk_with_granny_about_stranger
 
     :end
     > Klara
@@ -135,6 +217,8 @@
         I got to save him!
         :sleep 800
         :move 3 5
+        :state walking
+        :look down
         :sleep 300
 
         > Klara
@@ -153,6 +237,7 @@
         Why did he panic so fast?
         :sleep 2500
 
+        :next visit_chef_and_ron
     :end
 
 
