@@ -31,5 +31,5 @@ void FontManager::empty_cache()
 {
     for(auto pair : _fonts)
         TTF_CloseFont(pair.second);
-    _fonts.empty();
+    _fonts.clear();
 }

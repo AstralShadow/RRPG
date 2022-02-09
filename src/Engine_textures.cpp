@@ -62,9 +62,9 @@ void Engine::clear_textures()
 {
     for(auto pair : _textures)
         pair.second.clear();
-    _textures.empty();
+    _textures.clear();
 
     for(auto pair : _texts)
         pair.second.clear();
-    _texts.empty();
+    _texts.clear();
 }

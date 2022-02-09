@@ -79,7 +79,8 @@ void GameScene::set_story(string name)
     
     print("\nPlaying story: ", name);
 
-    _linestack.empty();
+    while(!_linestack.empty())
+        _linestack.pop();
     _map = nullptr;
 
     auto* arc = &(itr->second.actions);
@@ -108,11 +109,12 @@ void GameScene::set_map(string name)
         print("Can not find map: ", name);
         throw runtime_error("Can not find map.");
     }
+
     print("Preparing map: ", name);
     _map = &(map->second);
-    _tilesets.empty();
-    _entities.empty();
-    _motions.empty();
+    _tilesets.clear();
+    _entities.clear();
+    _motions.clear();
 
     for(auto pair : _map->tilesets)
     {
@@ -273,7 +275,6 @@ void GameScene::finish_motion(Motion& motion)
 
 void GameScene::move_camera(SDL_Point pos)
 {
-    auto map_size = _map->size * _zoom;
     SDL_Point target = pos * (32 * _zoom);
 
     _camera_offset.x = _screen_size.x / 2 - target.x;

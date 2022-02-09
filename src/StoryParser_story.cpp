@@ -31,7 +31,8 @@ begin_story_state(string&,
     story.name = name;
 
     _target = name;
-    _context_stack.empty();
+    while(!_context_stack.empty())
+        _context_stack.pop();
     _context_stack.push(&(story.actions));
     _state = state_story;
     print("Loading story ", name);
@@ -49,7 +50,8 @@ begin_event_state(string&,
     auto flag = args[2];
     
     _target = story;
-    _context_stack.empty();
+    while(!_context_stack.empty())
+        _context_stack.pop();
     _context_stack
         .push(&(_stories[story].events[flag]));
     _state = state_story;

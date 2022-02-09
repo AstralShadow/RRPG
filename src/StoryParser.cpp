@@ -81,11 +81,14 @@ void StoryParser::parse_state_block(string block)
     auto args = explode(' ', block);
 
     if(_context_stack.size() > 1)
+    {
+        print("Current line: #", block);
         throw std::runtime_error
             ("Can not change state with" 
             " non-empty context stack "
             "(aka finish your logic blocks and"
             "then do other stories/events).");
+    }
 
     if(args[0] == "sprite")
         begin_sprite_state(block, args);
