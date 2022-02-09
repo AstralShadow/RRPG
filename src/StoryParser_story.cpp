@@ -155,6 +155,7 @@ parse_story_command(string& line,
         return;
     }
 
+
     if(args[0] == "remove")
     {
         auto cmd = new Command;
@@ -163,6 +164,16 @@ parse_story_command(string& line,
             cmd->name = args[1];
         else
             cmd->name = _speaker;
+        _context_stack.top()->emplace_back(cmd);
+        return;
+    }
+
+    if(args[0] == "camera" && args.size() == 3)
+    {
+        auto cmd = new Command;
+        cmd->command = Command::CAMERA;
+        cmd->pos.x = stoi(args[1]);
+        cmd->pos.y = stoi(args[2]);
         _context_stack.top()->emplace_back(cmd);
         return;
     }

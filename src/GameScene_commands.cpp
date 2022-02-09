@@ -49,6 +49,10 @@ void GameScene::process_command(shared_ptr<Command> cmd)
             remove_entity(cmd->name);
             break;
 
+        case Command::CAMERA:
+            move_camera(cmd->pos);
+            break;
+
         case Command::SLEEP:
             sleep(milliseconds(std::stoi(cmd->name)));
             break;
@@ -266,3 +270,13 @@ void GameScene::finish_motion(Motion& motion)
     _entities[motion.entity].pos.x = motion.end.x;
     _entities[motion.entity].pos.y = motion.end.y;
 }
+
+void GameScene::move_camera(SDL_Point pos)
+{
+    auto map_size = _map->size * _zoom;
+    SDL_Point target = pos * (32 * _zoom);
+
+    _camera_offset.x = _screen_size.x / 2 - target.x;
+    _camera_offset.y = _screen_size.y / 2 - target.y;
+}
+

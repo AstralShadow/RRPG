@@ -87,6 +87,8 @@ struct Command : public Action
         STATE, // affects sprite
         MOVE,
         LOOK,
+
+        CAMERA,
         
         SLEEP,
         WAIT

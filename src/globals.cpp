@@ -16,6 +16,14 @@ bool operator < (SDL_Color const& a,
     return a.a < b.a;
 }
 
+SDL_Point operator * (SDL_Point const& input, float num)
+{
+    SDL_Point output = input;
+    output.x *= num;
+    output.y *= num;
+    return output;
+}
+
 SDL_Rect operator * (SDL_Rect const& input, float num)
 {
     SDL_Rect output = input;

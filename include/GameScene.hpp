@@ -121,6 +121,7 @@ private:
     void set_entity_direction(Name, string direction);
     void move_entity(Name, SDL_Point);
     void remove_entity(Name);
+    void move_camera(SDL_Point);
 
     /* Input */
     bool _wait_input = true;
@@ -147,7 +148,7 @@ private:
     Map* _map;
     map<char, std::pair<Texture, SDL_Point>> _tilesets;
     
-    SDL_Point _screen_size;
+    SDL_Point _screen_size{SCREEN_W, SCREEN_H};
     Point _camera_offset;
     bool _show_grid_locations = false;
 
