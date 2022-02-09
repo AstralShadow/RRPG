@@ -89,8 +89,8 @@ void GameScene::position_speeches_horizontally()
         int speech_w = speech.text.w();
         auto age = duration_cast
                     <milliseconds>(speech.age);
-        if(age < milliseconds(500))
-            speech_w *= age.count() / 500;
+        if(age < milliseconds(1000))
+            speech_w *= age.count() / 1000;
 
         float speech_x1 = speech.pos.x
                 - speech_w / (_zoom * 64);

@@ -216,9 +216,9 @@ void GameScene::render_speeches(SDL_Renderer* rnd)
             if(opacity < 0) opacity = 0;
             alpha = opacity * 32 / 125;
         }
-        if(age.count() < 500)
+        if(age.count() < 1000)
         {
-            auto width = to.w * age.count() / 500;
+            auto width = to.w * age.count() / 1000;
             to.x += (to.w - width) / 2;
             to.w = width;
         }

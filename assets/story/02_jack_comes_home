@@ -1,3 +1,159 @@
 #story jack_comes_home
-    :map house1
-    :next show_houses
+    :map house2
+    :spawn Klara 3 2
+    :look Klara up
+    :spawn Jack 3 5 walking
+    :look Jack up
+
+    > Jack
+    :move 3 4
+    Hello darling!
+    :wait
+    :state idle
+    :sleep 1000
+
+    > Klara
+    :look down
+    Welcome home!
+    :sleep 2000
+
+    > Jack
+    I sold the horses.
+    :sleep 100
+
+    > Klara
+    Food is ready.
+    :sleep 1700
+
+    > Jack
+    Wait, what?
+    :sleep 1300
+    Where did you get money for that??
+    :sleep 1300
+    Don't tell me you sold Ron!
+    :sleep 1300
+
+    > Klara
+    :choice > How could you think that??
+        > Klara
+        :set friend_gave_the_gold
+
+        Calm down dear. You must be very tired.
+        :sleep 3000
+        Don't worry, i haven't sold your brother.
+        :sleep 3000
+        One friend of yours gave us a sack of gold.
+        :sleep 2500
+
+        > Jack
+        And you didn't find that suspicious?
+        :sleep 3000
+        You know i don't have any friends that rich.
+        :sleep 3000
+
+        > Klara
+        He said you may not remember him,
+        :sleep 2000
+        because you haven't met for a long time.
+        :sleep 2000
+
+        > Jack
+        How did he look like?
+        :sleep 1500
+
+        > Klara
+        He seemed quite old.
+        :sleep 1600
+        He had a strange walking stick.
+        :sleep 2000
+        He was wearing dark clothers.
+        :sleep 1800
+        And he sounded quite tired,
+        :sleep 1300
+        but he also didn't want to stay for dinner.
+        :sleep 2500
+
+        > Jack
+        I can't think of anyone like that.
+        :sleep 2000
+
+        > Klara
+        I think he mentioned he left the
+        :sleep 1300
+        village before a few decades.
+        :sleep 3000
+
+        > Jack
+        Maybe i should go ask granny about it.
+        :sleep 2000
+
+        > Klara
+        Not a bad idea.
+        :sleep 1500
+        But be fast, the food'll get cold.
+        :sleep 1500
+
+        > Jack
+        :move 3 5
+        :wait
+        :remove
+        :sleep 100
+
+        > Klara
+        :look up
+        :sleep 1000
+
+    :end
+    > Klara
+    :choice > But you didn't need him?
+        :set chef_cooks_ron
+
+        Huh, but you said he's useless.
+        :sleep 1000
+        
+        > Jack
+         !!!
+        :sleep 1500
+        
+        > Klara
+        Don't worry, i'm just teasing you.
+        :sleep 2000
+        
+        > Jack
+        But Ron is fine, right?
+        :sleep 2000
+
+        > Klara
+        Yea, he's at chef's place.
+        :sleep 2000
+        She's trying to cook a new dish.
+        :sleep 2000
+
+        > Jack
+        She's gonna cook him!!!
+        :sleep 1300
+        I got to save him!
+        :sleep 800
+        :move 3 5
+        :sleep 300
+
+        > Klara
+        Jack, wait!
+
+        > Jack
+        :wait
+        :remove
+        :sleep 1500
+
+        > Klara
+        But he knows how much Ron likes food.
+        :sleep 1500
+        :look up
+        :sleep 500
+        Why did he panic so fast?
+        :sleep 2500
+
+    :end
+
+
+
