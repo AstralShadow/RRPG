@@ -98,7 +98,7 @@ void GameScene::render_map(SDL_Renderer* rnd)
         to.y = _camera_offset.y + map_y * to.h;
 
         SDL_Rect to2 = {(int)to.x, (int)to.y,
-                        (int)to.w+1, (int)to.h+1};
+                        (int)to.w + 1, (int)to.h + 1};
 
         SDL_RenderCopy(rnd, cache.first, &from, &to2);
         map_i++;
@@ -109,16 +109,23 @@ void GameScene::render_map(SDL_Renderer* rnd)
 
 void GameScene::render_entities(SDL_Renderer* rnd)
 {
-    SDL_Rect to { 0, 0,
-                 (int) (32 * _zoom),
-                 (int) (32 * _zoom) };
-    SDL_Rect from {0, 0, 32, 32};
-
     for(auto pair : _entities)
     {
         auto const& entity = pair.second;
-        to.x = _camera_offset.x + entity.pos.x * to.w;
-        to.y = _camera_offset.y + entity.pos.y * to.h;
+
+        int tile_size_x = entity.texture.w() /
+                    entity.sprite->size.x;
+        int tile_size_y = entity.texture.h() /
+                    entity.sprite->size.y;
+        SDL_Rect to { 0, 0,
+                     (int) (tile_size_x * _zoom),
+                     (int) (tile_size_y * _zoom) };
+        SDL_Rect from {0, 0, tile_size_x, tile_size_y};
+
+        to.x = _camera_offset.x +
+            entity.pos.x * 32 * _zoom;
+        to.y = _camera_offset.y +
+            entity.pos.y * 32 * _zoom;
         
         auto ani_data = entity.sprite
                             ->animation[entity.state];
@@ -146,7 +153,6 @@ void GameScene::render_entities(SDL_Renderer* rnd)
         from.y = frame / entity.sprite->size.x;
         from.x *= from.w;
         from.y *= from.h;
-
 
         SDL_RenderCopy(rnd, entity.texture, &from, &to);
     }
