@@ -1,7 +1,7 @@
 #story main
-;    :load_map kitchen
-;    :load_character Гошо at 4 4
-;    :load_character Петя at 4 5
+    :load_map kitchen
+    :load_character Гошо at 4 4
+    :load_character Петя at 4 5
 
     > Гошо
     Добро утро!
@@ -41,9 +41,9 @@
     :end
 
     :if cooking
-        ;stuff
+        :next main_act_1a
     :else
-        ;stuff
+        :next main_act_1b
     :end
 
     > Гошо

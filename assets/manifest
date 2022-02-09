@@ -26,11 +26,12 @@
 
 :include tilesets/manifest
 
-;:include maps/floor
-
+; test is the file & map name that the level editor
+; saves as and loads from. You shall rename your maps
+; once you finish editing them. We'll make that
+; more automatic and easier in the future.
 :include maps/test
+:include maps/manifest
 
-;:include meadow_story
-
-#story main
+:include story/manifest
 
