@@ -115,6 +115,12 @@ void GameScene::process(SDL_Event const& e)
         }
     }
 
+    if(e.type == SDL_KEYDOWN)
+    {
+        if(e.key.keysym.scancode == SDL_SCANCODE_G)
+            _show_grid_locations = !_show_grid_locations;
+    }
+
     if(e.type == SDL_MOUSEMOTION)
     {
         if(e.motion.state & SDL_BUTTON_LMASK)

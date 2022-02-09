@@ -101,6 +101,18 @@ void GameScene::render_map(SDL_Renderer* rnd)
                         (int)to.w + 1, (int)to.h + 1};
 
         SDL_RenderCopy(rnd, cache.first, &from, &to2);
+
+        if(_show_grid_locations)
+        {
+            const SDL_Color color {128, 0, 128, 255};
+            auto text = _engine->get_text
+                (std::to_string(map_x) + "x"
+                 + std::to_string(map_y), color);
+            SDL_Rect id_area { to2.x, to2.y,
+                               text.w(), text.h() };
+            SDL_RenderCopy(rnd, text, nullptr, &id_area);
+        }
+
         map_i++;
         if(map_i >= map_size.x * map_size.y)
             return;

@@ -149,6 +149,7 @@ private:
     
     SDL_Point _screen_size;
     Point _camera_offset;
+    bool _show_grid_locations = false;
 
     void fit_map_on_screen();
     void render_map(SDL_Renderer*);
