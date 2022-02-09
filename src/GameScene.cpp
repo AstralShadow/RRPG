@@ -142,7 +142,6 @@ void GameScene::process(SDL_Event const& e)
             {
                 auto pos = _camera_offset - _drag_start;
 
-                print(_zoom / old_zoom);
                 pos *= _zoom / old_zoom;
                 pos += _drag_start;
                 _camera_offset = pos;
