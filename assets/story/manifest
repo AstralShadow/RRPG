@@ -1,1 +1,7 @@
 :include story/main
+
+:include story/00_show_houses
+
+:include story/01_jack_enters_the_village
+:include story/02_jack_comes_home
+

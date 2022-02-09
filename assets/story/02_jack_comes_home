@@ -1,0 +1,3 @@
+#story jack_comes_home
+    :map house1
+    :next show_houses

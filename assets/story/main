@@ -1,3 +1,3 @@
 #story main
 
-    :include story/01_jack_enters_the_village
+    :next jack_enters_the_village

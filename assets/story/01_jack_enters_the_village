@@ -1,8 +1,10 @@
-:map village
-:insert story/00_village_default
+#story jack_enters_the_village
+    :map village
+    :include story/00_village_default
+
+    :spawn Jack 30 12 walking
 
 ; Jack comes from the village entrance
-    :spawn Jack 30 12 walking
     > Jack
     :look left
 
@@ -14,11 +16,11 @@
     :look down
     :state idle
     Move the camera by dragging left click
-    :sleep 2000
-    Zoom by dragging right click
-    :sleep 2000
-    Have fun, player.
     :sleep 1500
+    Zoom by dragging right click
+    :sleep 1500
+    Have fun, player.
+    :sleep 1000
 
 ; Jack goes to his house
     :state walking
@@ -40,3 +42,4 @@
     :move 15 5
     :wait
 
+:next jack_comes_home

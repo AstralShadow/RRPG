@@ -1,0 +1,23 @@
+#story show_houses
+    :map house1
+    :sleep 5000
+    :map house2
+    :sleep 5000
+    :map house3
+    :sleep 5000
+    :map house4
+    :sleep 5000
+    :map house5
+    :sleep 5000
+    :map house6
+    :sleep 5000
+    :map house7
+    :sleep 5000
+    :map house8
+    :sleep 5000
+    :map house9
+    :sleep 5000
+    :map house10
+    :sleep 5000
+
+    :next show_houses
