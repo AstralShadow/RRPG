@@ -1,0 +1,79 @@
+NAME=game.exe
+CXX=i686-w64-mingw32-g++
+__CXXFLAGS= -O2 -std=c++11 -lstdc++ \
+	-Wall -Wpedantic -Wextra \
+	-I/usr/lib/gcc/i686-w64-mingw32/11.2.1/include \
+	-L/usr/lib/gcc/i686-w64-mingw32/11.2.1 \
+	-Ilib/SDL2-2.0.20/i686-w64-mingw32/include \
+	-Ilib/SDL2-2.0.20/i686-w64-mingw32/include/SDL2 \
+	-Llib/SDL2-2.0.20/i686-w64-mingw32/lib \
+	-Ilib/SDL2_image-2.0.5/i686-w64-mingw32/include \
+	-Llib/SDL2_image-2.0.5/i686-w64-mingw32/lib \
+	-Ilib/SDL2_ttf-2.0.18/i686-w64-mingw32/include \
+	-Llib/SDL2_ttf-2.0.18/i686-w64-mingw32/lib \
+	-static-libstdc++ -static -static-libgcc \
+	-Wl,-Bstatic -march=i686 -mtune=i686\
+	-lmingw32 -lSDL2main -lSDL2.dll -lSDL2_image.dll -lSDL2_ttf.dll \
+	-mwindows -mwin32 \
+	-Wl,--dynamicbase -Wl,--nxcompat \
+	-lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 \
+	-lole32 -loleaut32 -lshell32 -lsetupapi -lversion -luuid# -municode
+
+# -Dmain=SDL_main \ 
+
+
+# -Dmain=SDL_main  
+#-lharfbuzz -lfreetype -lharfbuzz -static
+#-lsetupapi -static \
+#-m32 -mwindows -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 \
+#-lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lversion -luuid
+
+# src/hidapi/windows/hid.c
+#-static-libstdc++ -static 
+
+
+
+IDIR=include
+SDIR=src
+BDIR=bin
+ODIR=obj
+DDIR=dep
+
+_CXXFLAGS = ${__CXXFLAGS} -I${IDIR} ${CXXFLAGS}
+SRC = $(shell find ${SDIR} -type f -name '*.cpp' -o -name ".backup" -prune -type f)
+OBJ = $(patsubst ${SDIR}/%.cpp,${ODIR}/%.o,${SRC})
+DEP = $(patsubst ${SDIR}/%.cpp,${DDIR}/%.dep,${SRC})
+
+ifndef VERBOSE
+.SILENT:
+endif
+
+build: depend ${SRC} ${BDIR}/${NAME}
+
+${DEP}: ${DDIR}/%.dep: ${SDIR}/%.cpp
+	mkdir -p ${DDIR}
+	echo "Calculating dependencies for $^"
+	mkdir -p $$(dirname $@)
+	${CXX} ${_CXXFLAGS} $^ -MM -MP -MT $(patsubst ${SDIR}/%.cpp,${ODIR}/%.o,$^) > $@
+
+depend: ${DEP}
+include ${DEP}
+
+${OBJ}: ${ODIR}/%.o: ${SDIR}/%.cpp
+	mkdir -p ${ODIR}
+	echo "Compiling $@"
+	mkdir -p $$(dirname $@)
+	${CXX} -c -o $@ $< ${_CXXFLAGS}
+
+${BDIR}/${NAME}: ${OBJ}
+	mkdir -p ${BDIR}
+	echo "Linking ${NAME}"
+	$(CXX) -o $@ ${OBJ} ${_CXXFLAGS}
+
+clean:
+	echo "Cleaning build files"
+	rm -r ${ODIR} ${DDIR}
+
+run: build
+	echo "Running ${NAME}"
+	${BDIR}/${NAME}

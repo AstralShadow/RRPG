@@ -5,11 +5,13 @@ archive/
 # Vim metadata and backup files. 
 .backup/
 *.swp
+*.swo
 tags
 *~
 
 # Makefile compilation binary and object dirs.
 bin/
+lib/
 obj/
 dep/
 tags

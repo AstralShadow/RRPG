@@ -1,9 +1,10 @@
-NAME=my_app
-CXX=g++
+NAME?=game.x86_64
+CXX?=g++
 __CXXFLAGS= -Og -g -std=c++11 \
 	-Wall -Wpedantic -Wextra \
 	-pthread \
 	-lSDL2 -lSDL2_image -lSDL2_ttf
+
 
 
 IDIR=include
@@ -21,7 +22,7 @@ ifndef VERBOSE
 .SILENT:
 endif
 
-build: depend tags ${SRC} ${BDIR}/${NAME}
+build: depend ${SRC} ${BDIR}/${NAME}
 
 ${DEP}: ${DDIR}/%.dep: ${SDIR}/%.cpp
 	mkdir -p ${DDIR}
@@ -45,12 +46,12 @@ ${BDIR}/${NAME}: ${OBJ}
 
 clean:
 	echo "Cleaning build files"
-	rm -r ${ODIR} ${BDIR} ${DDIR} tags
+	rm -r ${ODIR} ${DDIR}
 
 run: build
 	echo "Running ${NAME}"
 	${BDIR}/${NAME}
 
-tags: ${SRC}
+ctags: ${SRC}
 	echo "Generating ctags"
 	ctags -R ${IDIR} ${SDIR}
