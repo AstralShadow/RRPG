@@ -106,6 +106,44 @@ void GameScene::update_motions(duration_t progress)
 
 void GameScene::process(SDL_Event const& e)
 {
+    if(e.type == SDL_MOUSEBUTTONDOWN)
+    {
+        if(e.button.button == SDL_BUTTON_RIGHT)
+        {
+            _drag_start.x = e.button.x;
+            _drag_start.y = e.button.y;
+        }
+    }
+
+    if(e.type == SDL_MOUSEMOTION)
+    {
+        if(e.motion.state & SDL_BUTTON_LMASK)
+        {
+            _dragging = true;
+            _camera_offset.x += e.motion.xrel;
+            _camera_offset.y += e.motion.yrel;
+        }
+        if(e.motion.state & SDL_BUTTON_RMASK)
+        {
+            auto old_zoom = _zoom;
+            _dragging = true;
+            _zoom += e.motion.xrel / 100.0;
+            if(_zoom < 1.0)
+                _zoom = 1.0;
+            else if(_zoom > 5.0)
+                _zoom = 5.0;
+            else
+            {
+                auto pos = _camera_offset - _drag_start;
+
+                print(_zoom / old_zoom);
+                pos *= _zoom / old_zoom;
+                pos += _drag_start;
+                _camera_offset = pos;
+            }
+        }
+    }
+        
     if(e.type == SDL_MOUSEBUTTONUP)
     {
         if(!_dragging)
@@ -122,25 +160,7 @@ void GameScene::process(SDL_Event const& e)
         }
         _dragging = false;
     }
-    if(e.type == SDL_MOUSEMOTION)
-    {
-        if(e.motion.state & SDL_BUTTON_LMASK)
-        {
-            _dragging = true;
-            _camera_offset.x += e.motion.xrel;
-            _camera_offset.y += e.motion.yrel;
-        }
-        if(e.motion.state & SDL_BUTTON_RMASK)
-        {
-            _dragging = true;
-            _zoom += e.motion.xrel / 100.0;
-            if(_zoom < 1.0)
-                _zoom = 1.0;
-            if(_zoom > 5.0)
-                _zoom = 5.0;
-        }
-    }
-        
+
 }
 
 void GameScene::process_action()

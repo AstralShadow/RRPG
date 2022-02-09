@@ -22,6 +22,46 @@ struct Point
         y = p.y;
         return *this;
     }
+
+    Point& operator +=(Point p)
+    {
+        x += p.x;
+        y += p.y;
+        return *this;
+    }
+
+    Point& operator -=(Point p)
+    {
+        x -= p.x;
+        y -= p.y;
+        return *this;
+    }
+
+    Point& operator +=(float num)
+    {
+        x = x + num;
+        y = y + num;
+        return *this;
+    }
+
+    Point& operator /=(float num)
+    {
+        x = x / num;
+        y = y / num;
+        return *this;
+    }
+
+    Point& operator *=(float num)
+    {
+        x = x * num;
+        y = y * num;
+        return *this;
+    }
 };
+
+extern Point operator + (Point const&,
+                         Point const&);
+extern Point operator - (Point const&,
+                         Point const&);
 
 #endif

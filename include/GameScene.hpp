@@ -126,6 +126,7 @@ private:
     bool _wait_input = true;
     duration_t _time_to_wait;
     bool _dragging = false;
+    Point _drag_start{0, 0};
     float _zoom = 2.5;
 
     /* Ticking */
@@ -147,7 +148,7 @@ private:
     map<char, std::pair<Texture, SDL_Point>> _tilesets;
     
     SDL_Point _screen_size;
-    SDL_Point _camera_offset;
+    Point _camera_offset;
 
     void fit_map_on_screen();
     void render_map(SDL_Renderer*);

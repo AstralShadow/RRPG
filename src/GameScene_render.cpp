@@ -51,9 +51,7 @@ void GameScene::fit_map_on_screen()
 
 void GameScene::render_map(SDL_Renderer* rnd)
 {
-    SDL_Rect to { 0, 0,
-                 (int) (32 * _zoom),
-                 (int) (32 * _zoom) };
+    SDL_FRect to { 0, 0, 32 * _zoom, 32 * _zoom };
     SDL_Rect from {0, 0, 32, 32};
 
     auto const& map_size = _map->size;
@@ -99,8 +97,10 @@ void GameScene::render_map(SDL_Renderer* rnd)
         to.x = _camera_offset.x + map_x * to.w;
         to.y = _camera_offset.y + map_y * to.h;
 
+        SDL_Rect to2 = {(int)to.x, (int)to.y,
+                        (int)to.w+1, (int)to.h+1};
 
-        SDL_RenderCopy(rnd, cache.first, &from, &to);
+        SDL_RenderCopy(rnd, cache.first, &from, &to2);
         map_i++;
         if(map_i >= map_size.x * map_size.y)
             return;
