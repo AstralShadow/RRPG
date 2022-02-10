@@ -183,7 +183,7 @@
         :look up
         :sleep 1000
 
-        :next talk_with_granny_about_stranger
+        :next visit_grannys_house_1
 
     :end
     > Klara

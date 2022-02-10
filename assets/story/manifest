@@ -8,3 +8,7 @@
 :include story/10_visit_chef_and_ron
 :include story/11_meet_chef_and_ron
 
+:include story/15_visit_grannys_house_1
+:include story/16_talk_with_granny_about_stranger
+
+:include story/99_research_stranger

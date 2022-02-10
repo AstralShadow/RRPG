@@ -1,0 +1,261 @@
+#story talk_with_granny_about_stranger
+    :map house8
+    :spawn Jack 3 4 
+    :look Jack right
+    :spawn Jessy 5 3
+    :look Jessy up
+
+    > Jack
+    Hi, Jess. You seen Lucy?
+    :sleep 400
+
+    > Jessy
+    :look left
+    :sleep 800
+    Oh, Jack, you're back!
+    :sleep 1500
+    Yea, I saw granny this morning.
+    :sleep 2000
+
+    > Jack
+    Do you know where can I find her?
+    :sleep 2100
+
+    > Jessy
+    :choice I don't know.
+        No idea.
+        :sleep 1000
+        
+        > Jack
+        But she's your grandma.
+        :sleep 1900
+        You have to take care of her.
+        :sleep 2000
+        
+        > Jessy
+        Everyone calls her granny.
+        :sleep 1800
+        She's perfectly fine on her own.
+        :sleep 2000
+
+        > Jack
+        You may be right.
+        :sleep 1500
+        Anyway, I have to go now.
+        :sleep 2000
+        Have a nice day.
+        :sleep 1500
+
+        > Jessy
+        You too, Jack.
+        :sleep 1200
+        :look up
+        :sleep 200
+
+        > Jack
+        :look left
+        :sleep 700
+        :remove
+        :sleep 900
+
+        :set jess_dont_follow_you
+        :next research_stranger
+
+    :end
+    > Jessy
+    :choice She went to the neighbour.
+        Yes, I do know.
+        :sleep 1600
+
+        > Jack
+        Can you tell me.
+        :sleep 2500
+
+        > Jessy
+        Yes, I can.
+        :sleep 1700
+
+        > Jack
+        Then tell me!
+        :sleep 2000
+
+        > Jessy
+        Why would I?
+        :sleep 1800
+
+        > Jack
+        Because i need to ask her something.
+        :sleep 2200
+
+        > Jessy
+        Sounds reasonable.
+        :sleep 1800
+        I think she's at Lora's house.
+        :sleep 2100
+        They're always together.
+        :sleep 2200
+        
+        > Jack
+        Oh, right... why did i even come here...
+        :sleep 2400
+        Anyway, i'm in a hurry, got to find Ron as well.
+        :sleep 2500
+
+        > Jessy
+        Why?
+        :sleep 1200
+
+        > Jack
+        Why what?
+        :sleep 1200
+
+        > Jessy
+        What do you need Ron for?
+        :sleep 1500
+
+        > Jack
+        It's time for dinner.
+        :sleep 1800
+        You know where's Ron?
+        :sleep 1800
+
+        > Jessy
+        Yes, anytime.
+        :sleep 1500
+
+        > Jack
+        You're stalking him!?
+        :sleep 1500
+
+        > Jessy
+        No-o-o?
+        :sleep 1500
+
+        > Jack
+        But...
+        :sleep 1000
+
+        > Jessy
+        Do you want to know where he is or not?
+        :sleep 2400
+
+        > Jack
+        Where is Ron?
+        :sleep 1800
+        
+        > Jessy
+        He's with Petia. It's dinner time.
+        :sleep 2000
+
+        > Jack
+        Oh, thanks.
+        :sleep 1500
+        And please, don't stalk him.
+        :sleep 2000
+
+        > Jessy
+        He doesn't mind it.
+        :sleep 1800
+
+        > Jack
+        Does he know about that?
+        :sleep 1700
+
+        > Jessy
+        :choice Yes.
+            I'm almost sure he does.
+            :sleep 2000
+
+            > Jack
+            Uh, i got to go.
+            :sleep 1400
+
+            > Jessy
+            To find Ron?
+            :sleep 600
+            
+            > Jack
+            :look left
+            :sleep 700
+            :remove
+
+            > Jessy
+            :sleep 100
+            I'm coming as well.
+            :sleep 500
+            :move 3 4
+            :state walking
+            :look left
+            :wait
+            :state idle
+            :sleep 500
+            :remove
+        :end
+        > Jessy
+        :choice No.
+            Not exactly...
+            :sleep 1300
+            
+            > Jack
+            Then why do you think he doesn't mind it?
+            :sleep 2300
+
+            > Jessy
+            Why would he?
+            :sleep 1800
+
+            > Jack
+            Uh... I have more important stuff to do.
+            :sleep 2200
+
+            > Jessy
+            Like finding Ron.
+            :sleep 1700
+
+            > Jack
+            ... Ye-e-es.
+            :sleep 1500
+
+            > Jessy
+            I'm coming with you.
+            :sleep 1700
+            
+            > Jack
+            No, you aren't.
+            :sleep 1600
+
+            > Jessy
+            You can't stop me.
+            :sleep 1700
+
+            > Jack
+            I'll tell Ron you stalk him.
+            :sleep 1800
+
+            > Jessy
+            I'll give him food and he won't mind it.
+            :sleep 2200
+
+            > Jack
+            Damn his food addiction!
+            :sleep 800
+            :look left
+            :sleep 700
+            :remove
+
+            > Jessy
+            Let's go to Ron, yay!
+            :sleep 800
+            :move 3 4
+            :state walking
+            :wait
+            :state idle
+            :sleep 700
+            :remove
+        :end
+
+        :sleep 2000
+        :set jess_follows_you
+        :next research_stranger
+
+    :end

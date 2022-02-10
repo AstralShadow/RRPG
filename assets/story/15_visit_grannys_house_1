@@ -1,0 +1,24 @@
+#story visit_grannys_house_1
+    :map village
+    :include story/00_village_default
+
+    :spawn Jack 14 5 walking
+    :camera 12 7
+    
+    > Jack
+    :move 14 7
+    :wait
+    :move 15 10
+    The village feels kinda quiet today.
+    :wait
+    :move 21 10
+    :look right
+    :wait
+    :move 21 12
+    :look down
+    :wait
+    :move 18 12
+    :look left
+    :wait
+
+    :next talk_with_granny_about_stranger

@@ -1,0 +1,51 @@
+#story research_stranger
+    :map village
+    :include 00_village_default
+
+    :spawn Jack 14 5
+    :camera 14 5
+
+    :if jess_dont_follow_you
+        :spawn Jack 19 12
+        :camera 19 12
+    :end
+    
+    :if jess_follows_you
+        :spawn Jack 19 12
+        :spawn Jessy 19 13
+        :camera 19 12
+    :end
+
+    :if ron_helps_with_research
+        :spawn Jack 6 13
+        :camera 6 13
+    :end
+
+    > Jack
+    That's the end of the prologe.
+    :sleep 1900
+    I hope you enjoyed playing it.
+    :sleep 1900
+
+    :if jess_follows_you
+        > Jessy
+        Make sure to check the other storylines as well.
+    :else
+        > Jack
+        You should explore the other storylines as well.
+    :end
+    :sleep 2800
+
+
+:if ron_helps_with_research
+    :spawn Lucy 10 5
+    > Lucy
+    :look up
+    Let's go, we have work to do.
+    :sleep 1000
+    :spawn Lora 9 5
+    :look Lucy left
+    :look Lora right
+    :sleep 500
+:end
+
