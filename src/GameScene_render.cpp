@@ -254,7 +254,8 @@ void GameScene::render_speeches(SDL_Renderer* rnd)
                 SDL_SetTextureAlphaMod(text, alpha);
                 
                 to.h = text.h();
-                to.w = text.w();
+                if(to.w > text.w())
+                    to.w = text.w();
 
                 SDL_Rect from {0, 0, to.w, to.h};
                 SDL_RenderCopy(rnd, text, &from, &to);
