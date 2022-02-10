@@ -174,7 +174,7 @@ void GameScene::process_action()
     if(_linestack.size() == 0)
     {
         print("Story finished.");
-        sleep(milliseconds(5000));
+        sleep(milliseconds(10000));
         return;
     }
 

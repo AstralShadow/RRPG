@@ -5,9 +5,14 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#define ENABLE_PRINTING 1
+#include "print.hpp"
 
 namespace EngineModeLog
 {
+    #ifdef ENABLE_PRINTING
+        #undef ENABLE_PRINTING
+    #endif
     #define ENABLE_PRINTING PRINT_ENGINE_MODE
     #include "print.hpp"
 }
@@ -82,11 +87,16 @@ void Engine::run()
     while(_running)
     {
         auto tick_start = steady_clock::now();
-        auto progress = tick_start - last_tick;
+        
+        duration_t progress = duration_cast
+                <duration_t>(tick_start - last_tick);
+        progress = duration_cast
+                <duration_t>(progress * GAME_SPEED);
+
         last_tick = tick_start;
 
         poll_events();
-        tick(duration_cast<duration_t>(progress));
+        tick(progress);
         render();
 
         auto tick_end = steady_clock::now();

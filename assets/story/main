@@ -1,6 +1,9 @@
 #story main
 
+    ;:next show_houses
+
     :next jack_enters_the_village
+
     ;:next jack_comes_home
     ;:next meet_chef_and_ron
     ;:next visit_grannys_house_1
@@ -8,4 +11,3 @@
 
     ;:next research_stranger
 
-    ;:next show_houses

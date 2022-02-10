@@ -19,6 +19,7 @@ extern std::mt19937 mt_generator;
  */
 #define BUILD_LEVEL_EDITOR 2
 
+#define GAME_SPEED 0.95f
 
 #define WINDOW_TITLE "my window"
 #define SCREEN_W 800
