@@ -248,14 +248,14 @@ void GameScene::render_speeches(SDL_Renderer* rnd)
         }
         else
         {
+            auto bubble_width = to.w;
             for(auto pair : *speech.options)
             {
                 auto text = pair.first;
                 SDL_SetTextureAlphaMod(text, alpha);
                 
                 to.h = text.h();
-                if(to.w > text.w())
-                    to.w = text.w();
+                to.w = std::min(text.w(), bubble_width);
 
                 SDL_Rect from {0, 0, to.w, to.h};
                 SDL_RenderCopy(rnd, text, &from, &to);
