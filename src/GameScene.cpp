@@ -32,10 +32,7 @@ void GameScene::tick(duration_t progress)
 {
     _time_to_wait -= progress;
 
-    update_animations(progress);
-    update_motions(progress);
     remove_old_speeches(progress);
-    position_speeches();
 
     auto start = steady_clock::now();
     while(!_wait_input && _time_to_wait.count() <= 0)
@@ -52,6 +49,10 @@ void GameScene::tick(duration_t progress)
         if(duration.count() > 5)
         break;
     }
+
+    update_animations(progress);
+    update_motions(progress);
+    position_speeches();
 }
 
 void GameScene::sleep(milliseconds time)

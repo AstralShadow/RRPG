@@ -1,3 +1,11 @@
 #story main
 
     :next jack_enters_the_village
+    ;:next jack_comes_home
+    ;:next meet_chef_and_ron
+    ;:next visit_grannys_house_1
+    ;:next talk_with_granny_about_stranger
+
+    ;:next research_stranger
+
+    ;:next show_houses
