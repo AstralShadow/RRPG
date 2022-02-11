@@ -1,7 +1,8 @@
-# An RPG game.
-With an R at the beginning. ;)
+# An RPG game engine.
+Includes a game as well.
 
 Making this for the SDL Enthusiasts 1K members Game Jam.
+
 
 ## Edit 2022-02-05:
 So far, this is a cool limited control rpg engine.
@@ -12,3 +13,5 @@ the loading screen.
 
 _All details about my idea will stay hidden until i implement them. And if all goes smooth, i may actually be able to compile that for Windows 7_
 
+## Edit 2022-02-11
+It actually compiled for Windows 7 (because i compiled on Windows 7).
