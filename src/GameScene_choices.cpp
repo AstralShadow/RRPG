@@ -94,16 +94,18 @@ make_choice(SDL_MouseButtonEvent const& e)
     }
 
     area.w += 16;
-    auto speech_height = area.h + 16;
+    auto speech_height = area.h + 5;
 
     area.x -= area.w / 2;
     area.y -= area.h;
     
     for(auto pair : *itr->options)
     {
-        area.h = pair.first.h();
+        area.h = pair.first.h() + 5;
         if(SDL_PointInRect(&mouse_pos, &area))
         {
+            print("You hit speach. ", pair.first.w());
+            return;
             run_story_arc(pair.second);
             _speeches.erase(itr);
             for(auto& speech : _speeches)
@@ -112,7 +114,8 @@ make_choice(SDL_MouseButtonEvent const& e)
             _wait_input = false;
             return;
         }
-        area.y += area.h + 5;
+        area.y += area.h;
     }
+    print("You no hit speach.");
 }
 
