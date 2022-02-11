@@ -104,8 +104,6 @@ make_choice(SDL_MouseButtonEvent const& e)
         area.h = pair.first.h() + 5;
         if(SDL_PointInRect(&mouse_pos, &area))
         {
-            print("You hit speach. ", pair.first.w());
-            return;
             run_story_arc(pair.second);
             _speeches.erase(itr);
             for(auto& speech : _speeches)
@@ -116,6 +114,5 @@ make_choice(SDL_MouseButtonEvent const& e)
         }
         area.y += area.h;
     }
-    print("You no hit speach.");
 }
 
