@@ -5,6 +5,7 @@ __CXXFLAGS= -Og -g -std=c++11 \
 	-pthread \
 	-lSDL2 -lSDL2_image -lSDL2_ttf
 
+LDXX?=g++
 
 
 IDIR=include
@@ -42,7 +43,7 @@ ${OBJ}: ${ODIR}/%.o: ${SDIR}/%.cpp
 ${BDIR}/${NAME}: ${OBJ}
 	mkdir -p ${BDIR}
 	echo "Linking ${NAME}"
-	$(CXX) -o $@ ${OBJ} ${_CXXFLAGS}
+	${LDXX} -o $@ ${OBJ} ${_CXXFLAGS}
 
 clean:
 	echo "Cleaning build files"
